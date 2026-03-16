@@ -59,7 +59,6 @@ code {
 }
 
 .info::before {
-  content: "💡 ";
   font-weight: bold;
 }
 
@@ -73,7 +72,6 @@ code {
 }
 
 .warning::before {
-  content: "⚠️ ";
   font-weight: bold;
 }
 
@@ -87,7 +85,6 @@ code {
 }
 
 .exercise::before {
-  content: "📝 ";
   font-weight: bold;
 }
 
@@ -101,7 +98,6 @@ code {
 }
 
 .advanced::before {
-  content: "🎓 ";
   font-weight: bold;
 }
 
@@ -246,4 +242,25 @@ img {
   img {
     page-break-inside: avoid;
   }
+}
+
+.download-box {
+  background-color: #e8f4f8;
+  border-left: 5px solid #2196F3;
+  border-radius: 5px;
+  padding: 15px 20px;
+  margin: 20px 0;
+}
+
+.download-box p {
+  margin: 0 0 8px 0;
+  font-weight: bold;
+}
+
+.download-box ul {
+  margin: 5px 0 0 0;
+}
+
+.download-box a {
+  color: #1565C0;
 }

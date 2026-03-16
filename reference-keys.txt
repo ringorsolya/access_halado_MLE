@@ -9,7 +9,6 @@ exr:unlabeled-div-8
 exr:unlabeled-div-9
 exr:unlabeled-div-10
 exr:unlabeled-div-11
-exr:unlabeled-div-12
 rossz-adatbázis-struktúra-felismerése
 problemas-db
 egyetlen-táblás-megoldás
@@ -206,15 +205,3 @@ műveleti-lekérdezések-1
 kereszttábla-lekérdezések-1
 excel-access-integráció-1
 makrók
-mit-tudunk-halado
-gyakorlati-alk
-teljes-állomány-nyilvántartó-rendszer
-digitalizálási-workflow-rendszer
-kutatói-kiszolgálási-rendszer
-kovetkezo-lepesek-halado
-sql-tanulás
-vba-programozás
-adatbázis-adminisztráció
-több-felhasználós-adatbázisok
-hasznos-forrasok
-zaro-gondolatok
