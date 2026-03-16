@@ -1,0 +1,249 @@
+/* Access haladó bookdown - Custom CSS */
+
+/* Általános formázás */
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.6;
+  color: #333;
+}
+
+h1, h2, h3, h4 {
+  color: #2c3e50;
+  margin-top: 1.5em;
+}
+
+h1 {
+  border-bottom: 3px solid #9b59b6;
+  padding-bottom: 0.3em;
+}
+
+h2 {
+  border-bottom: 1px solid #bdc3c7;
+  padding-bottom: 0.2em;
+}
+
+/* Kódblokkok */
+pre {
+  background-color: #f4f4f4;
+  border: 1px solid #ddd;
+  border-left: 3px solid #9b59b6;
+  color: #333;
+  page-break-inside: avoid;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 14px;
+  line-height: 1.6;
+  margin-bottom: 1.6em;
+  max-width: 100%;
+  overflow: auto;
+  padding: 1em 1.5em;
+  display: block;
+  word-wrap: break-word;
+}
+
+code {
+  background-color: #f4f4f4;
+  padding: 2px 6px;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 90%;
+  color: #c7254e;
+  border-radius: 3px;
+}
+
+/* Info boxok */
+.info {
+  background-color: #d1ecf1;
+  border-left: 5px solid #17a2b8;
+  padding: 15px;
+  margin: 20px 0;
+  border-radius: 4px;
+}
+
+.info::before {
+  content: "💡 ";
+  font-weight: bold;
+}
+
+/* Warning boxok */
+.warning {
+  background-color: #fff3cd;
+  border-left: 5px solid #ffc107;
+  padding: 15px;
+  margin: 20px 0;
+  border-radius: 4px;
+}
+
+.warning::before {
+  content: "⚠️ ";
+  font-weight: bold;
+}
+
+/* Exercise boxok */
+.exercise {
+  background-color: #d4edda;
+  border-left: 5px solid #28a745;
+  padding: 15px;
+  margin: 20px 0;
+  border-radius: 4px;
+}
+
+.exercise::before {
+  content: "📝 ";
+  font-weight: bold;
+}
+
+/* Advanced boxok (új a haladó tananyaghoz) */
+.advanced {
+  background-color: #e7d9f5;
+  border-left: 5px solid #9b59b6;
+  padding: 15px;
+  margin: 20px 0;
+  border-radius: 4px;
+}
+
+.advanced::before {
+  content: "🎓 ";
+  font-weight: bold;
+}
+
+/* Táblázatok */
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 20px 0;
+}
+
+table th {
+  background-color: #9b59b6;
+  color: white;
+  font-weight: bold;
+  padding: 12px;
+  text-align: left;
+  border: 1px solid #8e44ad;
+}
+
+table td {
+  padding: 10px;
+  border: 1px solid #ddd;
+}
+
+table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+table tr:hover {
+  background-color: #f1f1f1;
+}
+
+/* Listaelemek */
+ul, ol {
+  margin: 15px 0;
+  padding-left: 30px;
+}
+
+li {
+  margin: 8px 0;
+}
+
+/* Linkek */
+a {
+  color: #9b59b6;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #8e44ad;
+  text-decoration: underline;
+}
+
+/* Képek */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 20px auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 5px;
+}
+
+/* Fejléc és lábléc */
+.book .book-header {
+  background-color: #2c3e50;
+  color: white;
+}
+
+.book .book-header h1 {
+  color: white;
+  border: none;
+}
+
+/* Oldalsáv (TOC) */
+.book .book-summary {
+  background-color: #ecf0f1;
+}
+
+.book .book-summary ul.summary li a {
+  color: #2c3e50;
+  padding: 8px 15px;
+  display: block;
+}
+
+.book .book-summary ul.summary li a:hover {
+  background-color: #d5dbdb;
+  text-decoration: none;
+}
+
+.book .book-summary ul.summary li.active > a {
+  background-color: #9b59b6;
+  color: white;
+  font-weight: bold;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  body {
+    font-size: 14px;
+  }
+  
+  h1 {
+    font-size: 24px;
+  }
+  
+  h2 {
+    font-size: 20px;
+  }
+  
+  table {
+    font-size: 12px;
+  }
+  
+  pre {
+    font-size: 12px;
+    padding: 0.5em;
+  }
+}
+
+/* Nyomtatás */
+@media print {
+  .book .book-summary,
+  .book .book-header {
+    display: none;
+  }
+  
+  .book .book-body {
+    margin-left: 0;
+  }
+  
+  pre {
+    border: 1px solid #000;
+    page-break-inside: avoid;
+  }
+  
+  h1, h2, h3 {
+    page-break-after: avoid;
+  }
+  
+  img {
+    page-break-inside: avoid;
+  }
+}

@@ -1,0 +1,1561 @@
+<!DOCTYPE html>
+<html lang="hu" xml:lang="hu">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Fejezet 2 Normalizálás alapjai | Access haladó - Levéltári adatbázisok</title>
+  <meta name="description" content="Microsoft Access haladó szintű tananyag levéltárosok számára - többtáblás adatbázisok, normalizálás, hierarchikus űrlapok, haladó lekérdezések." />
+  <meta name="generator" content="bookdown 0.46 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Fejezet 2 Normalizálás alapjai | Access haladó - Levéltári adatbázisok" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="Microsoft Access haladó szintű tananyag levéltárosok számára - többtáblás adatbázisok, normalizálás, hierarchikus űrlapok, haladó lekérdezések." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Fejezet 2 Normalizálás alapjai | Access haladó - Levéltári adatbázisok" />
+  
+  <meta name="twitter:description" content="Microsoft Access haladó szintű tananyag levéltárosok számára - többtáblás adatbázisok, normalizálás, hierarchikus űrlapok, haladó lekérdezések." />
+  
+
+<meta name="author" content="Ring Orsolya" />
+
+
+<meta name="date" content="2026-03-16" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="rossz-adatbázis-struktúra-felismerése.html"/>
+<link rel="next" href="műveleti-lekérdezések.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Access haladó - Levéltári adatbázisok</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Előszó</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#a-tananyag-fel%C3%A9p%C3%ADt%C3%A9se"><i class="fa fa-check"></i>A tananyag felépítése</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#gyakorlati-projekt"><i class="fa fa-check"></i>Gyakorlati projekt</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="rossz-adatbázis-struktúra-felismerése.html"><a href="rossz-adatbázis-struktúra-felismerése.html"><i class="fa fa-check"></i><b>1</b> Rossz adatbázis-struktúra felismerése</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="rossz-adatbázis-struktúra-felismerése.html"><a href="rossz-adatbázis-struktúra-felismerése.html#problemas-db"><i class="fa fa-check"></i><b>1.1</b> A problémás adatbázis</a>
+<ul>
+<li class="chapter" data-level="1.1.1" data-path="rossz-adatbázis-struktúra-felismerése.html"><a href="rossz-adatbázis-struktúra-felismerése.html#egyetlen-t%C3%A1bl%C3%A1s-megold%C3%A1s"><i class="fa fa-check"></i><b>1.1.1</b> Egyetlen táblás “megoldás”</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="rossz-adatbázis-struktúra-felismerése.html"><a href="rossz-adatbázis-struktúra-felismerése.html#ismetlodo-adatok"><i class="fa fa-check"></i><b>1.2</b> Probléma #1: Ismétlődő adatok</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="rossz-adatbázis-struktúra-felismerése.html"><a href="rossz-adatbázis-struktúra-felismerése.html#ugyanez-az-%C3%A1llagn%C3%A1l"><i class="fa fa-check"></i><b>1.2.1</b> Ugyanez az állagnál</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="rossz-adatbázis-struktúra-felismerése.html"><a href="rossz-adatbázis-struktúra-felismerése.html#frissitesi-anomaliak"><i class="fa fa-check"></i><b>1.3</b> Probléma #2: Frissítési anomáliák</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="rossz-adatbázis-struktúra-felismerése.html"><a href="rossz-adatbázis-struktúra-felismerése.html#mi-t%C3%B6rt%C3%A9nik-ha"><i class="fa fa-check"></i><b>1.3.1</b> Mi történik, ha…</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="rossz-adatbázis-struktúra-felismerése.html"><a href="rossz-adatbázis-struktúra-felismerése.html#adatintegr-kockazat"><i class="fa fa-check"></i><b>1.4</b> Probléma #3: Adatintegritási kockázat</a>
+<ul>
+<li class="chapter" data-level="1.4.1" data-path="rossz-adatbázis-struktúra-felismerése.html"><a href="rossz-adatbázis-struktúra-felismerése.html#ugyanaz-a-fond-m%C3%A9gis-m%C3%A1sk%C3%A9pp"><i class="fa fa-check"></i><b>1.4.1</b> Ugyanaz a fond, mégis másképp</a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="rossz-adatbázis-struktúra-felismerése.html"><a href="rossz-adatbázis-struktúra-felismerése.html#redundancia"><i class="fa fa-check"></i><b>1.5</b> Probléma #4: Redundancia és méret</a>
+<ul>
+<li class="chapter" data-level="1.5.1" data-path="rossz-adatbázis-struktúra-felismerése.html"><a href="rossz-adatbázis-struktúra-felismerése.html#mennyi-helyet-pazarolunk"><i class="fa fa-check"></i><b>1.5.1</b> Mennyi helyet pazarolunk?</a></li>
+</ul></li>
+<li class="chapter" data-level="1.6" data-path="rossz-adatbázis-struktúra-felismerése.html"><a href="rossz-adatbázis-struktúra-felismerése.html#lekerdezes-nehezseg"><i class="fa fa-check"></i><b>1.6</b> Probléma #5: Lekérdezési nehézségek</a>
+<ul>
+<li class="chapter" data-level="1.6.1" data-path="rossz-adatbázis-struktúra-felismerése.html"><a href="rossz-adatbázis-struktúra-felismerése.html#egyszer%C5%B1-k%C3%A9rd%C3%A9sek-bonyolult-megold%C3%A1sok"><i class="fa fa-check"></i><b>1.6.1</b> Egyszerű kérdések, bonyolult megoldások</a></li>
+</ul></li>
+<li class="chapter" data-level="1.7" data-path="rossz-adatbázis-struktúra-felismerése.html"><a href="rossz-adatbázis-struktúra-felismerése.html#felhasznaloi-hibak"><i class="fa fa-check"></i><b>1.7</b> Probléma #6: Felhasználói hibák</a>
+<ul>
+<li class="chapter" data-level="1.7.1" data-path="rossz-adatbázis-struktúra-felismerése.html"><a href="rossz-adatbázis-struktúra-felismerése.html#adatbevitel-egyetlen-t%C3%A1bl%C3%A1ban"><i class="fa fa-check"></i><b>1.7.1</b> Adatbevitel egyetlen táblában</a></li>
+</ul></li>
+<li class="chapter" data-level="1.8" data-path="rossz-adatbázis-struktúra-felismerése.html"><a href="rossz-adatbázis-struktúra-felismerése.html#megoldas-elozetes"><i class="fa fa-check"></i><b>1.8</b> A megoldás: Normalizálás</a>
+<ul>
+<li class="chapter" data-level="1.8.1" data-path="rossz-adatbázis-struktúra-felismerése.html"><a href="rossz-adatbázis-struktúra-felismerése.html#mi-az-a-normaliz%C3%A1l%C3%A1s"><i class="fa fa-check"></i><b>1.8.1</b> Mi az a normalizálás?</a></li>
+<li class="chapter" data-level="1.8.2" data-path="rossz-adatbázis-struktúra-felismerése.html"><a href="rossz-adatbázis-struktúra-felismerése.html#helyes-strukt%C3%BAra-el%C5%91n%C3%A9zet"><i class="fa fa-check"></i><b>1.8.2</b> Helyes struktúra előnézet</a></li>
+</ul></li>
+<li class="chapter" data-level="1.9" data-path="rossz-adatbázis-struktúra-felismerése.html"><a href="rossz-adatbázis-struktúra-felismerése.html#gyak-problemak"><i class="fa fa-check"></i><b>1.9</b> Gyakorlat: Problémák azonosítása</a>
+<ul>
+<li class="chapter" data-level="1.9.1" data-path="rossz-adatbázis-struktúra-felismerése.html"><a href="rossz-adatbázis-struktúra-felismerése.html#p%C3%A9lda-adatb%C3%A1zis-kik%C3%A9r%C3%A9sek"><i class="fa fa-check"></i><b>1.9.1</b> Példa adatbázis: Kikérések</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="normalizálás-alapjai.html"><a href="normalizálás-alapjai.html"><i class="fa fa-check"></i><b>2</b> Normalizálás alapjai</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="normalizálás-alapjai.html"><a href="normalizálás-alapjai.html#mi-a-normalizalas"><i class="fa fa-check"></i><b>2.1</b> Mi a normalizálás?</a></li>
+<li class="chapter" data-level="2.2" data-path="normalizálás-alapjai.html"><a href="normalizálás-alapjai.html#normal-szintek"><i class="fa fa-check"></i><b>2.2</b> A normalizálás szintjei</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="normalizálás-alapjai.html"><a href="normalizálás-alapjai.html#elso-normalforma"><i class="fa fa-check"></i><b>2.2.1</b> Első normálforma (1NF)</a></li>
+<li class="chapter" data-level="2.2.2" data-path="normalizálás-alapjai.html"><a href="normalizálás-alapjai.html#masodik-normalforma"><i class="fa fa-check"></i><b>2.2.2</b> Második normálforma (2NF)</a></li>
+<li class="chapter" data-level="2.2.3" data-path="normalizálás-alapjai.html"><a href="normalizálás-alapjai.html#harmadik-normalforma"><i class="fa fa-check"></i><b>2.2.3</b> Harmadik normálforma (3NF)</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="normalizálás-alapjai.html"><a href="normalizálás-alapjai.html#leveltari-pelda"><i class="fa fa-check"></i><b>2.3</b> Levéltári példa: Fondok → Állagok → Iratok</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="normalizálás-alapjai.html"><a href="normalizálás-alapjai.html#kiindul%C3%A1s-rossz-strukt%C3%BAra-denormaliz%C3%A1lt"><i class="fa fa-check"></i><b>2.3.1</b> Kiindulás: Rossz struktúra (denormalizált)</a></li>
+<li class="chapter" data-level="2.3.2" data-path="normalizálás-alapjai.html"><a href="normalizálás-alapjai.html#l%C3%A9p%C3%A9s-1nf-ellen%C5%91rz%C3%A9se"><i class="fa fa-check"></i><b>2.3.2</b> 1. lépés: 1NF ellenőrzése</a></li>
+<li class="chapter" data-level="2.3.3" data-path="normalizálás-alapjai.html"><a href="normalizálás-alapjai.html#l%C3%A9p%C3%A9s-2nf-alkalmaz%C3%A1sa"><i class="fa fa-check"></i><b>2.3.3</b> 2. lépés: 2NF alkalmazása</a></li>
+<li class="chapter" data-level="2.3.4" data-path="normalizálás-alapjai.html"><a href="normalizálás-alapjai.html#l%C3%A9p%C3%A9s-3nf-alkalmaz%C3%A1sa"><i class="fa fa-check"></i><b>2.3.4</b> 3. lépés: 3NF alkalmazása</a></li>
+<li class="chapter" data-level="2.3.5" data-path="normalizálás-alapjai.html"><a href="normalizálás-alapjai.html#v%C3%A9geredm%C3%A9ny-normaliz%C3%A1lt-strukt%C3%BAra"><i class="fa fa-check"></i><b>2.3.5</b> Végeredmény: Normalizált struktúra</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="normalizálás-alapjai.html"><a href="normalizálás-alapjai.html#normalizalasi-szabalyok"><i class="fa fa-check"></i><b>2.4</b> Normalizálási szabályok levéltárban</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="normalizálás-alapjai.html"><a href="normalizálás-alapjai.html#%C3%A1ltal%C3%A1nos-elvek"><i class="fa fa-check"></i><b>2.4.1</b> Általános elvek</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="normalizálás-alapjai.html"><a href="normalizálás-alapjai.html#gyakorlat-normalizalas"><i class="fa fa-check"></i><b>2.5</b> Gyakorlat: Normalizálás lépésről-lépésre</a>
+<ul>
+<li class="chapter" data-level="2.5.1" data-path="normalizálás-alapjai.html"><a href="normalizálás-alapjai.html#kiindul%C3%A1s-kutat%C3%B3i-kik%C3%B6lcs%C3%B6nz%C3%A9si-napl%C3%B3"><i class="fa fa-check"></i><b>2.5.1</b> Kiindulás: Kutatói kikölcsönzési napló</a></li>
+<li class="chapter" data-level="2.5.2" data-path="normalizálás-alapjai.html"><a href="normalizálás-alapjai.html#megold%C3%A1s"><i class="fa fa-check"></i><b>2.5.2</b> Megoldás</a></li>
+</ul></li>
+<li class="chapter" data-level="2.6" data-path="normalizálás-alapjai.html"><a href="normalizálás-alapjai.html#fejlett-combo"><i class="fa fa-check"></i><b>2.6</b> Fejlettebb combo box: Fond + Állag együtt</a>
+<ul>
+<li class="chapter" data-level="2.6.1" data-path="normalizálás-alapjai.html"><a href="normalizálás-alapjai.html#sql-m%C3%B3dos%C3%ADt%C3%A1sa"><i class="fa fa-check"></i><b>2.6.1</b> SQL módosítása</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="műveleti-lekérdezések.html"><a href="műveleti-lekérdezések.html"><i class="fa fa-check"></i><b>3</b> Műveleti lekérdezések</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="műveleti-lekérdezések.html"><a href="műveleti-lekérdezések.html#biztonsagi-mentes"><i class="fa fa-check"></i><b>3.1</b> Biztonsági mentés készítése</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="műveleti-lekérdezések.html"><a href="műveleti-lekérdezések.html#m%C3%B3dszer-1-adatb%C3%A1zis-m%C3%A1sol%C3%A1sa-aj%C3%A1nlott"><i class="fa fa-check"></i><b>3.1.1</b> Módszer 1: Adatbázis másolása (AJÁNLOTT)</a></li>
+<li class="chapter" data-level="3.1.2" data-path="műveleti-lekérdezések.html"><a href="műveleti-lekérdezések.html#m%C3%B3dszer-2-t%C3%B6m%C3%B6r%C3%ADt%C3%A9s-%C3%A9s-m%C3%A1sol%C3%A1s-halad%C3%B3knak"><i class="fa fa-check"></i><b>3.1.2</b> Módszer 2: Tömörítés és Másolás (haladóknak)</a></li>
+<li class="chapter" data-level="3.1.3" data-path="műveleti-lekérdezések.html"><a href="műveleti-lekérdezések.html#biztons%C3%A1gi-ment%C3%A9si-strat%C3%A9gia"><i class="fa fa-check"></i><b>3.1.3</b> Biztonsági mentési stratégia</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="műveleti-lekérdezések.html"><a href="műveleti-lekérdezések.html#frissitesi"><i class="fa fa-check"></i><b>3.2</b> Frissítési lekérdezés (Update Query)</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="műveleti-lekérdezések.html"><a href="műveleti-lekérdezések.html#p%C3%A9lda-dobozt%C3%A1r-sz%C3%A1mok-el%C5%91tag%C3%A1nak-m%C3%B3dos%C3%ADt%C3%A1sa"><i class="fa fa-check"></i><b>3.2.1</b> Példa: Doboztár számok előtagának módosítása</a></li>
+<li class="chapter" data-level="3.2.2" data-path="műveleti-lekérdezések.html"><a href="műveleti-lekérdezések.html#l%C3%A9p%C3%A9s-biztons%C3%A1gi-ment%C3%A9s-k%C3%B6telez%C5%91"><i class="fa fa-check"></i><b>3.2.2</b> 1. LÉPÉS: Biztonsági mentés (KÖTELEZŐ!)</a></li>
+<li class="chapter" data-level="3.2.3" data-path="műveleti-lekérdezések.html"><a href="műveleti-lekérdezések.html#l%C3%A9p%C3%A9s-tesztel%C3%A9s-select-lek%C3%A9rdez%C3%A9ssel"><i class="fa fa-check"></i><b>3.2.3</b> 2. LÉPÉS: Tesztelés SELECT lekérdezéssel</a></li>
+<li class="chapter" data-level="3.2.4" data-path="műveleti-lekérdezések.html"><a href="műveleti-lekérdezések.html#l%C3%A9p%C3%A9s-sz%C3%A1m%C3%ADtott-mez%C5%91-tesztel%C3%A9se"><i class="fa fa-check"></i><b>3.2.4</b> 3. LÉPÉS: Számított mező tesztelése</a></li>
+<li class="chapter" data-level="3.2.5" data-path="műveleti-lekérdezések.html"><a href="műveleti-lekérdezések.html#l%C3%A9p%C3%A9s-%C3%A1tv%C3%A1lt%C3%A1s-friss%C3%ADt%C3%A9si-lek%C3%A9rdez%C3%A9sre"><i class="fa fa-check"></i><b>3.2.5</b> 4. LÉPÉS: Átváltás FRISSÍTÉSI lekérdezésre</a></li>
+<li class="chapter" data-level="3.2.6" data-path="műveleti-lekérdezések.html"><a href="műveleti-lekérdezések.html#l%C3%A9p%C3%A9s-futtat%C3%A1s-visszavonhatatlan"><i class="fa fa-check"></i><b>3.2.6</b> 5. LÉPÉS: FUTTATÁS (Visszavonhatatlan!)</a></li>
+<li class="chapter" data-level="3.2.7" data-path="műveleti-lekérdezések.html"><a href="műveleti-lekérdezések.html#l%C3%A9p%C3%A9s-eredm%C3%A9ny-ellen%C5%91rz%C3%A9se"><i class="fa fa-check"></i><b>3.2.7</b> 6. LÉPÉS: Eredmény ellenőrzése</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="műveleti-lekérdezések.html"><a href="műveleti-lekérdezések.html#hozzafuzes"><i class="fa fa-check"></i><b>3.3</b> Hozzáfűzési lekérdezés (Append Query)</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="műveleti-lekérdezések.html"><a href="műveleti-lekérdezések.html#p%C3%A9lda-digitaliz%C3%A1lt-iratok-archiv%C3%A1l%C3%A1sa"><i class="fa fa-check"></i><b>3.3.1</b> Példa: Digitalizált iratok archiválása</a></li>
+<li class="chapter" data-level="3.3.2" data-path="műveleti-lekérdezések.html"><a href="műveleti-lekérdezések.html#arch%C3%ADv-t%C3%A1bla-l%C3%A9trehoz%C3%A1sa"><i class="fa fa-check"></i><b>3.3.2</b> 1. Archív tábla létrehozása</a></li>
+<li class="chapter" data-level="3.3.3" data-path="műveleti-lekérdezések.html"><a href="műveleti-lekérdezések.html#hozz%C3%A1f%C5%B1z%C3%A9si-lek%C3%A9rdez%C3%A9s-k%C3%A9sz%C3%ADt%C3%A9se"><i class="fa fa-check"></i><b>3.3.3</b> 2. Hozzáfűzési lekérdezés készítése</a></li>
+<li class="chapter" data-level="3.3.4" data-path="műveleti-lekérdezések.html"><a href="műveleti-lekérdezések.html#%C3%A1tv%C3%A1lt%C3%A1s-hozz%C3%A1f%C5%B1z%C3%A9si-lek%C3%A9rdez%C3%A9sre"><i class="fa fa-check"></i><b>3.3.4</b> 3. Átváltás hozzáfűzési lekérdezésre</a></li>
+<li class="chapter" data-level="3.3.5" data-path="műveleti-lekérdezések.html"><a href="műveleti-lekérdezések.html#futtat%C3%A1s"><i class="fa fa-check"></i><b>3.3.5</b> 4. Futtatás</a></li>
+<li class="chapter" data-level="3.3.6" data-path="műveleti-lekérdezések.html"><a href="műveleti-lekérdezések.html#ellen%C5%91rz%C3%A9s"><i class="fa fa-check"></i><b>3.3.6</b> 5. Ellenőrzés</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="műveleti-lekérdezések.html"><a href="műveleti-lekérdezések.html#torlesi"><i class="fa fa-check"></i><b>3.4</b> Törlési lekérdezés (Delete Query)</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="műveleti-lekérdezések.html"><a href="műveleti-lekérdezések.html#p%C3%A9lda-r%C3%A9gi-arch%C3%ADv-rekordok-t%C3%B6rl%C3%A9se"><i class="fa fa-check"></i><b>3.4.1</b> Példa: Régi archív rekordok törlése</a></li>
+<li class="chapter" data-level="3.4.2" data-path="műveleti-lekérdezések.html"><a href="műveleti-lekérdezések.html#biztons%C3%A1gi-ment%C3%A9s-k%C3%B6telez%C5%91"><i class="fa fa-check"></i><b>3.4.2</b> 1. Biztonsági mentés (KÖTELEZŐ!)</a></li>
+<li class="chapter" data-level="3.4.3" data-path="műveleti-lekérdezések.html"><a href="műveleti-lekérdezések.html#select-teszt"><i class="fa fa-check"></i><b>3.4.3</b> 2. SELECT teszt</a></li>
+<li class="chapter" data-level="3.4.4" data-path="műveleti-lekérdezések.html"><a href="műveleti-lekérdezések.html#%C3%A1tv%C3%A1lt%C3%A1s-t%C3%B6rl%C3%A9si-lek%C3%A9rdez%C3%A9sre"><i class="fa fa-check"></i><b>3.4.4</b> 3. Átváltás törlési lekérdezésre</a></li>
+<li class="chapter" data-level="3.4.5" data-path="műveleti-lekérdezések.html"><a href="műveleti-lekérdezések.html#futtat%C3%A1s-visszavonhatatlan"><i class="fa fa-check"></i><b>3.4.5</b> 4. Futtatás (Visszavonhatatlan!)</a></li>
+<li class="chapter" data-level="3.4.6" data-path="műveleti-lekérdezések.html"><a href="műveleti-lekérdezések.html#ellen%C5%91rz%C3%A9s-1"><i class="fa fa-check"></i><b>3.4.6</b> 5. Ellenőrzés</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="műveleti-lekérdezések.html"><a href="műveleti-lekérdezések.html#tablakeszito"><i class="fa fa-check"></i><b>3.5</b> Táblakészítő lekérdezés (Make-Table Query)</a>
+<ul>
+<li class="chapter" data-level="3.5.1" data-path="műveleti-lekérdezések.html"><a href="műveleti-lekérdezések.html#p%C3%A9lda-statisztikai-%C3%B6sszes%C3%ADt%C5%91-t%C3%A1bla"><i class="fa fa-check"></i><b>3.5.1</b> Példa: Statisztikai összesítő tábla</a></li>
+<li class="chapter" data-level="3.5.2" data-path="műveleti-lekérdezések.html"><a href="műveleti-lekérdezések.html#l%C3%A9p%C3%A9sek"><i class="fa fa-check"></i><b>3.5.2</b> Lépések</a></li>
+<li class="chapter" data-level="3.5.3" data-path="műveleti-lekérdezések.html"><a href="műveleti-lekérdezések.html#%C3%A1tv%C3%A1lt%C3%A1s-t%C3%A1blak%C3%A9sz%C3%ADt%C5%91-lek%C3%A9rdez%C3%A9sre"><i class="fa fa-check"></i><b>3.5.3</b> Átváltás táblakészítő lekérdezésre</a></li>
+<li class="chapter" data-level="3.5.4" data-path="műveleti-lekérdezések.html"><a href="műveleti-lekérdezések.html#futtat%C3%A1s-1"><i class="fa fa-check"></i><b>3.5.4</b> Futtatás</a></li>
+<li class="chapter" data-level="3.5.5" data-path="műveleti-lekérdezések.html"><a href="műveleti-lekérdezések.html#ellen%C5%91rz%C3%A9s-2"><i class="fa fa-check"></i><b>3.5.5</b> Ellenőrzés</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="műveleti-lekérdezések.html"><a href="műveleti-lekérdezések.html#hibak-06"><i class="fa fa-check"></i><b>3.6</b> Hibaelhárítás</a>
+<ul>
+<li class="chapter" data-level="3.6.1" data-path="műveleti-lekérdezések.html"><a href="műveleti-lekérdezések.html#h1-t%C3%BAl-sok-rekord-friss%C3%ADtenet%C3%B6r%C3%B6lne"><i class="fa fa-check"></i><b>3.6.1</b> H1: “Túl sok rekord frissítene/törölne”</a></li>
+<li class="chapter" data-level="3.6.2" data-path="műveleti-lekérdezések.html"><a href="műveleti-lekérdezések.html#h2-t%C3%ADpuselt%C3%A9r%C3%A9s-a-kifejez%C3%A9sben"><i class="fa fa-check"></i><b>3.6.2</b> H2: “Típuseltérés a kifejezésben”</a></li>
+<li class="chapter" data-level="3.6.3" data-path="műveleti-lekérdezések.html"><a href="műveleti-lekérdezések.html#h3-kulcs-megs%C3%A9rt%C3%A9s"><i class="fa fa-check"></i><b>3.6.3</b> H3: “Kulcs megsértés”</a></li>
+<li class="chapter" data-level="3.6.4" data-path="műveleti-lekérdezések.html"><a href="műveleti-lekérdezések.html#h4-referenci%C3%A1lis-integrit%C3%A1s-megs%C3%A9rt%C3%A9se"><i class="fa fa-check"></i><b>3.6.4</b> H4: “Referenciális integritás megsértése”</a></li>
+<li class="chapter" data-level="3.6.5" data-path="műveleti-lekérdezések.html"><a href="műveleti-lekérdezések.html#h5-0-rekord-friss%C3%BCltt%C3%B6rl%C5%91d%C3%B6tt"><i class="fa fa-check"></i><b>3.6.5</b> H5: “0 rekord frissült/törlődött”</a></li>
+<li class="chapter" data-level="3.6.6" data-path="műveleti-lekérdezések.html"><a href="műveleti-lekérdezések.html#h6-a-lek%C3%A9rdez%C3%A9s-s%C3%A9r%C3%BClt"><i class="fa fa-check"></i><b>3.6.6</b> H6: “A lekérdezés sérült”</a></li>
+</ul></li>
+<li class="chapter" data-level="3.7" data-path="műveleti-lekérdezések.html"><a href="műveleti-lekérdezések.html#gyakorlatok-06"><i class="fa fa-check"></i><b>3.7</b> Gyakorlatok</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="kereszttábla-lekérdezések.html"><a href="kereszttábla-lekérdezések.html"><i class="fa fa-check"></i><b>4</b> Kereszttábla lekérdezések</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="kereszttábla-lekérdezések.html"><a href="kereszttábla-lekérdezések.html#mi-kereszttabla"><i class="fa fa-check"></i><b>4.1</b> Mi a kereszttábla?</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="kereszttábla-lekérdezések.html"><a href="kereszttábla-lekérdezések.html#hagyom%C3%A1nyos-lek%C3%A9rdez%C3%A9s-vs.-keresztt%C3%A1bla"><i class="fa fa-check"></i><b>4.1.1</b> Hagyományos lekérdezés vs. Kereszttábla</a></li>
+<li class="chapter" data-level="4.1.2" data-path="kereszttábla-lekérdezések.html"><a href="kereszttábla-lekérdezések.html#keresztt%C3%A1bla-elemei"><i class="fa fa-check"></i><b>4.1.2</b> Kereszttábla elemei</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="kereszttábla-lekérdezések.html"><a href="kereszttábla-lekérdezések.html#kereszt-varazslo"><i class="fa fa-check"></i><b>4.2</b> Kereszttábla varázsló részletesen</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="kereszttábla-lekérdezések.html"><a href="kereszttábla-lekérdezések.html#l%C3%A9p%C3%A9s-var%C3%A1zsl%C3%B3-ind%C3%ADt%C3%A1sa"><i class="fa fa-check"></i><b>4.2.1</b> 1. LÉPÉS: Varázsló indítása</a></li>
+<li class="chapter" data-level="4.2.2" data-path="kereszttábla-lekérdezések.html"><a href="kereszttábla-lekérdezések.html#l%C3%A9p%C3%A9s-forr%C3%A1s-t%C3%A1bla-kiv%C3%A1laszt%C3%A1sa"><i class="fa fa-check"></i><b>4.2.2</b> 2. LÉPÉS: Forrás tábla kiválasztása</a></li>
+<li class="chapter" data-level="4.2.3" data-path="kereszttábla-lekérdezések.html"><a href="kereszttábla-lekérdezések.html#l%C3%A9p%C3%A9s-sorfejl%C3%A9cek-kiv%C3%A1laszt%C3%A1sa"><i class="fa fa-check"></i><b>4.2.3</b> 3. LÉPÉS: Sorfejlécek kiválasztása</a></li>
+<li class="chapter" data-level="4.2.4" data-path="kereszttábla-lekérdezések.html"><a href="kereszttábla-lekérdezések.html#l%C3%A9p%C3%A9s-oszlopfejl%C3%A9cek-kiv%C3%A1laszt%C3%A1sa"><i class="fa fa-check"></i><b>4.2.4</b> 4. LÉPÉS: Oszlopfejlécek kiválasztása</a></li>
+<li class="chapter" data-level="4.2.5" data-path="kereszttábla-lekérdezések.html"><a href="kereszttábla-lekérdezések.html#l%C3%A9p%C3%A9s-%C3%A9rt%C3%A9kek-be%C3%A1ll%C3%ADt%C3%A1sa"><i class="fa fa-check"></i><b>4.2.5</b> 5. LÉPÉS: Értékek beállítása</a></li>
+<li class="chapter" data-level="4.2.6" data-path="kereszttábla-lekérdezések.html"><a href="kereszttábla-lekérdezések.html#l%C3%A9p%C3%A9s-lek%C3%A9rdez%C3%A9s-neve"><i class="fa fa-check"></i><b>4.2.6</b> 6. LÉPÉS: Lekérdezés neve</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="kereszttábla-lekérdezések.html"><a href="kereszttábla-lekérdezések.html#sql-szerkesztes"><i class="fa fa-check"></i><b>4.3</b> SQL szerkesztése és magyarázat</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="kereszttábla-lekérdezések.html"><a href="kereszttábla-lekérdezések.html#gener%C3%A1lt-sql-var%C3%A1zsl%C3%B3-eredm%C3%A9nye"><i class="fa fa-check"></i><b>4.3.1</b> Generált SQL (varázsló eredménye):</a></li>
+<li class="chapter" data-level="4.3.2" data-path="kereszttábla-lekérdezések.html"><a href="kereszttábla-lekérdezések.html#jav%C3%ADtott-sql-join-nal-%C3%A1llag-n%C3%A9vvel"><i class="fa fa-check"></i><b>4.3.2</b> Javított SQL (JOIN-nal, állag névvel):</a></li>
+<li class="chapter" data-level="4.3.3" data-path="kereszttábla-lekérdezések.html"><a href="kereszttábla-lekérdezések.html#transformpivot-sql-magyar%C3%A1zat"><i class="fa fa-check"></i><b>4.3.3</b> TRANSFORM…PIVOT SQL magyarázat</a></li>
+<li class="chapter" data-level="4.3.4" data-path="kereszttábla-lekérdezések.html"><a href="kereszttábla-lekérdezések.html#vizualiz%C3%A1ci%C3%B3---mi-t%C3%B6rt%C3%A9nik"><i class="fa fa-check"></i><b>4.3.4</b> Vizualizáció - Mi történik?</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="kereszttábla-lekérdezések.html"><a href="kereszttábla-lekérdezések.html#kereszt-datum"><i class="fa fa-check"></i><b>4.4</b> Kereszttábla dátumokkal</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="kereszttábla-lekérdezések.html"><a href="kereszttábla-lekérdezések.html#p%C3%A9lda-1-digitaliz%C3%A1l%C3%A1s-havi-bont%C3%A1sban"><i class="fa fa-check"></i><b>4.4.1</b> Példa 1: Digitalizálás havi bontásban</a></li>
+<li class="chapter" data-level="4.4.2" data-path="kereszttábla-lekérdezések.html"><a href="kereszttábla-lekérdezések.html#p%C3%A9lda-2-kik%C3%A9r%C3%A9sek-negyed%C3%A9ves-bont%C3%A1sban"><i class="fa fa-check"></i><b>4.4.2</b> Példa 2: Kikérések negyedéves bontásban</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="kereszttábla-lekérdezések.html"><a href="kereszttábla-lekérdezések.html#excel-export"><i class="fa fa-check"></i><b>4.5</b> Excel exportálás</a>
+<ul>
+<li class="chapter" data-level="4.5.1" data-path="kereszttábla-lekérdezések.html"><a href="kereszttábla-lekérdezések.html#l%C3%A9p%C3%A9sek-1"><i class="fa fa-check"></i><b>4.5.1</b> Lépések:</a></li>
+<li class="chapter" data-level="4.5.2" data-path="kereszttábla-lekérdezések.html"><a href="kereszttábla-lekérdezések.html#excel-ben-tov%C3%A1bbi-feldolgoz%C3%A1s"><i class="fa fa-check"></i><b>4.5.2</b> Excel-ben további feldolgozás</a></li>
+</ul></li>
+<li class="chapter" data-level="4.6" data-path="kereszttábla-lekérdezések.html"><a href="kereszttábla-lekérdezések.html#hibak-07"><i class="fa fa-check"></i><b>4.6</b> Hibaelhárítás</a>
+<ul>
+<li class="chapter" data-level="4.6.1" data-path="kereszttábla-lekérdezések.html"><a href="kereszttábla-lekérdezések.html#h1-t%C3%BAl-sok-oszlop"><i class="fa fa-check"></i><b>4.6.1</b> H1: “Túl sok oszlop”</a></li>
+<li class="chapter" data-level="4.6.2" data-path="kereszttábla-lekérdezések.html"><a href="kereszttábla-lekérdezések.html#h2-null-%C3%A9rt%C3%A9kek-az-oszlopokban"><i class="fa fa-check"></i><b>4.6.2</b> H2: “NULL értékek az oszlopokban”</a></li>
+<li class="chapter" data-level="4.6.3" data-path="kereszttábla-lekérdezések.html"><a href="kereszttábla-lekérdezések.html#h3-h%C3%B3napok-rossz-sorrendben"><i class="fa fa-check"></i><b>4.6.3</b> H3: “Hónapok rossz sorrendben”</a></li>
+</ul></li>
+<li class="chapter" data-level="4.7" data-path="kereszttábla-lekérdezések.html"><a href="kereszttábla-lekérdezések.html#gyakorlatok-07"><i class="fa fa-check"></i><b>4.7</b> Gyakorlatok</a></li>
+<li class="chapter" data-level="" data-path="kereszttábla-lekérdezések.html"><a href="kereszttábla-lekérdezések.html#%C3%B6sszefoglal%C3%A1s"><i class="fa fa-check"></i>Összefoglalás</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="excel-access-integráció.html"><a href="excel-access-integráció.html"><i class="fa fa-check"></i><b>5</b> Excel-Access integráció</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="excel-access-integráció.html"><a href="excel-access-integráció.html#excel-vs-access"><i class="fa fa-check"></i><b>5.1</b> Mikor használjunk Excel-t, mikor Access-t?</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="excel-access-integráció.html"><a href="excel-access-integráció.html#excel-er%C5%91ss%C3%A9gei"><i class="fa fa-check"></i><b>5.1.1</b> Excel erősségei</a></li>
+<li class="chapter" data-level="5.1.2" data-path="excel-access-integráció.html"><a href="excel-access-integráció.html#access-er%C5%91ss%C3%A9gei"><i class="fa fa-check"></i><b>5.1.2</b> Access erősségei</a></li>
+<li class="chapter" data-level="5.1.3" data-path="excel-access-integráció.html"><a href="excel-access-integráció.html#az-ide%C3%A1lis-munkafolyamat"><i class="fa fa-check"></i><b>5.1.3</b> Az ideális munkafolyamat 🔄</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="excel-access-integráció.html"><a href="excel-access-integráció.html#import-excel"><i class="fa fa-check"></i><b>5.2</b> Import Excel-ből</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="excel-access-integráció.html"><a href="excel-access-integráció.html#excel-f%C3%A1jl-el%C5%91k%C3%A9sz%C3%ADt%C3%A9se-fontos"><i class="fa fa-check"></i><b>5.2.1</b> Excel fájl előkészítése (FONTOS!)</a></li>
+<li class="chapter" data-level="5.2.2" data-path="excel-access-integráció.html"><a href="excel-access-integráció.html#import-var%C3%A1zsl%C3%B3-r%C3%A9szletesen"><i class="fa fa-check"></i><b>5.2.2</b> Import varázsló részletesen</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="excel-access-integráció.html"><a href="excel-access-integráció.html#export-excel"><i class="fa fa-check"></i><b>5.3</b> Export Access-ből Excel-be</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="excel-access-integráció.html"><a href="excel-access-integráció.html#export-l%C3%A9p%C3%A9sei-r%C3%A9szletesen"><i class="fa fa-check"></i><b>5.3.1</b> Export lépései részletesen</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="excel-access-integráció.html"><a href="excel-access-integráció.html#osszekapcsolt"><i class="fa fa-check"></i><b>5.4</b> Összekapcsolt tábla</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="excel-access-integráció.html"><a href="excel-access-integráció.html#l%C3%A9trehoz%C3%A1s"><i class="fa fa-check"></i><b>5.4.1</b> Létrehozás</a></li>
+<li class="chapter" data-level="5.4.2" data-path="excel-access-integráció.html"><a href="excel-access-integráció.html#m%C5%B1k%C3%B6d%C3%A9s"><i class="fa fa-check"></i><b>5.4.2</b> Működés</a></li>
+<li class="chapter" data-level="5.4.3" data-path="excel-access-integráció.html"><a href="excel-access-integráció.html#el%C5%91ny%C3%B6k-%C3%A9s-h%C3%A1tr%C3%A1nyok"><i class="fa fa-check"></i><b>5.4.3</b> Előnyök és hátrányok</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="excel-access-integráció.html"><a href="excel-access-integráció.html#adattipus-problemak"><i class="fa fa-check"></i><b>5.5</b> Adattípus-problémák kezelése</a>
+<ul>
+<li class="chapter" data-level="5.5.1" data-path="excel-access-integráció.html"><a href="excel-access-integráció.html#probl%C3%A9ma-1-d%C3%A1tum-nem-import%C3%A1l%C3%B3dik"><i class="fa fa-check"></i><b>5.5.1</b> Probléma 1: Dátum nem importálódik</a></li>
+<li class="chapter" data-level="5.5.2" data-path="excel-access-integráció.html"><a href="excel-access-integráció.html#probl%C3%A9ma-2-sz%C3%A1m-sz%C3%B6vegk%C3%A9nt-import%C3%A1l%C3%B3dik"><i class="fa fa-check"></i><b>5.5.2</b> Probléma 2: Szám szövegként importálódik</a></li>
+<li class="chapter" data-level="5.5.3" data-path="excel-access-integráció.html"><a href="excel-access-integráció.html#probl%C3%A9ma-3-null-%C3%A9rt%C3%A9kek-%C3%BCres-cell%C3%A1k"><i class="fa fa-check"></i><b>5.5.3</b> Probléma 3: NULL értékek (üres cellák)</a></li>
+</ul></li>
+<li class="chapter" data-level="5.6" data-path="excel-access-integráció.html"><a href="excel-access-integráció.html#workflow-pelda"><i class="fa fa-check"></i><b>5.6</b> Gyakorlati workflow példa</a>
+<ul>
+<li class="chapter" data-level="5.6.1" data-path="excel-access-integráció.html"><a href="excel-access-integráció.html#teljes-lev%C3%A9lt%C3%A1ri-munkafolyamat"><i class="fa fa-check"></i><b>5.6.1</b> Teljes levéltári munkafolyamat</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="alapszintű-makrók.html"><a href="alapszintű-makrók.html"><i class="fa fa-check"></i><b>6</b> Alapszintű makrók</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="alapszintű-makrók.html"><a href="alapszintű-makrók.html#mi-a-makro"><i class="fa fa-check"></i><b>6.1</b> Mi a makró?</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="alapszintű-makrók.html"><a href="alapszintű-makrók.html#makr%C3%B3-vs.-vba"><i class="fa fa-check"></i><b>6.1.1</b> Makró vs. VBA</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="alapszintű-makrók.html"><a href="alapszintű-makrók.html#makro-urlap"><i class="fa fa-check"></i><b>6.2</b> Egyszerű makró: Űrlap megnyitása</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="alapszintű-makrók.html"><a href="alapszintű-makrók.html#l%C3%A9p%C3%A9s-makr%C3%B3-l%C3%A9trehoz%C3%A1sa"><i class="fa fa-check"></i><b>6.2.1</b> 1. LÉPÉS: Makró létrehozása</a></li>
+<li class="chapter" data-level="6.2.2" data-path="alapszintű-makrók.html"><a href="alapszintű-makrók.html#l%C3%A9p%C3%A9s-m%C5%B1velet-hozz%C3%A1ad%C3%A1sa"><i class="fa fa-check"></i><b>6.2.2</b> 2. LÉPÉS: Művelet hozzáadása</a></li>
+<li class="chapter" data-level="6.2.3" data-path="alapszintű-makrók.html"><a href="alapszintű-makrók.html#l%C3%A9p%C3%A9s-param%C3%A9terek-be%C3%A1ll%C3%ADt%C3%A1sa"><i class="fa fa-check"></i><b>6.2.3</b> 3. LÉPÉS: Paraméterek beállítása</a></li>
+<li class="chapter" data-level="6.2.4" data-path="alapszintű-makrók.html"><a href="alapszintű-makrók.html#l%C3%A9p%C3%A9s-makr%C3%B3-ment%C3%A9se"><i class="fa fa-check"></i><b>6.2.4</b> 4. LÉPÉS: Makró mentése</a></li>
+<li class="chapter" data-level="6.2.5" data-path="alapszintű-makrók.html"><a href="alapszintű-makrók.html#l%C3%A9p%C3%A9s-gomb-k%C3%A9sz%C3%ADt%C3%A9se-%C5%B1rlapon"><i class="fa fa-check"></i><b>6.2.5</b> 5. LÉPÉS: Gomb készítése űrlapon</a></li>
+<li class="chapter" data-level="6.2.6" data-path="alapszintű-makrók.html"><a href="alapszintű-makrók.html#l%C3%A9p%C3%A9s-tesztel%C3%A9s"><i class="fa fa-check"></i><b>6.2.6</b> 6. LÉPÉS: Tesztelés</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="alapszintű-makrók.html"><a href="alapszintű-makrók.html#makro-lekerdezes"><i class="fa fa-check"></i><b>6.3</b> Makró lekérdezés futtatásához</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="alapszintű-makrók.html"><a href="alapszintű-makrók.html#makr%C3%B3-l%C3%A9trehoz%C3%A1sa"><i class="fa fa-check"></i><b>6.3.1</b> Makró létrehozása</a></li>
+<li class="chapter" data-level="6.3.2" data-path="alapszintű-makrók.html"><a href="alapszintű-makrók.html#gomb-hozz%C3%A1ad%C3%A1sa-gyors%C3%ADtott"><i class="fa fa-check"></i><b>6.3.2</b> Gomb hozzáadása (gyorsított)</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="alapszintű-makrók.html"><a href="alapszintű-makrók.html#makro-export"><i class="fa fa-check"></i><b>6.4</b> Makró exportáláshoz</a>
+<ul>
+<li class="chapter" data-level="6.4.1" data-path="alapszintű-makrók.html"><a href="alapszintű-makrók.html#makr%C3%B3-l%C3%A9trehoz%C3%A1sa-1"><i class="fa fa-check"></i><b>6.4.1</b> Makró létrehozása</a></li>
+<li class="chapter" data-level="6.4.2" data-path="alapszintű-makrók.html"><a href="alapszintű-makrók.html#gomb-hozz%C3%A1ad%C3%A1sa"><i class="fa fa-check"></i><b>6.4.2</b> Gomb hozzáadása</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="alapszintű-makrók.html"><a href="alapszintű-makrók.html#makro-sorozat"><i class="fa fa-check"></i><b>6.5</b> Makró sorozat</a>
+<ul>
+<li class="chapter" data-level="6.5.1" data-path="alapszintű-makrók.html"><a href="alapszintű-makrók.html#makr%C3%B3-l%C3%A9trehoz%C3%A1sa-t%C3%B6bb-m%C5%B1velettel"><i class="fa fa-check"></i><b>6.5.1</b> Makró létrehozása több művelettel</a></li>
+</ul></li>
+<li class="chapter" data-level="6.6" data-path="alapszintű-makrók.html"><a href="alapszintű-makrók.html#felteteles-makro"><i class="fa fa-check"></i><b>6.6</b> Feltételes makró</a>
+<ul>
+<li class="chapter" data-level="6.6.1" data-path="alapszintű-makrók.html"><a href="alapszintű-makrók.html#makr%C3%B3-l%C3%A9trehoz%C3%A1sa-felt%C3%A9tellel"><i class="fa fa-check"></i><b>6.6.1</b> Makró létrehozása feltétellel</a></li>
+<li class="chapter" data-level="6.6.2" data-path="alapszintű-makrók.html"><a href="alapszintű-makrók.html#tesztel%C3%A9s"><i class="fa fa-check"></i><b>6.6.2</b> Tesztelés</a></li>
+</ul></li>
+<li class="chapter" data-level="6.7" data-path="alapszintű-makrók.html"><a href="alapszintű-makrók.html#makro-debug"><i class="fa fa-check"></i><b>6.7</b> Makró debugolás</a>
+<ul>
+<li class="chapter" data-level="6.7.1" data-path="alapszintű-makrók.html"><a href="alapszintű-makrók.html#l%C3%A9p%C3%A9senk%C3%A9nti-futtat%C3%A1s"><i class="fa fa-check"></i><b>6.7.1</b> Lépésenkénti futtatás</a></li>
+<li class="chapter" data-level="6.7.2" data-path="alapszintű-makrók.html"><a href="alapszintű-makrók.html#hiba%C3%BCzenetek-%C3%A9rtelmez%C3%A9se"><i class="fa fa-check"></i><b>6.7.2</b> Hibaüzenetek értelmezése</a></li>
+</ul></li>
+<li class="chapter" data-level="6.8" data-path="alapszintű-makrók.html"><a href="alapszintű-makrók.html#gyakori-mintak"><i class="fa fa-check"></i><b>6.8</b> Gyakori makró minták</a>
+<ul>
+<li class="chapter" data-level="6.8.1" data-path="alapszintű-makrók.html"><a href="alapszintű-makrók.html#bez%C3%A1r%C3%A1s-%C3%A9s-%C3%BAjramegnyit%C3%A1s-friss%C3%ADt%C3%A9s"><i class="fa fa-check"></i><b>6.8.1</b> 1. “Bezárás és újramegnyitás” (frissítés)</a></li>
+<li class="chapter" data-level="6.8.2" data-path="alapszintű-makrók.html"><a href="alapszintű-makrók.html#sz%C5%B1r%C3%A9s-alkalmaz%C3%A1sa"><i class="fa fa-check"></i><b>6.8.2</b> 2. “Szűrés alkalmazása”</a></li>
+<li class="chapter" data-level="6.8.3" data-path="alapszintű-makrók.html"><a href="alapszintű-makrók.html#rekord-t%C3%B6rl%C3%A9se-meger%C5%91s%C3%ADt%C3%A9ssel"><i class="fa fa-check"></i><b>6.8.3</b> 3. “Rekord törlése megerősítéssel”</a></li>
+<li class="chapter" data-level="6.8.4" data-path="alapszintű-makrók.html"><a href="alapszintű-makrók.html#email-k%C3%BCld%C3%A9s-outlook-kal"><i class="fa fa-check"></i><b>6.8.4</b> 4. “Email küldés Outlook-kal”</a></li>
+</ul></li>
+<li class="chapter" data-level="6.9" data-path="alapszintű-makrók.html"><a href="alapszintű-makrók.html#hibak-09"><i class="fa fa-check"></i><b>6.9</b> Hibaelhárítás</a>
+<ul>
+<li class="chapter" data-level="6.9.1" data-path="alapszintű-makrók.html"><a href="alapszintű-makrók.html#h1-az-objektum-nem-tal%C3%A1lhat%C3%B3"><i class="fa fa-check"></i><b>6.9.1</b> H1: “Az objektum nem található”</a></li>
+<li class="chapter" data-level="6.9.2" data-path="alapszintű-makrók.html"><a href="alapszintű-makrók.html#h2-a-f%C3%A1jl-m%C3%A1r-haszn%C3%A1latban-van"><i class="fa fa-check"></i><b>6.9.2</b> H2: “A fájl már használatban van”</a></li>
+<li class="chapter" data-level="6.9.3" data-path="alapszintű-makrók.html"><a href="alapszintű-makrók.html#h3-%C3%A9rv%C3%A9nytelen-kifejez%C3%A9s"><i class="fa fa-check"></i><b>6.9.3</b> H3: “Érvénytelen kifejezés”</a></li>
+</ul></li>
+<li class="chapter" data-level="6.10" data-path="alapszintű-makrók.html"><a href="alapszintű-makrók.html#gyakorlatok-09"><i class="fa fa-check"></i><b>6.10</b> Gyakorlatok</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="összefoglalás-és-következő-lépések.html"><a href="összefoglalás-és-következő-lépések.html"><i class="fa fa-check"></i><b>7</b> Összefoglalás és következő lépések</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="összefoglalás-és-következő-lépések.html"><a href="összefoglalás-és-következő-lépések.html#mit-tanultunk-halado"><i class="fa fa-check"></i><b>7.1</b> Mit tanultunk?</a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="összefoglalás-és-következő-lépések.html"><a href="összefoglalás-és-következő-lépések.html#rossz-strukt%C3%BAra-felismer%C3%A9se"><i class="fa fa-check"></i><b>7.1.1</b> 1. Rossz struktúra felismerése</a></li>
+<li class="chapter" data-level="7.1.2" data-path="összefoglalás-és-következő-lépések.html"><a href="összefoglalás-és-következő-lépések.html#normaliz%C3%A1l%C3%A1s"><i class="fa fa-check"></i><b>7.1.2</b> 2. Normalizálás</a></li>
+<li class="chapter" data-level="7.1.3" data-path="összefoglalás-és-következő-lépések.html"><a href="összefoglalás-és-következő-lépések.html#t%C3%B6bbt%C3%A1bl%C3%A1s-strukt%C3%BAra"><i class="fa fa-check"></i><b>7.1.3</b> 3. Többtáblás struktúra</a></li>
+<li class="chapter" data-level="7.1.4" data-path="összefoglalás-és-következő-lépések.html"><a href="összefoglalás-és-következő-lépések.html#hierarchikus-%C5%B1rlapok"><i class="fa fa-check"></i><b>7.1.4</b> 4. Hierarchikus űrlapok</a></li>
+<li class="chapter" data-level="7.1.5" data-path="összefoglalás-és-következő-lépések.html"><a href="összefoglalás-és-következő-lépések.html#kombin%C3%A1lt-list%C3%A1k-combo-box"><i class="fa fa-check"></i><b>7.1.5</b> 5. Kombinált listák (Combo Box)</a></li>
+<li class="chapter" data-level="7.1.6" data-path="összefoglalás-és-következő-lépések.html"><a href="összefoglalás-és-következő-lépések.html#m%C5%B1veleti-lek%C3%A9rdez%C3%A9sek-1"><i class="fa fa-check"></i><b>7.1.6</b> 6. Műveleti lekérdezések</a></li>
+<li class="chapter" data-level="7.1.7" data-path="összefoglalás-és-következő-lépések.html"><a href="összefoglalás-és-következő-lépések.html#keresztt%C3%A1bla-lek%C3%A9rdez%C3%A9sek-1"><i class="fa fa-check"></i><b>7.1.7</b> 7. Kereszttábla lekérdezések</a></li>
+<li class="chapter" data-level="7.1.8" data-path="összefoglalás-és-következő-lépések.html"><a href="összefoglalás-és-következő-lépések.html#excel-access-integr%C3%A1ci%C3%B3-1"><i class="fa fa-check"></i><b>7.1.8</b> 8. Excel-Access integráció</a></li>
+<li class="chapter" data-level="7.1.9" data-path="összefoglalás-és-következő-lépések.html"><a href="összefoglalás-és-következő-lépések.html#makr%C3%B3k"><i class="fa fa-check"></i><b>7.1.9</b> 9. Makrók</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="összefoglalás-és-következő-lépések.html"><a href="összefoglalás-és-következő-lépések.html#mit-tudunk-halado"><i class="fa fa-check"></i><b>7.2</b> A kurzus végeztével mit tudunk?</a></li>
+<li class="chapter" data-level="7.3" data-path="összefoglalás-és-következő-lépések.html"><a href="összefoglalás-és-következő-lépések.html#gyakorlati-alk"><i class="fa fa-check"></i><b>7.3</b> Gyakorlati alkalmazások</a>
+<ul>
+<li class="chapter" data-level="7.3.1" data-path="összefoglalás-és-következő-lépések.html"><a href="összefoglalás-és-következő-lépések.html#teljes-%C3%A1llom%C3%A1ny-nyilv%C3%A1ntart%C3%B3-rendszer"><i class="fa fa-check"></i><b>7.3.1</b> 1. Teljes állomány-nyilvántartó rendszer</a></li>
+<li class="chapter" data-level="7.3.2" data-path="összefoglalás-és-következő-lépések.html"><a href="összefoglalás-és-következő-lépések.html#digitaliz%C3%A1l%C3%A1si-workflow-rendszer"><i class="fa fa-check"></i><b>7.3.2</b> 2. Digitalizálási workflow rendszer</a></li>
+<li class="chapter" data-level="7.3.3" data-path="összefoglalás-és-következő-lépések.html"><a href="összefoglalás-és-következő-lépések.html#kutat%C3%B3i-kiszolg%C3%A1l%C3%A1si-rendszer"><i class="fa fa-check"></i><b>7.3.3</b> 3. Kutatói kiszolgálási rendszer</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="összefoglalás-és-következő-lépések.html"><a href="összefoglalás-és-következő-lépések.html#kovetkezo-lepesek-halado"><i class="fa fa-check"></i><b>7.4</b> Következő lépések</a>
+<ul>
+<li class="chapter" data-level="7.4.1" data-path="összefoglalás-és-következő-lépések.html"><a href="összefoglalás-és-következő-lépések.html#sql-tanul%C3%A1s"><i class="fa fa-check"></i><b>7.4.1</b> SQL tanulás</a></li>
+<li class="chapter" data-level="7.4.2" data-path="összefoglalás-és-következő-lépések.html"><a href="összefoglalás-és-következő-lépések.html#vba-programoz%C3%A1s"><i class="fa fa-check"></i><b>7.4.2</b> VBA programozás</a></li>
+<li class="chapter" data-level="7.4.3" data-path="összefoglalás-és-következő-lépések.html"><a href="összefoglalás-és-következő-lépések.html#adatb%C3%A1zis-adminisztr%C3%A1ci%C3%B3"><i class="fa fa-check"></i><b>7.4.3</b> Adatbázis-adminisztráció</a></li>
+<li class="chapter" data-level="7.4.4" data-path="összefoglalás-és-következő-lépések.html"><a href="összefoglalás-és-következő-lépések.html#t%C3%B6bb-felhaszn%C3%A1l%C3%B3s-adatb%C3%A1zisok"><i class="fa fa-check"></i><b>7.4.4</b> Több felhasználós adatbázisok</a></li>
+</ul></li>
+<li class="chapter" data-level="7.5" data-path="összefoglalás-és-következő-lépések.html"><a href="összefoglalás-és-következő-lépések.html#hasznos-forrasok"><i class="fa fa-check"></i><b>7.5</b> Hasznos források</a></li>
+<li class="chapter" data-level="7.6" data-path="összefoglalás-és-következő-lépések.html"><a href="összefoglalás-és-következő-lépések.html#zaro-gondolatok"><i class="fa fa-check"></i><b>7.6</b> Záró gondolatok</a></li>
+<li class="chapter" data-level="" data-path="összefoglalás-és-következő-lépések.html"><a href="összefoglalás-és-következő-lépések.html#f%C3%BCggel%C3%A9k-%C3%B6sszefoglal%C3%B3-t%C3%A1bl%C3%A1zat"><i class="fa fa-check"></i>Függelék: Összefoglaló táblázat</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Bookdown által készítve</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Access haladó - Levéltári adatbázisok</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="normalizálás-alapjai" class="section level1 hasAnchor" number="2">
+<h1><span class="header-section-number">Fejezet 2</span> Normalizálás alapjai<a href="normalizálás-alapjai.html#normaliz%C3%A1l%C3%A1s-alapjai" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>A normalizálás az adatbázis-tervezés <strong>alapvető módszere</strong>, amely megszünteti az ismétlődéseket és biztosítja az adatok konzisztenciáját. Ebben a fejezetben megtanuljuk a normalizálás alapelveit levéltári kontextusban.</p>
+<div id="mi-a-normalizalas" class="section level2 hasAnchor" number="2.1">
+<h2><span class="header-section-number">2.1</span> Mi a normalizálás?<a href="normalizálás-alapjai.html#mi-a-normalizalas" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>A <strong>normalizálás</strong> az adatok logikus táblákba szervezésének folyamata úgy, hogy:</p>
+<ol style="list-style-type: decimal">
+<li>Minimalizáljuk az <strong>ismétlődést</strong> (redundanciát)</li>
+<li>Biztosítsuk az <strong>adatintegritást</strong> (konzisztenciát)</li>
+<li>Megkönnyítsük az <strong>adatok karbantartását</strong> (módosítás, törlés, beszúrás)</li>
+</ol>
+<div class="info">
+<p><strong>Egyszerűen:</strong> A normalizálás azt jelenti, hogy minden adatot a <strong>megfelelő helyre</strong> teszünk, és <strong>csak egyszer</strong> tároljuk.</p>
+</div>
+</div>
+<div id="normal-szintek" class="section level2 hasAnchor" number="2.2">
+<h2><span class="header-section-number">2.2</span> A normalizálás szintjei<a href="normalizálás-alapjai.html#normal-szintek" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Az adatbázis-elméletben több normálformát különböztetünk meg. Mi most a gyakorlatban legfontosabb <strong>három szintet</strong> nézzük meg.</p>
+<div id="elso-normalforma" class="section level3 hasAnchor" number="2.2.1">
+<h3><span class="header-section-number">2.2.1</span> Első normálforma (1NF)<a href="normalizálás-alapjai.html#elso-normalforma" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>Alapelv:</strong> Minden mezőben <strong>egyetlen érték</strong> szerepel, nincs több értékű mező.</p>
+<p><strong>Rossz példa (nem 1NF):</strong></p>
+<pre><code>┌─────┬───────────────┬───────────────────────────│  
+│FondID│FondNév       │Állag                      │
+├─────┼───────────────┼───────────────────────────┤
+│  1  │I. ker.Tanács  │Ülések, Iratok, Határozatok│
+│  2  │Pesti Színház  │Igazgató, Előadások        │
+└─────┴───────────────┴───────────────────────────┘</code></pre>
+<p><strong>Probléma:</strong> Az “Állag” mező <strong>több értéket</strong> tartalmaz egyetlen cellában!</p>
+<p><strong>Helyes (1NF):</strong></p>
+<pre><code>┌─────┬─────────────────┬────────────┐
+│FondID│FondNév         │ÁllagNév    │
+├─────┼─────────────────┼─────────── ┤
+│  1  │I. ker.Tanács    │Ülések      │
+│  1  │I. ker.Tanács    │Iratok      │
+│  1  │I. ker.Tanács    │Határozatok │
+│  2  │Pesti Színház    │Igazgató    │
+│  2  │Pesti Színház    │Előadások   │
+└─────┴─────────────────┴────────────┘</code></pre>
+<p>Most minden mezőben <strong>egy érték</strong> van. ✅</p>
+<div class="warning">
+<p><strong>Gyakori hiba:</strong> Többértékű mezők használata: “Ülések; Iratok; Határozatok” VAGY “Ülések, Iratok” stb. Ezeket mindig külön rekordokra kell bontani!</p>
+</div>
+</div>
+<div id="masodik-normalforma" class="section level3 hasAnchor" number="2.2.2">
+<h3><span class="header-section-number">2.2.2</span> Második normálforma (2NF)<a href="normalizálás-alapjai.html#masodik-normalforma" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>Alapelv:</strong> Az 1NF-en felül minden nem-kulcs mező <strong>teljes mértékben függ</strong> az elsődleges kulcstól.</p>
+<p><strong>Példa (nem 2NF - még mindig rossz):</strong></p>
+<p>Az előző “helyes” példa valójában még mindig problémás:</p>
+<pre><code>┌─────┬──────────────┬────────────┐
+│FondID│FondNév      │ÁllagNév    │
+├─────┼──────────────┼────────────┤
+│  1  │I. ker.Tanács │Ülések      │
+│  1  │I. ker.Tanács │Iratok      │
+│  1  │I. ker.Tanács │Határozatok │
+└─────┴──────────────┴────────────┘</code></pre>
+<p><strong>Probléma:</strong> A <em>FondNév</em> <strong>ismétlődik</strong>! Az “I. ker. Tanács” háromszor szerepel.</p>
+<p><strong>Miért?</strong> Mert a <em>FondNév</em> csak a <em>FondID</em>-tól függ, nem az egész sorból (FondID + ÁllagNév).</p>
+<p><strong>Megoldás:</strong> Bontsuk <strong>két táblára</strong>!</p>
+<p><strong>tbl_Fondok:</strong></p>
+<pre><code>┌─────┬─────────────┐
+│FondID│FondNév     │
+├─────┼─────────────┤
+│  1  │I. ker.Tanács│
+│  2  │Pesti Színház│
+└─────┴─────────────┘</code></pre>
+<p><strong>tbl_Állagok:</strong></p>
+<pre><code>┌────────┬─────┬────────────┐
+│ÁllagID │FondID│ÁllagNév   │
+├────────┼─────┼────────────┤
+│   1    │  1  │Ülések      │
+│   2    │  1  │Iratok      │
+│   3    │  1  │Határozatok │
+│   4    │  2  │Igazgató    │
+│   5    │  2  │Előadások   │
+└────────┴─────┴────────────┘</code></pre>
+<p>Most a <em>FondNév</em> <strong>csak egyszer</strong> szerepel! ✅ Az állagok a <em>FondID</em>-val hivatkoznak rá.</p>
+</div>
+<div id="harmadik-normalforma" class="section level3 hasAnchor" number="2.2.3">
+<h3><span class="header-section-number">2.2.3</span> Harmadik normálforma (3NF)<a href="normalizálás-alapjai.html#harmadik-normalforma" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>Alapelv:</strong> A 2NF-en felül nincs <strong>tranzitív függőség</strong> (nem-kulcs mezők nem függnek egymástól).</p>
+<p><strong>Példa (nem 3NF):</strong></p>
+<pre><code>tbl_Iratok:
+┌──────┬────────┬──────────┬──────────────┬──────────┐
+│IratID│ÁllagID│IratCím   │ÁllagKeletkezés│IratDátum │
+├──────┼────────┼──────────┼──────────────┼──────────┤
+│  1   │   1    │Jegyzők.1 │1949-1956     │1956.10.23│
+│  2   │   1    │Jegyzők.2 │1949-1956     │1956.11.04│
+│  3   │   2    │Levél X   │1945-1989     │1970.05.12│
+└──────┴────────┴──────────┼──────────────┼──────────┘</code></pre>
+<p><strong>Probléma:</strong> Az <em>ÁllagKeletkezés</em> nem az <em>IratID</em>-tól függ, hanem az <em>ÁllagID</em>-tól! Ez <strong>tranzitív függőség</strong>.</p>
+<p><strong>Következmény:</strong> Az “1949-1956” ismétlődik minden iratban, ami az 1-es állaghoz tartozik!</p>
+<p><strong>Megoldás:</strong> Az <em>ÁllagKeletkezés</em> a <code>tbl_Állagok</code> táblába tartozik!</p>
+<p><strong>tbl_Állagok (helyesen):</strong></p>
+<pre><code>┌────────┬─────┬────────────┬──────────────┬──────────┐
+│ÁllagID │FondID│ÁllagNév   │KeletkezésÉvtől│Kelet.Évig│
+├────────┼─────┼────────────┼──────────────┼──────────┤
+│   1    │  1  │Ülések      │    1949      │   1956   │
+│   2    │  1  │Iratok      │    1945      │   1989   │
+└────────┴─────┴────────────┴──────────────┴──────────┘</code></pre>
+<p><strong>tbl_Iratok (helyesen):</strong></p>
+<pre><code>┌──────┬────────┬──────────┬──────────┐
+│IratID│ÁllagID │IratCím   │IratDátum │
+├──────┼────────┼──────────┼──────────┤
+│  1   │   1    │Jegyzők.1 │1956.10.23│
+│  2   │   1    │Jegyzők.2 │1956.11.04│
+│  3   │   2    │Levél X   │1970.05.12│
+└──────┴────────┴──────────┴──────────┘</code></pre>
+<p>Most az állag keletkezési éve <strong>csak egyszer</strong> szerepel (a tbl_Állagok táblában)! ✅</p>
+</div>
+</div>
+<div id="leveltari-pelda" class="section level2 hasAnchor" number="2.3">
+<h2><span class="header-section-number">2.3</span> Levéltári példa: Fondok → Állagok → Iratok<a href="normalizálás-alapjai.html#leveltari-pelda" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Most alkalmazzuk a normalizálást a levéltári hierarchiára!</p>
+<div id="kiindulás-rossz-struktúra-denormalizált" class="section level3 hasAnchor" number="2.3.1">
+<h3><span class="header-section-number">2.3.1</span> Kiindulás: Rossz struktúra (denormalizált)<a href="normalizálás-alapjai.html#kiindul%C3%A1s-rossz-strukt%C3%BAra-denormaliz%C3%A1lt" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>Egyetlen tábla:</strong></p>
+<pre><code>┌────┬───────────┬───────────────┬─────────┬──────────┬──────────┬───────────┐
+│AZON│FondNév    │FondLeírás     │ÁllagNév │Évtől-Évig│IratCím   │DoboztárSz │
+├────┼───────────┼───────────────┼─────────┼──────────┼──────────┼───────────┤
+│ 1  │I.kerTanács   │Helyi tanács│Ülések   │1950-1990 │Jegyző.1  │123        │
+│ 2  │I.kerTanács   │Helyi tanács│Ülések   │1950-1990 │Jegyző.2  │124        │
+│ 3  │I.kerTanács   │Helyi tanács│Iratok   │1945-1989 │Levelezés │T 200      │
+└────┴──────────┴────────────┴─────────┴──────────┴──────────┴───────────────┘</code></pre>
+</div>
+<div id="lépés-1nf-ellenőrzése" class="section level3 hasAnchor" number="2.3.2">
+<h3><span class="header-section-number">2.3.2</span> 1. lépés: 1NF ellenőrzése<a href="normalizálás-alapjai.html#l%C3%A9p%C3%A9s-1nf-ellen%C5%91rz%C3%A9se" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>Kérdés:</strong> Van-e többértékű mező?</p>
+<p><strong>Ellenőrzés:</strong></p>
+<ul>
+<li>FondNév: “I. ker. Tanács” (egy érték)</li>
+<li>ÁllagNév: “Ülések” (egy érték)</li>
+<li>IratCím: “Jegyzőkönyv 1” (egy érték)</li>
+</ul>
+<p><strong>Eredmény:</strong> 1NF teljesül! Nincs vessző-elválasztott lista.</p>
+</div>
+<div id="lépés-2nf-alkalmazása" class="section level3 hasAnchor" number="2.3.3">
+<h3><span class="header-section-number">2.3.3</span> 2. lépés: 2NF alkalmazása<a href="normalizálás-alapjai.html#l%C3%A9p%C3%A9s-2nf-alkalmaz%C3%A1sa" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>Kérdés:</strong> Mi függ csak a <em>FondID</em>-tól?</p>
+<p><strong>Analízis:</strong></p>
+<ul>
+<li><em>FondNév</em>: Csak a fond azonosítójától függ → külön táblába!</li>
+<li><em>FondLeírás</em>: Csak a fond azonosítójától függ → külön táblába!</li>
+<li><em>ÁllagNév</em>: Az állagtól függ, nem a fondtól közvetlenül → külön táblába!</li>
+<li><em>IratCím</em>: Az irattól függ → marad az Iratok táblában</li>
+</ul>
+<p><strong>Bontsuk szét:</strong></p>
+<p><strong>tbl_Fondok:</strong></p>
+<pre><code>┌──────┬──────────────┬─────────────────────┐
+│FondID│FondNév       │FondLeírás           │
+├──────┼──────────────┼─────────────────────┤
+│  1   │I. ker.Tanács │Helyi tanács iratai  │
+│  2   │Pest Színház  │Pesti Színház iratai │
+└──────┴──────────────┴─────────────────────┘</code></pre>
+<p><strong>tbl_IratokÁllagokkal (még nem kész!):</strong></p>
+<pre><code>┌──────┬──────┬─────────┬──────────┬──────────┬───────────┐
+│IratID│FondID│ÁllagNév │Évtől-Évig│IratCím   │DoboztárSz │
+├──────┼──────┼─────────┼──────────┼──────────┼───────────┤
+│  1   │  1   │Ülések   │1950-1990 │Jegyzők.1 │123        │
+│  2   │  1   │Ülések   │1950-1990 │Jegyzők.2  │124       │
+│  3   │  1   │Iratok   │1945-1989 │Levelezés │200        │
+└──────┴──────┴─────────┴──────────┴──────────┴───────────┘</code></pre>
+<p><strong>Probléma:</strong> Az <em>ÁllagNév</em> és <em>Évtől-Évig</em> még mindig ismétlődik! (1-2. sor)</p>
+</div>
+<div id="lépés-3nf-alkalmazása" class="section level3 hasAnchor" number="2.3.4">
+<h3><span class="header-section-number">2.3.4</span> 3. lépés: 3NF alkalmazása<a href="normalizálás-alapjai.html#l%C3%A9p%C3%A9s-3nf-alkalmaz%C3%A1sa" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>Kérdés:</strong> Mi függ az <em>ÁllagID</em>-tól (nem az IratID-tól)?</p>
+<p><strong>Analízis:</strong></p>
+<ul>
+<li><em>ÁllagNév</em>: Az állagtól függ → külön táblába!</li>
+<li><em>Évtől-Évig</em>: Az állagtól függ → külön táblába!</li>
+<li><em>IratCím</em>: Az irattól függ → marad az Iratok táblában</li>
+</ul>
+<p><strong>Bontsuk tovább:</strong></p>
+<p><strong>tbl_Állagok:</strong></p>
+<pre><code>┌────────┬──────┬─────────┬──────────────┬──────────┐
+│ÁllagID │FondID│ÁllagNév │KeletkezésÉvtől│Kelet.Évig│
+├────────┼──────┼─────────┼──────────────┼──────────┤
+│   1    │  1   │Ülések   │    1950      │   1990   │
+│   2    │  1   │Iratok   │    1945      │   1989   │
+│   3    │  2   │Igazgató │    1900      │   1950   │
+└────────┴──────┴─────────┴──────────────┴──────────┘</code></pre>
+<p><strong>tbl_Iratok (végső, helyes):</strong></p>
+<pre><code>┌──────┬────────┬──────────┬───────────┬──────────────┐
+│IratID│ÁllagID│IratCím    │DoboztárSz │Digitalizálva │
+├──────┼────────┼──────────┼───────────┼──────────────┤
+│  1   │   1    │Jegyző.1  │123        │Igen          │
+│  2   │   1    │Jegyző.2  │124        │Igen          │
+│  3   │   2    │Levelezés │200        │Igen          │
+│  4   │   3    │Kinevezés │101        │Igen          │
+└──────┴────────┴──────────┴───────────┴──────────────┘</code></pre>
+</div>
+<div id="végeredmény-normalizált-struktúra" class="section level3 hasAnchor" number="2.3.5">
+<h3><span class="header-section-number">2.3.5</span> Végeredmény: Normalizált struktúra<a href="normalizálás-alapjai.html#v%C3%A9geredm%C3%A9ny-normaliz%C3%A1lt-strukt%C3%BAra" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>Három tábla, három szint:</strong></p>
+<pre><code>tbl_Fondok (FondID, FondNév, FondLeírás)
+  │
+  └─── kapcsolat: FondID
+       │
+       tbl_Állagok (ÁllagID, FondID, ÁllagNév, KeletkezésÉvtől, KeletkezésÉvig)
+            │
+            └─── kapcsolat: ÁllagID
+                 │
+                 tbl_Iratok (IratID, ÁllagID, IratCím, DoboztárSz, Digitalizálva)</code></pre>
+<p><strong>Előnyök:</strong></p>
+<ul>
+<li>Minden fond adatai <strong>egyszer</strong> szerepelnek</li>
+<li>Minden állag adatai <strong>egyszer</strong> szerepelnek</li>
+<li>Minden irat adatai <strong>egyszer</strong> szerepelnek</li>
+<li>Nincs ismétlődés, nincs redundancia</li>
+<li>Könnyű karbantartás, frissítés, törlés</li>
+</ul>
+</div>
+</div>
+<div id="normalizalasi-szabalyok" class="section level2 hasAnchor" number="2.4">
+<h2><span class="header-section-number">2.4</span> Normalizálási szabályok levéltárban<a href="normalizálás-alapjai.html#normalizalasi-szabalyok" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="általános-elvek" class="section level3 hasAnchor" number="2.4.1">
+<h3><span class="header-section-number">2.4.1</span> Általános elvek<a href="normalizálás-alapjai.html#%C3%A1ltal%C3%A1nos-elvek" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>1. Minden entitás külön táblába</strong></p>
+<ul>
+<li><strong>Entitás</strong>: Önállóan létező dolog (fond, állag, irat, kutató, stb.)</li>
+<li><strong>Külön tábla</strong>: Minden entitásnak saját táblája van</li>
+</ul>
+<p><strong>Levéltári példák:</strong></p>
+<ul>
+<li>Fond → <code>tbl_Fondok</code></li>
+<li>Állag → <code>tbl_Állagok</code></li>
+<li>Irat → <code>tbl_Iratok</code></li>
+<li>Kutató → <code>tbl_Kutatók</code></li>
+<li>Látogatás → <code>tbl_Látogatások</code></li>
+</ul>
+<p><strong>2. Nincs ismétlődés</strong></p>
+<p>Ha ugyanaz az adat többször szerepel → külön táblába!</p>
+<p><strong>Példa:</strong></p>
+<ul>
+<li>Ha az “I. ker. Tanács” fondnév 500 iratban szerepel → rossz! A tbl_Fondok táblában szerepeljen egyszer, és hivatkozzunk rá FondID-val.</li>
+</ul>
+<p><strong>3. Hierarchiák kapcsolatokkal</strong></p>
+<p>A levéltári hierarchiát (fond → állag → irat) <strong>kapcsolatokkal</strong> ábrázoljuk, nem ismétléssel!</p>
+<pre><code>Fond 1 ──────1:N──────&gt; Állag 1
+                        Állag 2
+                        Állag 3
+
+Állag 1 ─────1:N──────&gt; Irat 1
+                        Irat 2
+                        Irat 3</code></pre>
+<p><strong>4. Számított mezők kiszámítása, nem tárolása</strong></p>
+<p>Ne tároljuk a számítható adatokat!</p>
+<p><strong>Rossz példa:</strong></p>
+<pre><code>tbl_Állagok:
+ÁllagID, ÁllagNév, IratokSzáma</code></pre>
+<p><strong>Miért rossz?</strong> Az <em>IratokSzáma</em> számítható! (<code>COUNT(*)</code> lekérdezéssel)</p>
+<p><strong>Helyes:</strong></p>
+<pre><code>tbl_Állagok:
+ÁllagID, ÁllagNév
+
+Lekérdezésben:
+SELECT ÁllagNév, COUNT(IratID) AS IratokSzáma
+FROM tbl_Állagok
+LEFT JOIN tbl_Iratok ON tbl_Állagok.ÁllagID = tbl_Iratok.ÁllagID
+GROUP BY ÁllagNév</code></pre>
+<div class="advanced">
+<p><strong>Kivétel:</strong> Nagy adatbázisoknál teljesítményi okokból néha mégis tároljuk a számított értékeket (“denormalizáció”). De ez haladó téma, és csak indokolt esetben!</p>
+</div>
+</div>
+</div>
+<div id="gyakorlat-normalizalas" class="section level2 hasAnchor" number="2.5">
+<h2><span class="header-section-number">2.5</span> Gyakorlat: Normalizálás lépésről-lépésre<a href="normalizálás-alapjai.html#gyakorlat-normalizalas" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Most próbáljuk ki a normalizálást egy másik levéltári példán!</p>
+<div id="kiindulás-kutatói-kikölcsönzési-napló" class="section level3 hasAnchor" number="2.5.1">
+<h3><span class="header-section-number">2.5.1</span> Kiindulás: Kutatói kikölcsönzési napló<a href="normalizálás-alapjai.html#kiindul%C3%A1s-kutat%C3%B3i-kik%C3%B6lcs%C3%B6nz%C3%A9si-napl%C3%B3" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>Egyetlen tábla (rossz):</strong></p>
+<pre><code>┌────┬──────────┬─────────┬────────────┬──────┬───────────┬──────────┐
+│ID  │KutatóNév │Email    │Intézmény   │Jelzet│Kölcs.Dát. │Visszah.  │
+├────┼──────────┼─────────┼────────────┼──────┼───────────┼──────────┤
+│ 1  │Kovács A. │k@elte.hu│ELTE BTK    │K-150 │2024.01.15 │2024.01.20│
+│ 2  │Kovács A. │k@elte.hu│ELTE BTK    │K-151 │2024.02.03 │2024.02.10│
+│ 3  │Nagy P.   │n@pte.hu │PTE BTK     │K-200 │2024.02.05 │          │
+│ 4  │Kovács A. │k@elte.hu│ELTE BTK    │K-150 │2024.03.01 │2024.03.05│
+└────┴──────────┴─────────┴────────────┴──────┴───────────┴──────────┘</code></pre>
+<div class="exercise">
+<p><span id="exr:unlabeled-div-2" class="exercise"><strong>Exercise 2.1  </strong></span><strong>Feladat: Normalizáljuk ezt a táblát!</strong></p>
+<p><strong>Lépések:</strong></p>
+<ol style="list-style-type: decimal">
+<li>Azonosítsuk az entitásokat (mi az önálló “dolog”?)</li>
+<li>Milyen adatok ismétlődnek?</li>
+<li>Hány táblára bontsuk?</li>
+<li>Milyen legyenek a mezők?</li>
+<li>Hogyan kapcsolódjanak a táblák?</li>
+</ol>
+<p><strong>Gondolkodjunk el 5 percet, aztán nézzük meg a megoldást!</strong></p>
+</div>
+</div>
+<div id="megoldás" class="section level3 hasAnchor" number="2.5.2">
+<h3><span class="header-section-number">2.5.2</span> Megoldás<a href="normalizálás-alapjai.html#megold%C3%A1s" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>1. Entitások azonosítása:</strong></p>
+<ul>
+<li><strong>Kutató</strong>: Kovács Anna, Nagy Péter (önálló személyek)</li>
+<li><strong>Kikölcsönzés</strong>: Egy esemény (ki, mit, mikor)</li>
+</ul>
+<p><strong>2. Ismétlődések:</strong></p>
+<ul>
+<li>Kovács Anna adatai (Név, Email, Intézmény) <strong>3× ismétlődnek</strong> (1., 2., 4. sor)</li>
+</ul>
+<p><strong>3. Hány tábla?</strong></p>
+<ul>
+<li><strong>2 tábla</strong>: tbl_Kutatók, tbl_Kölcsönzések</li>
+</ul>
+<p><strong>4. Mezők:</strong></p>
+<p><strong>tbl_Kutatók:</strong></p>
+<pre><code>┌─────────┬──────────┬─────────┬──────────┐
+│KutatóID │Név       │Email    │Intézmény │
+├─────────┼──────────┼─────────┼──────────┤
+│    1    │Kovács A. │k@elte.hu│ELTE BTK  │
+│    2    │Nagy P.   │n@pte.hu │PTE BTK   │
+└─────────┴──────────┴─────────┴──────────┘</code></pre>
+<p><strong>tbl_Kölcsönzések:</strong></p>
+<pre><code>┌────────────┬─────────┬──────┬───────────┬───────────────┐
+│KölcsönzésID│KutatóID │Jelzet│Kölcs.Dát. │VisszahozásDát.│
+├────────────┼─────────┼──────┼───────────┼───────────────┤
+│     1      │    1    │K-150 │2024.01.15 │2024.01.20     │
+│     2      │    1    │K-151 │2024.02.03 │2024.02.10     │
+│     3      │    2    │K-200 │2024.02.05 │NULL           │
+│     4      │    1    │K-150 │2024.03.01 │2024.03.05     │
+└────────────┴─────────┴──────┴───────────┴───────────────┘</code></pre>
+<p><strong>5. Kapcsolat:</strong></p>
+<pre><code>tbl_Kutatók (KutatóID)
+      │
+      └─── 1:N kapcsolat
+           │
+      tbl_Kölcsönzések (KutatóID FK)</code></pre>
+<p><strong>Eredmény:</strong></p>
+<ul>
+<li>Kovács Anna adatai <strong>egyszer</strong> szerepelnek</li>
+<li>Minden kikölcsönzés hivatkozik a KutatóID-ra</li>
+<li>Nincs ismétlődés, nincs redundancia</li>
+<li>Email változás → egy helyen módosítani!</li>
+</ul>
+<pre><code>
+&lt;!--chapter:end:02-normalizalas.Rmd--&gt;
+
+# Többtáblás struktúra felépítése
+
+Most Access-ben megvalósítjuk a normalizált, háromszintű levéltári struktúrát: **Fondok → Állagok → Iratok**.
+
+## Előkészítés {#elokeszites}
+
+### Új adatbázis létrehozása
+
+1. **Access megnyitása**
+2. **Üres adatbázis** létrehozása
+3. Fájlnév: `Leveltar_Allomany.accdb`
+4. Mentési hely: Válasszunk egy könnyen elérhető mappát
+5. **Létrehozás** gomb
+
+:::{.info}
+**Tipp:** Célszerű külön mappát létrehozni a projekthez, mert később több fájl is keletkezhet (biztonsági mentések, import fájlok, stb.).
+:::
+
+## Az első tábla: tbl_Fondok {#tbl-fondok}
+
+### Táblatervezés
+
+**Létrehozás** → **Táblatervezés**
+
+**Mezők definiálása:**
+
+| Mezőnév | Adattípus | Leírás |
+|---------|-----------|--------|
+| FondID | AutoNumber | Elsődleges kulcs |
+| FondNév | Rövid szöveg | A fond neve |
+| JelzetPrefix | Rövid szöveg | Jelzet előtagja (pl. &quot;HU MNL OL K&quot;) |
+| FondLeírás | Hosszú szöveg | Részletes leírás |
+
+**FondID beállítása:**
+
+- Kijelöljük a FondID sort
+- 🔑 **Elsődleges kulcs** gomb
+
+**FondNév mezőtulajdonságai:**
+
+- **Mezőméret**: 100
+- **Kötelező**: Igen
+
+**JelzetPrefix mezőtulajdonságai:**
+
+- **Mezőméret**: 50
+- **Kötelező**: Nem (opcionális)
+
+**Mentés:** `tbl_Fondok`
+
+### Adatok rögzítése
+
+Adatlap nézetre váltás, és vigyünk fel néhány fondot:
+
+**1. fond:**
+</code></pre>
+<p>FondID: (automatikus: 1)
+FondNév: Tanács iratok
+JelzetPrefix: HU MNL OL K
+FondLeírás: Budapest Főváros XIV. kerületi Tanács iratai, 1950-1990</p>
+<pre><code>
+**2. fond:**
+</code></pre>
+<p>FondID: (automatikus: 2)
+FondNév: Nemzeti Színház
+JelzetPrefix: HU MNL OL SZ
+FondLeírás: Nemzeti Színház igazgatósági és művészi iratai, 1900-1950</p>
+<pre><code>
+**3. fond:**
+</code></pre>
+<p>FondID: (automatikus: 3)
+FondNév: Népszámlálási ívek
+JelzetPrefix: HU MNL OL N
+FondLeírás: Népszámlálási ívek és összeírások, 1869-1970</p>
+<pre><code>
+## A második tábla: tbl_Állagok {#tbl-allagok}
+
+### Táblatervezés
+
+**Létrehozás** → **Táblatervezés**
+
+**Mezők definiálása:**
+
+| Mezőnév | Adattípus | Leírás |
+|---------|-----------|--------|
+| ÁllagID | AutoNumber | Elsődleges kulcs |
+| FondID | Szám (Hosszú egész) | **Idegen kulcs** - kapcsolat a Fondokhoz |
+| ÁllagNév | Rövid szöveg | Az állag neve |
+| KeletkezésÉvtől | Szám (Egész) | Keletkezés kezdő éve |
+| KeletkezésÉvig | Szám (Egész) | Keletkezés záró éve |
+| ÁllagLeírás | Hosszú szöveg | Részletes leírás |
+
+**Elsődleges kulcs:**
+
+- ÁllagID → 🔑 **Elsődleges kulcs**
+
+**FondID mezőtulajdonságai (FONTOS!):**
+
+- **Mezőméret**: Hosszú egész (Long Integer)
+- **Kötelező**: Igen
+
+:::{.warning}
+**Figyelem!** A FondID **Szám** típusú, NEM AutoNumber! Ez az idegen kulcs, ami a tbl_Fondok FondID-jára mutat.
+:::
+
+**KeletkezésÉvtől/Évig mezőtulajdonságai:**
+
+- **Mezőméret**: Egész (Integer)
+- **Kötelező**: Nem (lehet üres)
+
+**Mentés:** `tbl_Állagok`
+
+### Adatok rögzítése
+
+Vigyünk fel néhány állagot!
+
+**Állag 1 (I. ker. Tanács fond alatt):**
+</code></pre>
+<p>ÁllagID: (automatikus: 1)
+FondID: 1 (I. ker. Tanács)
+ÁllagNév: Tanácsi ülések jegyzőkönyvei
+KeletkezésÉvtől: 1950
+KeletkezésÉvig: 1990
+ÁllagLeírás: Tanácsülési jegyzőkönyvek és határozatok</p>
+<pre><code>
+**Állag 2 (I. ker. Tanács fond alatt):**
+</code></pre>
+<p>ÁllagID: (automatikus: 2)
+FondID: 1 (I. ker. Tanács)
+ÁllagNév: Tanácsi iratok
+KeletkezésÉvtől: 1945
+KeletkezésÉvig: 1989
+ÁllagLeírás: Levelezés, rendeletek, körlevél</p>
+<pre><code>
+**Állag 3 (Nemzeti Színház fond alatt):**
+</code></pre>
+<p>ÁllagID: (automatikus: 3)
+FondID: 2 (Nemzeti Színház)
+ÁllagNév: Igazgatósági iratok
+KeletkezésÉvtől: 1900
+KeletkezésÉvig: 1950
+ÁllagLeírás: Igazgatói kinevezések, szerződések, jelentések</p>
+<pre><code>
+**Állag 4 (Színház fond alatt):**
+</code></pre>
+<p>ÁllagID: (automatikus: 4)
+FondID: 2 (Nemzeti Színház)
+ÁllagNév: Előadási iratok
+KeletkezésÉvtől: 1920
+KeletkezésÉvig: 1944
+ÁllagLeírás: Műsorok, szereposztások, kritikák</p>
+<pre><code>
+**Állag 5 (Népszámlálás fond alatt):**
+</code></pre>
+<p>ÁllagID: (automatikus: 5)
+FondID: 3 (Népszámlálás)
+ÁllagNév: 1960-as népszámlálás
+KeletkezésÉvtől: 1960
+KeletkezésÉvig: 1960
+ÁllagLeírás: 1960. évi népszámlálási ívek</p>
+<pre><code>
+## A harmadik tábla: tbl_Iratok {#tbl-iratok}
+
+### Táblatervezés
+
+**Létrehozás** → **Táblatervezés**
+
+**Mezők definiálása:**
+
+| Mezőnév | Adattípus | Leírás |
+|---------|-----------|--------|
+| IratID | AutoNumber | Elsődleges kulcs |
+| ÁllagID | Szám (Hosszú egész) | **Idegen kulcs** - kapcsolat az Állagokhoz |
+| IratCím | Rövid szöveg | Az irat címe |
+| Jelzet | Rövid szöveg | Teljes jelzet |
+| DoboztárSzám | Rövid szöveg | Raktári hely |
+| Digitalizálva | Igen/Nem | Van-e digitális másolat? |
+| DigitalizálásDátuma | Dátum/idő | Mikor digitalizáltuk? |
+| Megjegyzés | Hosszú szöveg | Egyéb megjegyzések |
+
+**Elsődleges kulcs:**
+
+- IratID → 🔑 **Elsődleges kulcs**
+
+**ÁllagID mezőtulajdonságai:**
+
+- **Mezőméret**: Hosszú egész
+- **Kötelező**: Igen
+
+**Digitalizálva mezőtulajdonságai:**
+
+- **Alapértelmezett érték**: Nem
+
+**DigitalizálásDátuma mezőtulajdonságai:**
+
+- **Formátum**: Rövid dátum
+- **Kötelező**: Nem
+
+**Mentés:** `tbl_Iratok`
+
+### Adatok rögzítése
+
+Vigyünk fel néhány iratot!
+
+**Irat 1 (Tanácsi ülések állag alatt):**
+</code></pre>
+<p>IratID: (automatikus: 1)
+ÁllagID: 1
+IratCím: Tanácsülési jegyzőkönyv 1956. október 23.
+Jelzet: HU MNL OL K 150/1956/10/23
+DoboztárSzám: TB-123
+Digitalizálva: Igen
+DigitalizálásDátuma: 2024-01-15</p>
+<pre><code>
+**Irat 2 (Tanácsi ülések állag alatt):**
+</code></pre>
+<p>IratID: (automatikus: 2)
+ÁllagID: 1
+IratCím: Tanácsülési jegyzőkönyv 1956. november 4.
+Jelzet: HU MNL OL K 150/1956/11/04
+DoboztárSzám: TB-124
+Digitalizálva: Igen
+DigitalizálásDátuma: 2024-01-15</p>
+<pre><code>
+**Irat 3 (Tanácsi iratok állag alatt):**
+</code></pre>
+<p>IratID: (automatikus: 3)
+ÁllagID: 2
+IratCím: Levelezés a belügyminisztériummal
+Jelzet: HU MNL OL K 151/1970/05/12
+DoboztárSzám: TB-200
+Digitalizálva: Nem</p>
+<pre><code>
+**Irat 4-10:** Vigyünk fel még néhány iratot különböző állagokhoz!
+
+:::{.exercise}
+**Gyakorlat:** Vigyen fel legalább 15-20 iratot különböző állagokhoz! Változatos legyen:
+
+- Különböző fondok
+- Különböző állagok
+- Néhány digitalizált, néhány nem
+- Különböző jelzetek
+:::
+
+## Kapcsolatok létrehozása {#kapcsolatok}
+
+Most hozzuk létre a kapcsolatokat a három tábla között!
+
+### Kapcsolatok nézet megnyitása
+
+**Adatbázis-eszközök** → **Kapcsolatok** (vagy **Ctrl+R**)
+
+### Táblák hozzáadása
+
+**Tervezés** → **Tábla megjelenítése**
+
+- Dupla klikk: `tbl_Fondok`
+- Dupla klikk: `tbl_Állagok`
+- Dupla klikk: `tbl_Iratok`
+- **Bezárás**
+
+Most látjuk mind a három táblát a Kapcsolatok nézetben!
+
+### Első kapcsolat: Fondok ←→ Állagok
+
+**Húzzuk a kapcsolatot:**
+
+1. Kattintsunk a `tbl_Fondok` tábla **FondID** mezőjére
+2. Tartsuk lenyomva, és húzzuk a `tbl_Állagok` tábla **FondID** mezőjére
+3. Eresszük el
+
+Megjelenik a **Kapcsolatok módosítása** ablak.
+
+**Beállítások:**
+
+- ☑ **Referenciális integritás érvényesítése**
+- ☑ **Lépcsőzetes frissítés a kapcsolódó mezőkben**
+- ☐ **Lépcsőzetes törlés** (NEM pipáljuk be!)
+
+:::{.warning}
+**Figyelem!** A lépcsőzetes törlést NE kapcsoljuk be levéltári adatbázisnál! Ha véletlenül törlünk egy fondot, nem akarjuk, hogy az összes állag és irat is törlődjön!
+:::
+
+**Kapcsolattípus:** Egy a többhöz (1:∞) 
+
+**Létrehozás** gomb
+
+### Második kapcsolat: Állagok ←→ Iratok
+
+**Húzzuk a kapcsolatot:**
+
+1. Kattintsunk a `tbl_Állagok` tábla **ÁllagID** mezőjére
+2. Húzzuk a `tbl_Iratok` tábla **ÁllagID** mezőjére
+
+**Beállítások:**
+
+- ☑ **Referenciális integritás érvényesítése**
+- ☑ **Lépcsőzetes frissítés**
+- ☐ **Lépcsőzetes törlés** (NEM!)
+
+**Létrehozás** gomb
+
+### Eredmény
+
+Most a Kapcsolatok nézetben látjuk a teljes hierarchiát:
+</code></pre>
+<p>┌──────────────┐ ┌───────────────┐ ┌──────────────┐
+│tbl_Fondok │ │tbl_Állagok │ │tbl_Iratok │
+├──────────────┤ ├───────────────┤ ├──────────────┤
+│🔑FondID │───1──∞│FondID │ │ ÁllagID │
+│ FondNév │ │🔑ÁllagID │───1──∞│🔑IratID │
+│ JelzetPrefix │ │ ÁllagNév │ │ IratCím │
+│ FondLeírás │ │ Keletkezés… │ │ Jelzet │
+└──────────────┘ └───────────────┘ └──────────────┘</p>
+<pre><code>
+**Mentés:** Ctrl+S vagy Bezárás → Igen
+
+## A struktúra tesztelése {#teszteles}
+
+Most teszteljük, hogy a referenciális integritás működik-e!
+
+### Teszt 1: Érvénytelen ÁllagID
+
+Nyissuk meg a `tbl_Iratok` táblát, és próbáljunk meg egy iratot felvinni **nem létező ÁllagID-val**:
+</code></pre>
+<p>ÁllagID: 999 (nem létezik!)
+IratCím: Teszt irat</p>
+<pre><code>
+**Eredmény:** Hibaüzenet! &quot;A tbl_Állagok táblában nem található kapcsolódó rekord.&quot;
+
+### Teszt 2: Állag törlése
+
+Próbáljuk meg törölni az &quot;1&quot; számú állagot (Tanácsi ülések), aminek **vannak iratai**!
+
+1. Nyissuk meg a `tbl_Állagok` táblát
+2. Jelöljük ki az 1-es állagot
+3. Delete billentyű
+
+**Eredmény:** Hibaüzenet! &quot;Nem törölhet rekordokat, mert a tbl_Iratok tábla kapcsolódó rekordokat tartalmaz.&quot;
+
+### Teszt 3: Fond törlése
+
+Hasonlóan, próbáljuk meg törölni a &quot;Tanács&quot; fondot!
+
+**Eredmény:** Hibaüzenet! Az Access megvédi az adatainkat!
+
+## Összefoglalás {-}
+
+Ebben a fejezetben:
+
+- Létrehoztuk a **három táblát**: Fondok, Állagok, Iratok
+- Definiáltuk a **mezőket** és **adattípusokat**
+- Beállítottuk az **elsődleges kulcsokat**
+- Beállítottuk az **idegen kulcsokat** (FondID, ÁllagID)
+-  Létrehoztuk a **kapcsolatokat** referenciális integritással
+- **Teszteltük** a struktúrát
+
+
+
+
+&lt;!--chapter:end:03-tobbtalas-struktura.Rmd--&gt;
+
+# Hierarchikus űrlapok (főűrlap + alűrlap)
+
+A hierarchikus űrlapok lehetővé teszik, hogy **egy űrlapon** lássuk és kezeljük a kapcsolódó adatokat. Például: egy fondot, annak állagait, és az állagok iratait - mind egy helyen!
+
+## Mi az az alűrlap? {#mi-az-alurlap}
+
+Az **alűrlap** (subform) egy űrlap, amely egy másik űrlapba van beágyazva.
+
+**Szerkezet:**
+</code></pre>
+<p>┌──────────────────────────────────────────┐
+│ Főűrlap (Fond adatai) │ ← Fond neve, leírása
+│ │
+│ ┌────────────────────────────────────┐ │
+│ │ Alűrlap 1 (Állagok) │ │ ← Az állagok listája
+│ │ - Állag 1 │ │
+│ │ - Állag 2 │ │
+│ │ - Állag 3 │ │
+│ └────────────────────────────────────┘ │
+│ │
+└──────────────────────────────────────────┘</p>
+<pre><code>
+**Előnyök:**
+
+-   Egy helyen látjuk a kapcsolódó adatokat
+-   Könnyű navigáció (fond → állagok)
+-   Automatikus szűrés (csak az aktuális fond állagait mutatja)
+
+## Egyszerű hierarchikus űrlap: Fondok + Állagok {#egyszerű-hierarchikus}
+
+### 1. lépés: Alap űrlap készítése (Fondok)
+
+**Navigációs panelben:** Kattintsunk a `tbl_Fondok` táblára (NE nyissuk meg!)
+
+**Létrehozás** → **Űrlap** gomb
+
+Automatikusan létrejön egy űrlap. **Mentés:** `frm_Fondok`
+
+### 2. lépés: Alűrlap hozzáadása
+
+**Tervezési nézetre váltás**
+
+**Alűrlap beszúrása:**
+
+1.  **Tervezés** fül → **Vezérlők** csoport → **Alűrlap/Aljelentés** ikon
+2.  Kattintsunk az űrlap alsó részére (ahol az alűrlapot szeretnénk)
+3.  Megjelenik az **Alűrlap varázsló**
+
+**Alűrlap varázsló - 1. lépés:**
+
+-   &quot;Meglévő tábla vagy lekérdezés használata&quot; ← válasszuk ezt
+-   **Tovább**
+
+**2. lépés:**
+
+-   **Tábla/lekérdezés:** `tbl_Állagok`
+-   **Elérhető mezők:** Vigyük át ezeket:
+    -   ÁllagNév
+    -   KeletkezésÉvtől
+    -   KeletkezésÉvig
+-   **Tovább**
+
+**3. lépés:**
+
+-   &quot;Kapcsolat definiálása magamnak&quot; ← válasszuk ezt
+-   Fő űrlap mezője: **FondID**
+-   Alűrlap mezője: **FondID**
+-   **Tovább**
+
+**4. lépés:**
+
+-   Alűrlap neve: `sub_Állagok`
+-   **Befejezés**
+
+### Eredmény
+
+Most van egy űrlapunk, ahol:
+
+-   **Felső rész:** Fond adatai (név, leírás)
+-   **Alsó rész:** Az aktuális fond állagainak listája!
+
+**Tesztelés:**
+
+1.  Váltás Űrlap nézetre
+2.  Navigáljunk a &quot;I. ker. Tanács&quot; fondra
+3.  Az alűrlapon csak az I. ker. Tanács állagait látjuk!
+4.  Navigáljunk a &quot;Nemzeti Színház&quot; fondra
+5.  Az alűrlapon csak a Nemzeti Színház állagait látjuk!
+
+::: info
+**Automatikus szűrés:** Az alűrlap automatikusan szűr! Amikor a főűrlapon a &quot;Tanács&quot; fondnál vagyunk, az alűrlap csak a `FondID=1` állagokat mutatja.
+:::
+
+## Kétszintű hierarchikus űrlap: Fondok + Állagok + Iratok {#ketszintu}
+
+Most készítsünk egy még összetettebb űrlapot: Fond → Állagok → Iratok (három szint!)
+
+### Stratégia
+</code></pre>
+<p>Főűrlap: Fondok
+└─ Alűrlap 1: Állagok
+└─ Alűrlap 2: Iratok (az alűrlapon belül!)</p>
+<pre><code>
+### 1. lépés: Állagok űrlap készítése (alűrlappal)
+
+Először készítsünk egy űrlapot az állagokhoz, amely tartalmazza az iratokat!
+
+**Navigációs panelben:** `tbl_Állagok` kijelölése
+
+**Létrehozás** → **Űrlap**
+
+**Mentés:** `frm_Állagok`
+
+**Tervezési nézetre váltás**
+
+**Alűrlap beszúrása (Iratok):**
+
+1.  **Alűrlap/Aljelentés** ikon
+2.  Kattintsunk az űrlap alsó részére
+3.  Varázsló:
+    -   Meglévő tábla: `tbl_Iratok`
+    -   Mezők: IratCím, Jelzet, DoboztárSzám, Digitalizálva
+    -   Kapcsolat: ÁllagID ↔ ÁllagID
+    -   Név: `sub_Iratok`
+
+**Mentés**
+
+Most a `frm_Állagok` űrlapon látjuk az állag adatait + az iratok listáját!
+
+### 2. lépés: Fondok űrlap módosítása
+
+Most módosítsuk a `frm_Fondok` űrlapot, hogy az alűrlap ne a tábla, hanem az ŰRLAP legyen!
+
+**`frm_Fondok` megnyitása tervezési nézetben**
+
+**Alűrlap vezérlő kijelölése** (az alsó részen)
+
+**Tulajdonságlap** (F4):
+
+-   **Forrás objektum:** Válasszuk ki: `frm_Állagok` (nem a táblát!)
+-   **Kapcsolat fő mezője:** FondID
+-   **Kapcsolat almezője:** FondID
+
+**Mentés**
+
+### Eredmény
+
+Most van egy háromszintű hierarchikus űrlapunk!
+</code></pre>
+<p>┌──────────────────────────────────────────────────┐
+│ frm_Fondok │
+│ FondNév: Tanács iratok │
+│ Leírás: Budapest XIV. ker. Tanács… │
+│ │
+│ ┌──────────────────────────────────────────────┐│
+│ │ frm_Állagok (alűrlap) ││
+│ │ Állag: Tanácsi ülések jegyzőkönyvei ││
+│ │ Évek: 1950-1990 ││
+│ │ ││
+│ │ ┌──────────────────────────────────────────┐││
+│ │ │ sub_Iratok (alűrlap az alűrlapon belül!) │││
+│ │ │ - Jegyzőkönyv 1956.10.23 TB-123 ☑ │││
+│ │ │ - Jegyzőkönyv 1956.11.04 TB-124 ☑ │││
+│ │ └──────────────────────────────────────────┘││
+│ └──────────────────────────────────────────────┘│
+└──────────────────────────────────────────────────┘</p>
+<pre><code>
+**Használat:**
+
+1.  Fond kiválasztása (felső rész)
+2.  Állagra kattintás az első alűrlapon
+3.  Az irat alűrlap automatikusan frissül, és csak az adott állag iratait mutatja!
+
+::: exercise
+**Gyakorlat:**
+
+1.  Tesztelje a háromszintű űrlapot! Navigáljon különböző fondokhoz, állagokhoz!
+2.  Vigyen fel új iratot az alűrlapon keresztül! (Automatikusan a megfelelő állaghoz kerül!)
+3.  Próbálja ki: Módosítson egy állag nevét a főűrlapon! Látja, hogy az irat alűrlap automatikusan frissül?
+:::
+
+&lt;!--chapter:end:04-hierarchikus-urlapok.Rmd--&gt;
+
+# Kombinált listák (Combo Box)
+
+A kombinált listák (combo box) az adatbevitel egyik leghatékonyabb módszere. Ahelyett, hogy begépelnénk az állag nevét vagy fond azonosítóját, egyszerűen kiválasztjuk egy legördülő listából!
+
+## Mi a combo box? {#mi-combo}
+
+A **combo box** (kombinált lista) egy legördülő mező, amely:
+
+- Megjeleníti a választható értékek listáját
+- Megakadályozza az elgépelést
+- Biztosítja, hogy csak érvényes értékek kerüljenek be
+- Felhasználóbarát (nem kell ID számokat megjegyezni!)
+
+**Példa:**
+</code></pre>
+<p>ÁllagID: [Tanácsi ülések jegyzőkönyvei ▼] ← combo box
+│ │
+│ Tanácsi ülések jegyzőkönyvei │ ← Legördülő lista
+│ Tanácsi hivatalos iratok │
+│ Igazgatósági iratok │
+│ Előadási iratok │
+└─────────────────────────────────┘</p>
+<pre><code>
+**Amit látunk:** Az állag neve (&quot;Tanácsi ülések...&quot;)  
+**Amit tárol:** Az ÁllagID szám (1, 2, 3...)
+
+## Combo box létrehozása varázslóval {#combo-varazslo}
+
+Készítsünk egy egyszerű űrlapot az iratok felvételéhez combo box-szal!
+
+### 1. lépés: Alapűrlap készítése
+
+**Létrehozás** → **Táblatervezés** → üres űrlap
+
+**Mentés:** `frm_IratFelvitel`
+
+### 2. lépés: Combo box beszúrása
+
+**Tervezési nézetre váltás**
+
+**Combo box beszúrása:**
+
+1. **Tervezés** fül → **Vezérlők** → **Kombinált lista** ikon
+2. Kattintsunk az űrlapra
+3. Megjelenik a **Kombinált lista varázsló**
+
+**Varázsló - 1. lépés:**
+
+- &quot;A kombinált lista a következő táblából vagy lekérdezésből veszi az értékeit&quot; ← válasszuk
+- **Tovább**
+
+**2. lépés:**
+
+- **Táblák:** válasszuk ki `tbl_Állagok`
+- **Tovább**
+
+**3. lépés - Mezők kiválasztása:**
+
+- **Elérhető mezők:**
+  - ÁllagID → vigyük át (ez a tárolt érték!)
+  - ÁllagNév → vigyük át (ezt látjuk!)
+- **Tovább**
+
+**4. lépés - Rendezés:**
+
+- **Rendezés:** ÁllagNév (Növekvő)
+- **Tovább**
+
+**5. lépés - Oszlopszélességek:**
+
+- ÁllagID oszlop szélessége: **0** (el akarjuk rejteni!)
+- ÁllagNév oszlop: hagyj uk szélesre
+- ☐ &quot;Kulcsoszlop elrejtése&quot; ← kapcsoljuk be!
+- **Tovább**
+
+**6. lépés - Hova tároljuk:**
+
+- &quot;Az érték tárolása a következő mezőben:&quot; → `ÁllagID` (tbl_Iratok)
+- **Tovább**
+
+**7. lépés - Címke:**
+
+- Címke: &quot;Állag:&quot;
+- **Befejezés**
+
+### Eredmény
+
+Most van egy combo box-unk, ahol:
+
+- **Látunk:** &quot;Tanácsi ülések jegyzőkönyvei&quot; (ÁllagNév)
+- **Tároljuk:** 1 (ÁllagID)
+
+**Tesztelés:**
+
+1. Váltás Űrlap nézetre
+2. Kattintsunk a combo box-ra → legördülő lista!
+3. Válasszunk ki egy állagot
+4. Mentsük el → az ÁllagID szám tárolódik, nem a szöveg! 
+
+## Combo box SQL-je {#combo-sql}
+
+A combo box varázsló SQL lekérdezést készít a háttérben. Nézzük meg!
+
+**Tervezési nézetben:**
+
+1. Kattintsunk a combo box-ra
+2. **Tulajdonságlap** (F4)
+3. **Adatok** fül → **Sorforrás** tulajdonság
+
+**Látjuk az SQL-t:**
+
+```sql
+SELECT tbl_Állagok.ÁllagID, tbl_Állagok.ÁllagNév
+FROM tbl_Állagok
+ORDER BY tbl_Állagok.ÁllagNév;</code></pre>
+<p>Ez azt mondja:</p>
+<ul>
+<li><code>SELECT ÁllagID, ÁllagNév</code>: Ezt a két mezőt kérd le</li>
+<li><code>FROM tbl_Állagok</code>: A tbl_Állagok táblából</li>
+<li><code>ORDER BY ÁllagNév</code>: Rendezd ÁllagNév szerint</li>
+</ul>
+</div>
+</div>
+<div id="fejlett-combo" class="section level2 hasAnchor" number="2.6">
+<h2><span class="header-section-number">2.6</span> Fejlettebb combo box: Fond + Állag együtt<a href="normalizálás-alapjai.html#fejlett-combo" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Most készítsünk egy combo box-ot, amely <strong>több mezőt</strong> jelenít meg egyszerre!</p>
+<p><strong>Példa:</strong> Az állag nevét ÉS a fond nevét is lássuk:</p>
+<pre><code>Állag: [Tanács iratok - Tanácsi ülések jegyzőkönyvei  ▼]</code></pre>
+<div id="sql-módosítása" class="section level3 hasAnchor" number="2.6.1">
+<h3><span class="header-section-number">2.6.1</span> SQL módosítása<a href="normalizálás-alapjai.html#sql-m%C3%B3dos%C3%ADt%C3%A1sa" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>A combo box <strong>Sorforrás</strong> tulajdonságát írjuk át:</p>
+<div class="sourceCode" id="cb50"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb50-1"><a href="normalizálás-alapjai.html#cb50-1" tabindex="-1"></a><span class="kw">SELECT</span> tbl_Állagok.ÁllagID, </span>
+<span id="cb50-2"><a href="normalizálás-alapjai.html#cb50-2" tabindex="-1"></a>       tbl_Fondok.FondNév &amp; <span class="ot">&quot; - &quot;</span> &amp; tbl_Állagok.ÁllagNév <span class="kw">AS</span> ÁllagTeljes</span>
+<span id="cb50-3"><a href="normalizálás-alapjai.html#cb50-3" tabindex="-1"></a><span class="kw">FROM</span> tbl_Fondok </span>
+<span id="cb50-4"><a href="normalizálás-alapjai.html#cb50-4" tabindex="-1"></a><span class="kw">INNER</span> <span class="kw">JOIN</span> tbl_Állagok <span class="kw">ON</span> tbl_Fondok.FondID <span class="op">=</span> tbl_Állagok.FondID</span>
+<span id="cb50-5"><a href="normalizálás-alapjai.html#cb50-5" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> tbl_Fondok.FondNév, tbl_Állagok.ÁllagNév;</span></code></pre></div>
+<p><strong>Magyarázat:</strong></p>
+<ul>
+<li><code>FondNév &amp; " - " &amp; ÁllagNév</code>: Összefűzi a két nevet</li>
+<li><code>AS ÁllagTeljes</code>: Elnevezi az eredményt</li>
+<li><code>INNER JOIN</code>: Összekapcsolja a két táblát</li>
+</ul>
+<p><strong>Tulajdonságok beállítása:</strong></p>
+<ul>
+<li><strong>Oszlopszám</strong>: 2</li>
+<li><strong>Oszlopszélességek</strong>: 0cm;8cm (első oszlop rejtve, második széles)</li>
+<li><strong>Kötött oszlop</strong>: 1 (az ÁllagID-t tárolja)</li>
+</ul>
+<div class="exercise">
+<p><span id="exr:unlabeled-div-3" class="exercise"><strong>Exercise 2.2  </strong></span><strong>Gyakorlat:</strong></p>
+<ol style="list-style-type: decimal">
+<li>Készítsen combo box-ot a FondID mezőhöz az Állagok űrlapon!</li>
+<li>Módosítsa úgy, hogy a fond nevét mutassa, ne a számot!</li>
+<li>Készítsen egy új űrlapot az iratok felviteléhez, combo box-szal az ÁllagID-hoz!</li>
+</ol>
+</div>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="rossz-adatbázis-struktúra-felismerése.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="műveleti-lekérdezések.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+  "sharing": {
+    "github": false,
+    "facebook": false,
+    "twitter": false,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": null,
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": ["access_halado.pdf", "access_halado.epub"],
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "subsection"
+  }
+});
+});
+</script>
+
+</body>
+
+</html>

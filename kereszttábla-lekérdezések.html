@@ -1,0 +1,1189 @@
+<!DOCTYPE html>
+<html lang="hu" xml:lang="hu">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Fejezet 4 Kereszttábla lekérdezések | Access haladó - Levéltári adatbázisok</title>
+  <meta name="description" content="Microsoft Access haladó szintű tananyag levéltárosok számára - többtáblás adatbázisok, normalizálás, hierarchikus űrlapok, haladó lekérdezések." />
+  <meta name="generator" content="bookdown 0.46 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Fejezet 4 Kereszttábla lekérdezések | Access haladó - Levéltári adatbázisok" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="Microsoft Access haladó szintű tananyag levéltárosok számára - többtáblás adatbázisok, normalizálás, hierarchikus űrlapok, haladó lekérdezések." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Fejezet 4 Kereszttábla lekérdezések | Access haladó - Levéltári adatbázisok" />
+  
+  <meta name="twitter:description" content="Microsoft Access haladó szintű tananyag levéltárosok számára - többtáblás adatbázisok, normalizálás, hierarchikus űrlapok, haladó lekérdezések." />
+  
+
+<meta name="author" content="Ring Orsolya" />
+
+
+<meta name="date" content="2026-03-16" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="műveleti-lekérdezések.html"/>
+<link rel="next" href="excel-access-integráció.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Access haladó - Levéltári adatbázisok</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Előszó</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#a-tananyag-fel%C3%A9p%C3%ADt%C3%A9se"><i class="fa fa-check"></i>A tananyag felépítése</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#gyakorlati-projekt"><i class="fa fa-check"></i>Gyakorlati projekt</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="rossz-adatbázis-struktúra-felismerése.html"><a href="rossz-adatbázis-struktúra-felismerése.html"><i class="fa fa-check"></i><b>1</b> Rossz adatbázis-struktúra felismerése</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="rossz-adatbázis-struktúra-felismerése.html"><a href="rossz-adatbázis-struktúra-felismerése.html#problemas-db"><i class="fa fa-check"></i><b>1.1</b> A problémás adatbázis</a>
+<ul>
+<li class="chapter" data-level="1.1.1" data-path="rossz-adatbázis-struktúra-felismerése.html"><a href="rossz-adatbázis-struktúra-felismerése.html#egyetlen-t%C3%A1bl%C3%A1s-megold%C3%A1s"><i class="fa fa-check"></i><b>1.1.1</b> Egyetlen táblás “megoldás”</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="rossz-adatbázis-struktúra-felismerése.html"><a href="rossz-adatbázis-struktúra-felismerése.html#ismetlodo-adatok"><i class="fa fa-check"></i><b>1.2</b> Probléma #1: Ismétlődő adatok</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="rossz-adatbázis-struktúra-felismerése.html"><a href="rossz-adatbázis-struktúra-felismerése.html#ugyanez-az-%C3%A1llagn%C3%A1l"><i class="fa fa-check"></i><b>1.2.1</b> Ugyanez az állagnál</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="rossz-adatbázis-struktúra-felismerése.html"><a href="rossz-adatbázis-struktúra-felismerése.html#frissitesi-anomaliak"><i class="fa fa-check"></i><b>1.3</b> Probléma #2: Frissítési anomáliák</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="rossz-adatbázis-struktúra-felismerése.html"><a href="rossz-adatbázis-struktúra-felismerése.html#mi-t%C3%B6rt%C3%A9nik-ha"><i class="fa fa-check"></i><b>1.3.1</b> Mi történik, ha…</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="rossz-adatbázis-struktúra-felismerése.html"><a href="rossz-adatbázis-struktúra-felismerése.html#adatintegr-kockazat"><i class="fa fa-check"></i><b>1.4</b> Probléma #3: Adatintegritási kockázat</a>
+<ul>
+<li class="chapter" data-level="1.4.1" data-path="rossz-adatbázis-struktúra-felismerése.html"><a href="rossz-adatbázis-struktúra-felismerése.html#ugyanaz-a-fond-m%C3%A9gis-m%C3%A1sk%C3%A9pp"><i class="fa fa-check"></i><b>1.4.1</b> Ugyanaz a fond, mégis másképp</a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="rossz-adatbázis-struktúra-felismerése.html"><a href="rossz-adatbázis-struktúra-felismerése.html#redundancia"><i class="fa fa-check"></i><b>1.5</b> Probléma #4: Redundancia és méret</a>
+<ul>
+<li class="chapter" data-level="1.5.1" data-path="rossz-adatbázis-struktúra-felismerése.html"><a href="rossz-adatbázis-struktúra-felismerése.html#mennyi-helyet-pazarolunk"><i class="fa fa-check"></i><b>1.5.1</b> Mennyi helyet pazarolunk?</a></li>
+</ul></li>
+<li class="chapter" data-level="1.6" data-path="rossz-adatbázis-struktúra-felismerése.html"><a href="rossz-adatbázis-struktúra-felismerése.html#lekerdezes-nehezseg"><i class="fa fa-check"></i><b>1.6</b> Probléma #5: Lekérdezési nehézségek</a>
+<ul>
+<li class="chapter" data-level="1.6.1" data-path="rossz-adatbázis-struktúra-felismerése.html"><a href="rossz-adatbázis-struktúra-felismerése.html#egyszer%C5%B1-k%C3%A9rd%C3%A9sek-bonyolult-megold%C3%A1sok"><i class="fa fa-check"></i><b>1.6.1</b> Egyszerű kérdések, bonyolult megoldások</a></li>
+</ul></li>
+<li class="chapter" data-level="1.7" data-path="rossz-adatbázis-struktúra-felismerése.html"><a href="rossz-adatbázis-struktúra-felismerése.html#felhasznaloi-hibak"><i class="fa fa-check"></i><b>1.7</b> Probléma #6: Felhasználói hibák</a>
+<ul>
+<li class="chapter" data-level="1.7.1" data-path="rossz-adatbázis-struktúra-felismerése.html"><a href="rossz-adatbázis-struktúra-felismerése.html#adatbevitel-egyetlen-t%C3%A1bl%C3%A1ban"><i class="fa fa-check"></i><b>1.7.1</b> Adatbevitel egyetlen táblában</a></li>
+</ul></li>
+<li class="chapter" data-level="1.8" data-path="rossz-adatbázis-struktúra-felismerése.html"><a href="rossz-adatbázis-struktúra-felismerése.html#megoldas-elozetes"><i class="fa fa-check"></i><b>1.8</b> A megoldás: Normalizálás</a>
+<ul>
+<li class="chapter" data-level="1.8.1" data-path="rossz-adatbázis-struktúra-felismerése.html"><a href="rossz-adatbázis-struktúra-felismerése.html#mi-az-a-normaliz%C3%A1l%C3%A1s"><i class="fa fa-check"></i><b>1.8.1</b> Mi az a normalizálás?</a></li>
+<li class="chapter" data-level="1.8.2" data-path="rossz-adatbázis-struktúra-felismerése.html"><a href="rossz-adatbázis-struktúra-felismerése.html#helyes-strukt%C3%BAra-el%C5%91n%C3%A9zet"><i class="fa fa-check"></i><b>1.8.2</b> Helyes struktúra előnézet</a></li>
+</ul></li>
+<li class="chapter" data-level="1.9" data-path="rossz-adatbázis-struktúra-felismerése.html"><a href="rossz-adatbázis-struktúra-felismerése.html#gyak-problemak"><i class="fa fa-check"></i><b>1.9</b> Gyakorlat: Problémák azonosítása</a>
+<ul>
+<li class="chapter" data-level="1.9.1" data-path="rossz-adatbázis-struktúra-felismerése.html"><a href="rossz-adatbázis-struktúra-felismerése.html#p%C3%A9lda-adatb%C3%A1zis-kik%C3%A9r%C3%A9sek"><i class="fa fa-check"></i><b>1.9.1</b> Példa adatbázis: Kikérések</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="normalizálás-alapjai.html"><a href="normalizálás-alapjai.html"><i class="fa fa-check"></i><b>2</b> Normalizálás alapjai</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="normalizálás-alapjai.html"><a href="normalizálás-alapjai.html#mi-a-normalizalas"><i class="fa fa-check"></i><b>2.1</b> Mi a normalizálás?</a></li>
+<li class="chapter" data-level="2.2" data-path="normalizálás-alapjai.html"><a href="normalizálás-alapjai.html#normal-szintek"><i class="fa fa-check"></i><b>2.2</b> A normalizálás szintjei</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="normalizálás-alapjai.html"><a href="normalizálás-alapjai.html#elso-normalforma"><i class="fa fa-check"></i><b>2.2.1</b> Első normálforma (1NF)</a></li>
+<li class="chapter" data-level="2.2.2" data-path="normalizálás-alapjai.html"><a href="normalizálás-alapjai.html#masodik-normalforma"><i class="fa fa-check"></i><b>2.2.2</b> Második normálforma (2NF)</a></li>
+<li class="chapter" data-level="2.2.3" data-path="normalizálás-alapjai.html"><a href="normalizálás-alapjai.html#harmadik-normalforma"><i class="fa fa-check"></i><b>2.2.3</b> Harmadik normálforma (3NF)</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="normalizálás-alapjai.html"><a href="normalizálás-alapjai.html#leveltari-pelda"><i class="fa fa-check"></i><b>2.3</b> Levéltári példa: Fondok → Állagok → Iratok</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="normalizálás-alapjai.html"><a href="normalizálás-alapjai.html#kiindul%C3%A1s-rossz-strukt%C3%BAra-denormaliz%C3%A1lt"><i class="fa fa-check"></i><b>2.3.1</b> Kiindulás: Rossz struktúra (denormalizált)</a></li>
+<li class="chapter" data-level="2.3.2" data-path="normalizálás-alapjai.html"><a href="normalizálás-alapjai.html#l%C3%A9p%C3%A9s-1nf-ellen%C5%91rz%C3%A9se"><i class="fa fa-check"></i><b>2.3.2</b> 1. lépés: 1NF ellenőrzése</a></li>
+<li class="chapter" data-level="2.3.3" data-path="normalizálás-alapjai.html"><a href="normalizálás-alapjai.html#l%C3%A9p%C3%A9s-2nf-alkalmaz%C3%A1sa"><i class="fa fa-check"></i><b>2.3.3</b> 2. lépés: 2NF alkalmazása</a></li>
+<li class="chapter" data-level="2.3.4" data-path="normalizálás-alapjai.html"><a href="normalizálás-alapjai.html#l%C3%A9p%C3%A9s-3nf-alkalmaz%C3%A1sa"><i class="fa fa-check"></i><b>2.3.4</b> 3. lépés: 3NF alkalmazása</a></li>
+<li class="chapter" data-level="2.3.5" data-path="normalizálás-alapjai.html"><a href="normalizálás-alapjai.html#v%C3%A9geredm%C3%A9ny-normaliz%C3%A1lt-strukt%C3%BAra"><i class="fa fa-check"></i><b>2.3.5</b> Végeredmény: Normalizált struktúra</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="normalizálás-alapjai.html"><a href="normalizálás-alapjai.html#normalizalasi-szabalyok"><i class="fa fa-check"></i><b>2.4</b> Normalizálási szabályok levéltárban</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="normalizálás-alapjai.html"><a href="normalizálás-alapjai.html#%C3%A1ltal%C3%A1nos-elvek"><i class="fa fa-check"></i><b>2.4.1</b> Általános elvek</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="normalizálás-alapjai.html"><a href="normalizálás-alapjai.html#gyakorlat-normalizalas"><i class="fa fa-check"></i><b>2.5</b> Gyakorlat: Normalizálás lépésről-lépésre</a>
+<ul>
+<li class="chapter" data-level="2.5.1" data-path="normalizálás-alapjai.html"><a href="normalizálás-alapjai.html#kiindul%C3%A1s-kutat%C3%B3i-kik%C3%B6lcs%C3%B6nz%C3%A9si-napl%C3%B3"><i class="fa fa-check"></i><b>2.5.1</b> Kiindulás: Kutatói kikölcsönzési napló</a></li>
+<li class="chapter" data-level="2.5.2" data-path="normalizálás-alapjai.html"><a href="normalizálás-alapjai.html#megold%C3%A1s"><i class="fa fa-check"></i><b>2.5.2</b> Megoldás</a></li>
+</ul></li>
+<li class="chapter" data-level="2.6" data-path="normalizálás-alapjai.html"><a href="normalizálás-alapjai.html#fejlett-combo"><i class="fa fa-check"></i><b>2.6</b> Fejlettebb combo box: Fond + Állag együtt</a>
+<ul>
+<li class="chapter" data-level="2.6.1" data-path="normalizálás-alapjai.html"><a href="normalizálás-alapjai.html#sql-m%C3%B3dos%C3%ADt%C3%A1sa"><i class="fa fa-check"></i><b>2.6.1</b> SQL módosítása</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="műveleti-lekérdezések.html"><a href="műveleti-lekérdezések.html"><i class="fa fa-check"></i><b>3</b> Műveleti lekérdezések</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="műveleti-lekérdezések.html"><a href="műveleti-lekérdezések.html#biztonsagi-mentes"><i class="fa fa-check"></i><b>3.1</b> Biztonsági mentés készítése</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="műveleti-lekérdezések.html"><a href="műveleti-lekérdezések.html#m%C3%B3dszer-1-adatb%C3%A1zis-m%C3%A1sol%C3%A1sa-aj%C3%A1nlott"><i class="fa fa-check"></i><b>3.1.1</b> Módszer 1: Adatbázis másolása (AJÁNLOTT)</a></li>
+<li class="chapter" data-level="3.1.2" data-path="műveleti-lekérdezések.html"><a href="műveleti-lekérdezések.html#m%C3%B3dszer-2-t%C3%B6m%C3%B6r%C3%ADt%C3%A9s-%C3%A9s-m%C3%A1sol%C3%A1s-halad%C3%B3knak"><i class="fa fa-check"></i><b>3.1.2</b> Módszer 2: Tömörítés és Másolás (haladóknak)</a></li>
+<li class="chapter" data-level="3.1.3" data-path="műveleti-lekérdezések.html"><a href="műveleti-lekérdezések.html#biztons%C3%A1gi-ment%C3%A9si-strat%C3%A9gia"><i class="fa fa-check"></i><b>3.1.3</b> Biztonsági mentési stratégia</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="műveleti-lekérdezések.html"><a href="műveleti-lekérdezések.html#frissitesi"><i class="fa fa-check"></i><b>3.2</b> Frissítési lekérdezés (Update Query)</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="műveleti-lekérdezések.html"><a href="műveleti-lekérdezések.html#p%C3%A9lda-dobozt%C3%A1r-sz%C3%A1mok-el%C5%91tag%C3%A1nak-m%C3%B3dos%C3%ADt%C3%A1sa"><i class="fa fa-check"></i><b>3.2.1</b> Példa: Doboztár számok előtagának módosítása</a></li>
+<li class="chapter" data-level="3.2.2" data-path="műveleti-lekérdezések.html"><a href="műveleti-lekérdezések.html#l%C3%A9p%C3%A9s-biztons%C3%A1gi-ment%C3%A9s-k%C3%B6telez%C5%91"><i class="fa fa-check"></i><b>3.2.2</b> 1. LÉPÉS: Biztonsági mentés (KÖTELEZŐ!)</a></li>
+<li class="chapter" data-level="3.2.3" data-path="műveleti-lekérdezések.html"><a href="műveleti-lekérdezések.html#l%C3%A9p%C3%A9s-tesztel%C3%A9s-select-lek%C3%A9rdez%C3%A9ssel"><i class="fa fa-check"></i><b>3.2.3</b> 2. LÉPÉS: Tesztelés SELECT lekérdezéssel</a></li>
+<li class="chapter" data-level="3.2.4" data-path="műveleti-lekérdezések.html"><a href="műveleti-lekérdezések.html#l%C3%A9p%C3%A9s-sz%C3%A1m%C3%ADtott-mez%C5%91-tesztel%C3%A9se"><i class="fa fa-check"></i><b>3.2.4</b> 3. LÉPÉS: Számított mező tesztelése</a></li>
+<li class="chapter" data-level="3.2.5" data-path="műveleti-lekérdezések.html"><a href="műveleti-lekérdezések.html#l%C3%A9p%C3%A9s-%C3%A1tv%C3%A1lt%C3%A1s-friss%C3%ADt%C3%A9si-lek%C3%A9rdez%C3%A9sre"><i class="fa fa-check"></i><b>3.2.5</b> 4. LÉPÉS: Átváltás FRISSÍTÉSI lekérdezésre</a></li>
+<li class="chapter" data-level="3.2.6" data-path="műveleti-lekérdezések.html"><a href="műveleti-lekérdezések.html#l%C3%A9p%C3%A9s-futtat%C3%A1s-visszavonhatatlan"><i class="fa fa-check"></i><b>3.2.6</b> 5. LÉPÉS: FUTTATÁS (Visszavonhatatlan!)</a></li>
+<li class="chapter" data-level="3.2.7" data-path="műveleti-lekérdezések.html"><a href="műveleti-lekérdezések.html#l%C3%A9p%C3%A9s-eredm%C3%A9ny-ellen%C5%91rz%C3%A9se"><i class="fa fa-check"></i><b>3.2.7</b> 6. LÉPÉS: Eredmény ellenőrzése</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="műveleti-lekérdezések.html"><a href="műveleti-lekérdezések.html#hozzafuzes"><i class="fa fa-check"></i><b>3.3</b> Hozzáfűzési lekérdezés (Append Query)</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="műveleti-lekérdezések.html"><a href="műveleti-lekérdezések.html#p%C3%A9lda-digitaliz%C3%A1lt-iratok-archiv%C3%A1l%C3%A1sa"><i class="fa fa-check"></i><b>3.3.1</b> Példa: Digitalizált iratok archiválása</a></li>
+<li class="chapter" data-level="3.3.2" data-path="műveleti-lekérdezések.html"><a href="műveleti-lekérdezések.html#arch%C3%ADv-t%C3%A1bla-l%C3%A9trehoz%C3%A1sa"><i class="fa fa-check"></i><b>3.3.2</b> 1. Archív tábla létrehozása</a></li>
+<li class="chapter" data-level="3.3.3" data-path="műveleti-lekérdezések.html"><a href="műveleti-lekérdezések.html#hozz%C3%A1f%C5%B1z%C3%A9si-lek%C3%A9rdez%C3%A9s-k%C3%A9sz%C3%ADt%C3%A9se"><i class="fa fa-check"></i><b>3.3.3</b> 2. Hozzáfűzési lekérdezés készítése</a></li>
+<li class="chapter" data-level="3.3.4" data-path="műveleti-lekérdezések.html"><a href="műveleti-lekérdezések.html#%C3%A1tv%C3%A1lt%C3%A1s-hozz%C3%A1f%C5%B1z%C3%A9si-lek%C3%A9rdez%C3%A9sre"><i class="fa fa-check"></i><b>3.3.4</b> 3. Átváltás hozzáfűzési lekérdezésre</a></li>
+<li class="chapter" data-level="3.3.5" data-path="műveleti-lekérdezések.html"><a href="műveleti-lekérdezések.html#futtat%C3%A1s"><i class="fa fa-check"></i><b>3.3.5</b> 4. Futtatás</a></li>
+<li class="chapter" data-level="3.3.6" data-path="műveleti-lekérdezések.html"><a href="műveleti-lekérdezések.html#ellen%C5%91rz%C3%A9s"><i class="fa fa-check"></i><b>3.3.6</b> 5. Ellenőrzés</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="műveleti-lekérdezések.html"><a href="műveleti-lekérdezések.html#torlesi"><i class="fa fa-check"></i><b>3.4</b> Törlési lekérdezés (Delete Query)</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="műveleti-lekérdezések.html"><a href="műveleti-lekérdezések.html#p%C3%A9lda-r%C3%A9gi-arch%C3%ADv-rekordok-t%C3%B6rl%C3%A9se"><i class="fa fa-check"></i><b>3.4.1</b> Példa: Régi archív rekordok törlése</a></li>
+<li class="chapter" data-level="3.4.2" data-path="műveleti-lekérdezések.html"><a href="műveleti-lekérdezések.html#biztons%C3%A1gi-ment%C3%A9s-k%C3%B6telez%C5%91"><i class="fa fa-check"></i><b>3.4.2</b> 1. Biztonsági mentés (KÖTELEZŐ!)</a></li>
+<li class="chapter" data-level="3.4.3" data-path="műveleti-lekérdezések.html"><a href="műveleti-lekérdezések.html#select-teszt"><i class="fa fa-check"></i><b>3.4.3</b> 2. SELECT teszt</a></li>
+<li class="chapter" data-level="3.4.4" data-path="műveleti-lekérdezések.html"><a href="műveleti-lekérdezések.html#%C3%A1tv%C3%A1lt%C3%A1s-t%C3%B6rl%C3%A9si-lek%C3%A9rdez%C3%A9sre"><i class="fa fa-check"></i><b>3.4.4</b> 3. Átváltás törlési lekérdezésre</a></li>
+<li class="chapter" data-level="3.4.5" data-path="műveleti-lekérdezések.html"><a href="műveleti-lekérdezések.html#futtat%C3%A1s-visszavonhatatlan"><i class="fa fa-check"></i><b>3.4.5</b> 4. Futtatás (Visszavonhatatlan!)</a></li>
+<li class="chapter" data-level="3.4.6" data-path="műveleti-lekérdezések.html"><a href="műveleti-lekérdezések.html#ellen%C5%91rz%C3%A9s-1"><i class="fa fa-check"></i><b>3.4.6</b> 5. Ellenőrzés</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="műveleti-lekérdezések.html"><a href="műveleti-lekérdezések.html#tablakeszito"><i class="fa fa-check"></i><b>3.5</b> Táblakészítő lekérdezés (Make-Table Query)</a>
+<ul>
+<li class="chapter" data-level="3.5.1" data-path="műveleti-lekérdezések.html"><a href="műveleti-lekérdezések.html#p%C3%A9lda-statisztikai-%C3%B6sszes%C3%ADt%C5%91-t%C3%A1bla"><i class="fa fa-check"></i><b>3.5.1</b> Példa: Statisztikai összesítő tábla</a></li>
+<li class="chapter" data-level="3.5.2" data-path="műveleti-lekérdezések.html"><a href="műveleti-lekérdezések.html#l%C3%A9p%C3%A9sek"><i class="fa fa-check"></i><b>3.5.2</b> Lépések</a></li>
+<li class="chapter" data-level="3.5.3" data-path="műveleti-lekérdezések.html"><a href="műveleti-lekérdezések.html#%C3%A1tv%C3%A1lt%C3%A1s-t%C3%A1blak%C3%A9sz%C3%ADt%C5%91-lek%C3%A9rdez%C3%A9sre"><i class="fa fa-check"></i><b>3.5.3</b> Átváltás táblakészítő lekérdezésre</a></li>
+<li class="chapter" data-level="3.5.4" data-path="műveleti-lekérdezések.html"><a href="műveleti-lekérdezések.html#futtat%C3%A1s-1"><i class="fa fa-check"></i><b>3.5.4</b> Futtatás</a></li>
+<li class="chapter" data-level="3.5.5" data-path="műveleti-lekérdezések.html"><a href="műveleti-lekérdezések.html#ellen%C5%91rz%C3%A9s-2"><i class="fa fa-check"></i><b>3.5.5</b> Ellenőrzés</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="műveleti-lekérdezések.html"><a href="műveleti-lekérdezések.html#hibak-06"><i class="fa fa-check"></i><b>3.6</b> Hibaelhárítás</a>
+<ul>
+<li class="chapter" data-level="3.6.1" data-path="műveleti-lekérdezések.html"><a href="műveleti-lekérdezések.html#h1-t%C3%BAl-sok-rekord-friss%C3%ADtenet%C3%B6r%C3%B6lne"><i class="fa fa-check"></i><b>3.6.1</b> H1: “Túl sok rekord frissítene/törölne”</a></li>
+<li class="chapter" data-level="3.6.2" data-path="műveleti-lekérdezések.html"><a href="műveleti-lekérdezések.html#h2-t%C3%ADpuselt%C3%A9r%C3%A9s-a-kifejez%C3%A9sben"><i class="fa fa-check"></i><b>3.6.2</b> H2: “Típuseltérés a kifejezésben”</a></li>
+<li class="chapter" data-level="3.6.3" data-path="műveleti-lekérdezések.html"><a href="műveleti-lekérdezések.html#h3-kulcs-megs%C3%A9rt%C3%A9s"><i class="fa fa-check"></i><b>3.6.3</b> H3: “Kulcs megsértés”</a></li>
+<li class="chapter" data-level="3.6.4" data-path="műveleti-lekérdezések.html"><a href="műveleti-lekérdezések.html#h4-referenci%C3%A1lis-integrit%C3%A1s-megs%C3%A9rt%C3%A9se"><i class="fa fa-check"></i><b>3.6.4</b> H4: “Referenciális integritás megsértése”</a></li>
+<li class="chapter" data-level="3.6.5" data-path="műveleti-lekérdezések.html"><a href="műveleti-lekérdezések.html#h5-0-rekord-friss%C3%BCltt%C3%B6rl%C5%91d%C3%B6tt"><i class="fa fa-check"></i><b>3.6.5</b> H5: “0 rekord frissült/törlődött”</a></li>
+<li class="chapter" data-level="3.6.6" data-path="műveleti-lekérdezések.html"><a href="műveleti-lekérdezések.html#h6-a-lek%C3%A9rdez%C3%A9s-s%C3%A9r%C3%BClt"><i class="fa fa-check"></i><b>3.6.6</b> H6: “A lekérdezés sérült”</a></li>
+</ul></li>
+<li class="chapter" data-level="3.7" data-path="műveleti-lekérdezések.html"><a href="műveleti-lekérdezések.html#gyakorlatok-06"><i class="fa fa-check"></i><b>3.7</b> Gyakorlatok</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="kereszttábla-lekérdezések.html"><a href="kereszttábla-lekérdezések.html"><i class="fa fa-check"></i><b>4</b> Kereszttábla lekérdezések</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="kereszttábla-lekérdezések.html"><a href="kereszttábla-lekérdezések.html#mi-kereszttabla"><i class="fa fa-check"></i><b>4.1</b> Mi a kereszttábla?</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="kereszttábla-lekérdezések.html"><a href="kereszttábla-lekérdezések.html#hagyom%C3%A1nyos-lek%C3%A9rdez%C3%A9s-vs.-keresztt%C3%A1bla"><i class="fa fa-check"></i><b>4.1.1</b> Hagyományos lekérdezés vs. Kereszttábla</a></li>
+<li class="chapter" data-level="4.1.2" data-path="kereszttábla-lekérdezések.html"><a href="kereszttábla-lekérdezések.html#keresztt%C3%A1bla-elemei"><i class="fa fa-check"></i><b>4.1.2</b> Kereszttábla elemei</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="kereszttábla-lekérdezések.html"><a href="kereszttábla-lekérdezések.html#kereszt-varazslo"><i class="fa fa-check"></i><b>4.2</b> Kereszttábla varázsló részletesen</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="kereszttábla-lekérdezések.html"><a href="kereszttábla-lekérdezések.html#l%C3%A9p%C3%A9s-var%C3%A1zsl%C3%B3-ind%C3%ADt%C3%A1sa"><i class="fa fa-check"></i><b>4.2.1</b> 1. LÉPÉS: Varázsló indítása</a></li>
+<li class="chapter" data-level="4.2.2" data-path="kereszttábla-lekérdezések.html"><a href="kereszttábla-lekérdezések.html#l%C3%A9p%C3%A9s-forr%C3%A1s-t%C3%A1bla-kiv%C3%A1laszt%C3%A1sa"><i class="fa fa-check"></i><b>4.2.2</b> 2. LÉPÉS: Forrás tábla kiválasztása</a></li>
+<li class="chapter" data-level="4.2.3" data-path="kereszttábla-lekérdezések.html"><a href="kereszttábla-lekérdezések.html#l%C3%A9p%C3%A9s-sorfejl%C3%A9cek-kiv%C3%A1laszt%C3%A1sa"><i class="fa fa-check"></i><b>4.2.3</b> 3. LÉPÉS: Sorfejlécek kiválasztása</a></li>
+<li class="chapter" data-level="4.2.4" data-path="kereszttábla-lekérdezések.html"><a href="kereszttábla-lekérdezések.html#l%C3%A9p%C3%A9s-oszlopfejl%C3%A9cek-kiv%C3%A1laszt%C3%A1sa"><i class="fa fa-check"></i><b>4.2.4</b> 4. LÉPÉS: Oszlopfejlécek kiválasztása</a></li>
+<li class="chapter" data-level="4.2.5" data-path="kereszttábla-lekérdezések.html"><a href="kereszttábla-lekérdezések.html#l%C3%A9p%C3%A9s-%C3%A9rt%C3%A9kek-be%C3%A1ll%C3%ADt%C3%A1sa"><i class="fa fa-check"></i><b>4.2.5</b> 5. LÉPÉS: Értékek beállítása</a></li>
+<li class="chapter" data-level="4.2.6" data-path="kereszttábla-lekérdezések.html"><a href="kereszttábla-lekérdezések.html#l%C3%A9p%C3%A9s-lek%C3%A9rdez%C3%A9s-neve"><i class="fa fa-check"></i><b>4.2.6</b> 6. LÉPÉS: Lekérdezés neve</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="kereszttábla-lekérdezések.html"><a href="kereszttábla-lekérdezések.html#sql-szerkesztes"><i class="fa fa-check"></i><b>4.3</b> SQL szerkesztése és magyarázat</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="kereszttábla-lekérdezések.html"><a href="kereszttábla-lekérdezések.html#gener%C3%A1lt-sql-var%C3%A1zsl%C3%B3-eredm%C3%A9nye"><i class="fa fa-check"></i><b>4.3.1</b> Generált SQL (varázsló eredménye):</a></li>
+<li class="chapter" data-level="4.3.2" data-path="kereszttábla-lekérdezések.html"><a href="kereszttábla-lekérdezések.html#jav%C3%ADtott-sql-join-nal-%C3%A1llag-n%C3%A9vvel"><i class="fa fa-check"></i><b>4.3.2</b> Javított SQL (JOIN-nal, állag névvel):</a></li>
+<li class="chapter" data-level="4.3.3" data-path="kereszttábla-lekérdezések.html"><a href="kereszttábla-lekérdezések.html#transformpivot-sql-magyar%C3%A1zat"><i class="fa fa-check"></i><b>4.3.3</b> TRANSFORM…PIVOT SQL magyarázat</a></li>
+<li class="chapter" data-level="4.3.4" data-path="kereszttábla-lekérdezések.html"><a href="kereszttábla-lekérdezések.html#vizualiz%C3%A1ci%C3%B3---mi-t%C3%B6rt%C3%A9nik"><i class="fa fa-check"></i><b>4.3.4</b> Vizualizáció - Mi történik?</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="kereszttábla-lekérdezések.html"><a href="kereszttábla-lekérdezések.html#kereszt-datum"><i class="fa fa-check"></i><b>4.4</b> Kereszttábla dátumokkal</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="kereszttábla-lekérdezések.html"><a href="kereszttábla-lekérdezések.html#p%C3%A9lda-1-digitaliz%C3%A1l%C3%A1s-havi-bont%C3%A1sban"><i class="fa fa-check"></i><b>4.4.1</b> Példa 1: Digitalizálás havi bontásban</a></li>
+<li class="chapter" data-level="4.4.2" data-path="kereszttábla-lekérdezések.html"><a href="kereszttábla-lekérdezések.html#p%C3%A9lda-2-kik%C3%A9r%C3%A9sek-negyed%C3%A9ves-bont%C3%A1sban"><i class="fa fa-check"></i><b>4.4.2</b> Példa 2: Kikérések negyedéves bontásban</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="kereszttábla-lekérdezések.html"><a href="kereszttábla-lekérdezések.html#excel-export"><i class="fa fa-check"></i><b>4.5</b> Excel exportálás</a>
+<ul>
+<li class="chapter" data-level="4.5.1" data-path="kereszttábla-lekérdezések.html"><a href="kereszttábla-lekérdezések.html#l%C3%A9p%C3%A9sek-1"><i class="fa fa-check"></i><b>4.5.1</b> Lépések:</a></li>
+<li class="chapter" data-level="4.5.2" data-path="kereszttábla-lekérdezések.html"><a href="kereszttábla-lekérdezések.html#excel-ben-tov%C3%A1bbi-feldolgoz%C3%A1s"><i class="fa fa-check"></i><b>4.5.2</b> Excel-ben további feldolgozás</a></li>
+</ul></li>
+<li class="chapter" data-level="4.6" data-path="kereszttábla-lekérdezések.html"><a href="kereszttábla-lekérdezések.html#hibak-07"><i class="fa fa-check"></i><b>4.6</b> Hibaelhárítás</a>
+<ul>
+<li class="chapter" data-level="4.6.1" data-path="kereszttábla-lekérdezések.html"><a href="kereszttábla-lekérdezések.html#h1-t%C3%BAl-sok-oszlop"><i class="fa fa-check"></i><b>4.6.1</b> H1: “Túl sok oszlop”</a></li>
+<li class="chapter" data-level="4.6.2" data-path="kereszttábla-lekérdezések.html"><a href="kereszttábla-lekérdezések.html#h2-null-%C3%A9rt%C3%A9kek-az-oszlopokban"><i class="fa fa-check"></i><b>4.6.2</b> H2: “NULL értékek az oszlopokban”</a></li>
+<li class="chapter" data-level="4.6.3" data-path="kereszttábla-lekérdezések.html"><a href="kereszttábla-lekérdezések.html#h3-h%C3%B3napok-rossz-sorrendben"><i class="fa fa-check"></i><b>4.6.3</b> H3: “Hónapok rossz sorrendben”</a></li>
+</ul></li>
+<li class="chapter" data-level="4.7" data-path="kereszttábla-lekérdezések.html"><a href="kereszttábla-lekérdezések.html#gyakorlatok-07"><i class="fa fa-check"></i><b>4.7</b> Gyakorlatok</a></li>
+<li class="chapter" data-level="" data-path="kereszttábla-lekérdezések.html"><a href="kereszttábla-lekérdezések.html#%C3%B6sszefoglal%C3%A1s"><i class="fa fa-check"></i>Összefoglalás</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="excel-access-integráció.html"><a href="excel-access-integráció.html"><i class="fa fa-check"></i><b>5</b> Excel-Access integráció</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="excel-access-integráció.html"><a href="excel-access-integráció.html#excel-vs-access"><i class="fa fa-check"></i><b>5.1</b> Mikor használjunk Excel-t, mikor Access-t?</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="excel-access-integráció.html"><a href="excel-access-integráció.html#excel-er%C5%91ss%C3%A9gei"><i class="fa fa-check"></i><b>5.1.1</b> Excel erősségei</a></li>
+<li class="chapter" data-level="5.1.2" data-path="excel-access-integráció.html"><a href="excel-access-integráció.html#access-er%C5%91ss%C3%A9gei"><i class="fa fa-check"></i><b>5.1.2</b> Access erősségei</a></li>
+<li class="chapter" data-level="5.1.3" data-path="excel-access-integráció.html"><a href="excel-access-integráció.html#az-ide%C3%A1lis-munkafolyamat"><i class="fa fa-check"></i><b>5.1.3</b> Az ideális munkafolyamat 🔄</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="excel-access-integráció.html"><a href="excel-access-integráció.html#import-excel"><i class="fa fa-check"></i><b>5.2</b> Import Excel-ből</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="excel-access-integráció.html"><a href="excel-access-integráció.html#excel-f%C3%A1jl-el%C5%91k%C3%A9sz%C3%ADt%C3%A9se-fontos"><i class="fa fa-check"></i><b>5.2.1</b> Excel fájl előkészítése (FONTOS!)</a></li>
+<li class="chapter" data-level="5.2.2" data-path="excel-access-integráció.html"><a href="excel-access-integráció.html#import-var%C3%A1zsl%C3%B3-r%C3%A9szletesen"><i class="fa fa-check"></i><b>5.2.2</b> Import varázsló részletesen</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="excel-access-integráció.html"><a href="excel-access-integráció.html#export-excel"><i class="fa fa-check"></i><b>5.3</b> Export Access-ből Excel-be</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="excel-access-integráció.html"><a href="excel-access-integráció.html#export-l%C3%A9p%C3%A9sei-r%C3%A9szletesen"><i class="fa fa-check"></i><b>5.3.1</b> Export lépései részletesen</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="excel-access-integráció.html"><a href="excel-access-integráció.html#osszekapcsolt"><i class="fa fa-check"></i><b>5.4</b> Összekapcsolt tábla</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="excel-access-integráció.html"><a href="excel-access-integráció.html#l%C3%A9trehoz%C3%A1s"><i class="fa fa-check"></i><b>5.4.1</b> Létrehozás</a></li>
+<li class="chapter" data-level="5.4.2" data-path="excel-access-integráció.html"><a href="excel-access-integráció.html#m%C5%B1k%C3%B6d%C3%A9s"><i class="fa fa-check"></i><b>5.4.2</b> Működés</a></li>
+<li class="chapter" data-level="5.4.3" data-path="excel-access-integráció.html"><a href="excel-access-integráció.html#el%C5%91ny%C3%B6k-%C3%A9s-h%C3%A1tr%C3%A1nyok"><i class="fa fa-check"></i><b>5.4.3</b> Előnyök és hátrányok</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="excel-access-integráció.html"><a href="excel-access-integráció.html#adattipus-problemak"><i class="fa fa-check"></i><b>5.5</b> Adattípus-problémák kezelése</a>
+<ul>
+<li class="chapter" data-level="5.5.1" data-path="excel-access-integráció.html"><a href="excel-access-integráció.html#probl%C3%A9ma-1-d%C3%A1tum-nem-import%C3%A1l%C3%B3dik"><i class="fa fa-check"></i><b>5.5.1</b> Probléma 1: Dátum nem importálódik</a></li>
+<li class="chapter" data-level="5.5.2" data-path="excel-access-integráció.html"><a href="excel-access-integráció.html#probl%C3%A9ma-2-sz%C3%A1m-sz%C3%B6vegk%C3%A9nt-import%C3%A1l%C3%B3dik"><i class="fa fa-check"></i><b>5.5.2</b> Probléma 2: Szám szövegként importálódik</a></li>
+<li class="chapter" data-level="5.5.3" data-path="excel-access-integráció.html"><a href="excel-access-integráció.html#probl%C3%A9ma-3-null-%C3%A9rt%C3%A9kek-%C3%BCres-cell%C3%A1k"><i class="fa fa-check"></i><b>5.5.3</b> Probléma 3: NULL értékek (üres cellák)</a></li>
+</ul></li>
+<li class="chapter" data-level="5.6" data-path="excel-access-integráció.html"><a href="excel-access-integráció.html#workflow-pelda"><i class="fa fa-check"></i><b>5.6</b> Gyakorlati workflow példa</a>
+<ul>
+<li class="chapter" data-level="5.6.1" data-path="excel-access-integráció.html"><a href="excel-access-integráció.html#teljes-lev%C3%A9lt%C3%A1ri-munkafolyamat"><i class="fa fa-check"></i><b>5.6.1</b> Teljes levéltári munkafolyamat</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="alapszintű-makrók.html"><a href="alapszintű-makrók.html"><i class="fa fa-check"></i><b>6</b> Alapszintű makrók</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="alapszintű-makrók.html"><a href="alapszintű-makrók.html#mi-a-makro"><i class="fa fa-check"></i><b>6.1</b> Mi a makró?</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="alapszintű-makrók.html"><a href="alapszintű-makrók.html#makr%C3%B3-vs.-vba"><i class="fa fa-check"></i><b>6.1.1</b> Makró vs. VBA</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="alapszintű-makrók.html"><a href="alapszintű-makrók.html#makro-urlap"><i class="fa fa-check"></i><b>6.2</b> Egyszerű makró: Űrlap megnyitása</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="alapszintű-makrók.html"><a href="alapszintű-makrók.html#l%C3%A9p%C3%A9s-makr%C3%B3-l%C3%A9trehoz%C3%A1sa"><i class="fa fa-check"></i><b>6.2.1</b> 1. LÉPÉS: Makró létrehozása</a></li>
+<li class="chapter" data-level="6.2.2" data-path="alapszintű-makrók.html"><a href="alapszintű-makrók.html#l%C3%A9p%C3%A9s-m%C5%B1velet-hozz%C3%A1ad%C3%A1sa"><i class="fa fa-check"></i><b>6.2.2</b> 2. LÉPÉS: Művelet hozzáadása</a></li>
+<li class="chapter" data-level="6.2.3" data-path="alapszintű-makrók.html"><a href="alapszintű-makrók.html#l%C3%A9p%C3%A9s-param%C3%A9terek-be%C3%A1ll%C3%ADt%C3%A1sa"><i class="fa fa-check"></i><b>6.2.3</b> 3. LÉPÉS: Paraméterek beállítása</a></li>
+<li class="chapter" data-level="6.2.4" data-path="alapszintű-makrók.html"><a href="alapszintű-makrók.html#l%C3%A9p%C3%A9s-makr%C3%B3-ment%C3%A9se"><i class="fa fa-check"></i><b>6.2.4</b> 4. LÉPÉS: Makró mentése</a></li>
+<li class="chapter" data-level="6.2.5" data-path="alapszintű-makrók.html"><a href="alapszintű-makrók.html#l%C3%A9p%C3%A9s-gomb-k%C3%A9sz%C3%ADt%C3%A9se-%C5%B1rlapon"><i class="fa fa-check"></i><b>6.2.5</b> 5. LÉPÉS: Gomb készítése űrlapon</a></li>
+<li class="chapter" data-level="6.2.6" data-path="alapszintű-makrók.html"><a href="alapszintű-makrók.html#l%C3%A9p%C3%A9s-tesztel%C3%A9s"><i class="fa fa-check"></i><b>6.2.6</b> 6. LÉPÉS: Tesztelés</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="alapszintű-makrók.html"><a href="alapszintű-makrók.html#makro-lekerdezes"><i class="fa fa-check"></i><b>6.3</b> Makró lekérdezés futtatásához</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="alapszintű-makrók.html"><a href="alapszintű-makrók.html#makr%C3%B3-l%C3%A9trehoz%C3%A1sa"><i class="fa fa-check"></i><b>6.3.1</b> Makró létrehozása</a></li>
+<li class="chapter" data-level="6.3.2" data-path="alapszintű-makrók.html"><a href="alapszintű-makrók.html#gomb-hozz%C3%A1ad%C3%A1sa-gyors%C3%ADtott"><i class="fa fa-check"></i><b>6.3.2</b> Gomb hozzáadása (gyorsított)</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="alapszintű-makrók.html"><a href="alapszintű-makrók.html#makro-export"><i class="fa fa-check"></i><b>6.4</b> Makró exportáláshoz</a>
+<ul>
+<li class="chapter" data-level="6.4.1" data-path="alapszintű-makrók.html"><a href="alapszintű-makrók.html#makr%C3%B3-l%C3%A9trehoz%C3%A1sa-1"><i class="fa fa-check"></i><b>6.4.1</b> Makró létrehozása</a></li>
+<li class="chapter" data-level="6.4.2" data-path="alapszintű-makrók.html"><a href="alapszintű-makrók.html#gomb-hozz%C3%A1ad%C3%A1sa"><i class="fa fa-check"></i><b>6.4.2</b> Gomb hozzáadása</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="alapszintű-makrók.html"><a href="alapszintű-makrók.html#makro-sorozat"><i class="fa fa-check"></i><b>6.5</b> Makró sorozat</a>
+<ul>
+<li class="chapter" data-level="6.5.1" data-path="alapszintű-makrók.html"><a href="alapszintű-makrók.html#makr%C3%B3-l%C3%A9trehoz%C3%A1sa-t%C3%B6bb-m%C5%B1velettel"><i class="fa fa-check"></i><b>6.5.1</b> Makró létrehozása több művelettel</a></li>
+</ul></li>
+<li class="chapter" data-level="6.6" data-path="alapszintű-makrók.html"><a href="alapszintű-makrók.html#felteteles-makro"><i class="fa fa-check"></i><b>6.6</b> Feltételes makró</a>
+<ul>
+<li class="chapter" data-level="6.6.1" data-path="alapszintű-makrók.html"><a href="alapszintű-makrók.html#makr%C3%B3-l%C3%A9trehoz%C3%A1sa-felt%C3%A9tellel"><i class="fa fa-check"></i><b>6.6.1</b> Makró létrehozása feltétellel</a></li>
+<li class="chapter" data-level="6.6.2" data-path="alapszintű-makrók.html"><a href="alapszintű-makrók.html#tesztel%C3%A9s"><i class="fa fa-check"></i><b>6.6.2</b> Tesztelés</a></li>
+</ul></li>
+<li class="chapter" data-level="6.7" data-path="alapszintű-makrók.html"><a href="alapszintű-makrók.html#makro-debug"><i class="fa fa-check"></i><b>6.7</b> Makró debugolás</a>
+<ul>
+<li class="chapter" data-level="6.7.1" data-path="alapszintű-makrók.html"><a href="alapszintű-makrók.html#l%C3%A9p%C3%A9senk%C3%A9nti-futtat%C3%A1s"><i class="fa fa-check"></i><b>6.7.1</b> Lépésenkénti futtatás</a></li>
+<li class="chapter" data-level="6.7.2" data-path="alapszintű-makrók.html"><a href="alapszintű-makrók.html#hiba%C3%BCzenetek-%C3%A9rtelmez%C3%A9se"><i class="fa fa-check"></i><b>6.7.2</b> Hibaüzenetek értelmezése</a></li>
+</ul></li>
+<li class="chapter" data-level="6.8" data-path="alapszintű-makrók.html"><a href="alapszintű-makrók.html#gyakori-mintak"><i class="fa fa-check"></i><b>6.8</b> Gyakori makró minták</a>
+<ul>
+<li class="chapter" data-level="6.8.1" data-path="alapszintű-makrók.html"><a href="alapszintű-makrók.html#bez%C3%A1r%C3%A1s-%C3%A9s-%C3%BAjramegnyit%C3%A1s-friss%C3%ADt%C3%A9s"><i class="fa fa-check"></i><b>6.8.1</b> 1. “Bezárás és újramegnyitás” (frissítés)</a></li>
+<li class="chapter" data-level="6.8.2" data-path="alapszintű-makrók.html"><a href="alapszintű-makrók.html#sz%C5%B1r%C3%A9s-alkalmaz%C3%A1sa"><i class="fa fa-check"></i><b>6.8.2</b> 2. “Szűrés alkalmazása”</a></li>
+<li class="chapter" data-level="6.8.3" data-path="alapszintű-makrók.html"><a href="alapszintű-makrók.html#rekord-t%C3%B6rl%C3%A9se-meger%C5%91s%C3%ADt%C3%A9ssel"><i class="fa fa-check"></i><b>6.8.3</b> 3. “Rekord törlése megerősítéssel”</a></li>
+<li class="chapter" data-level="6.8.4" data-path="alapszintű-makrók.html"><a href="alapszintű-makrók.html#email-k%C3%BCld%C3%A9s-outlook-kal"><i class="fa fa-check"></i><b>6.8.4</b> 4. “Email küldés Outlook-kal”</a></li>
+</ul></li>
+<li class="chapter" data-level="6.9" data-path="alapszintű-makrók.html"><a href="alapszintű-makrók.html#hibak-09"><i class="fa fa-check"></i><b>6.9</b> Hibaelhárítás</a>
+<ul>
+<li class="chapter" data-level="6.9.1" data-path="alapszintű-makrók.html"><a href="alapszintű-makrók.html#h1-az-objektum-nem-tal%C3%A1lhat%C3%B3"><i class="fa fa-check"></i><b>6.9.1</b> H1: “Az objektum nem található”</a></li>
+<li class="chapter" data-level="6.9.2" data-path="alapszintű-makrók.html"><a href="alapszintű-makrók.html#h2-a-f%C3%A1jl-m%C3%A1r-haszn%C3%A1latban-van"><i class="fa fa-check"></i><b>6.9.2</b> H2: “A fájl már használatban van”</a></li>
+<li class="chapter" data-level="6.9.3" data-path="alapszintű-makrók.html"><a href="alapszintű-makrók.html#h3-%C3%A9rv%C3%A9nytelen-kifejez%C3%A9s"><i class="fa fa-check"></i><b>6.9.3</b> H3: “Érvénytelen kifejezés”</a></li>
+</ul></li>
+<li class="chapter" data-level="6.10" data-path="alapszintű-makrók.html"><a href="alapszintű-makrók.html#gyakorlatok-09"><i class="fa fa-check"></i><b>6.10</b> Gyakorlatok</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="összefoglalás-és-következő-lépések.html"><a href="összefoglalás-és-következő-lépések.html"><i class="fa fa-check"></i><b>7</b> Összefoglalás és következő lépések</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="összefoglalás-és-következő-lépések.html"><a href="összefoglalás-és-következő-lépések.html#mit-tanultunk-halado"><i class="fa fa-check"></i><b>7.1</b> Mit tanultunk?</a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="összefoglalás-és-következő-lépések.html"><a href="összefoglalás-és-következő-lépések.html#rossz-strukt%C3%BAra-felismer%C3%A9se"><i class="fa fa-check"></i><b>7.1.1</b> 1. Rossz struktúra felismerése</a></li>
+<li class="chapter" data-level="7.1.2" data-path="összefoglalás-és-következő-lépések.html"><a href="összefoglalás-és-következő-lépések.html#normaliz%C3%A1l%C3%A1s"><i class="fa fa-check"></i><b>7.1.2</b> 2. Normalizálás</a></li>
+<li class="chapter" data-level="7.1.3" data-path="összefoglalás-és-következő-lépések.html"><a href="összefoglalás-és-következő-lépések.html#t%C3%B6bbt%C3%A1bl%C3%A1s-strukt%C3%BAra"><i class="fa fa-check"></i><b>7.1.3</b> 3. Többtáblás struktúra</a></li>
+<li class="chapter" data-level="7.1.4" data-path="összefoglalás-és-következő-lépések.html"><a href="összefoglalás-és-következő-lépések.html#hierarchikus-%C5%B1rlapok"><i class="fa fa-check"></i><b>7.1.4</b> 4. Hierarchikus űrlapok</a></li>
+<li class="chapter" data-level="7.1.5" data-path="összefoglalás-és-következő-lépések.html"><a href="összefoglalás-és-következő-lépések.html#kombin%C3%A1lt-list%C3%A1k-combo-box"><i class="fa fa-check"></i><b>7.1.5</b> 5. Kombinált listák (Combo Box)</a></li>
+<li class="chapter" data-level="7.1.6" data-path="összefoglalás-és-következő-lépések.html"><a href="összefoglalás-és-következő-lépések.html#m%C5%B1veleti-lek%C3%A9rdez%C3%A9sek-1"><i class="fa fa-check"></i><b>7.1.6</b> 6. Műveleti lekérdezések</a></li>
+<li class="chapter" data-level="7.1.7" data-path="összefoglalás-és-következő-lépések.html"><a href="összefoglalás-és-következő-lépések.html#keresztt%C3%A1bla-lek%C3%A9rdez%C3%A9sek-1"><i class="fa fa-check"></i><b>7.1.7</b> 7. Kereszttábla lekérdezések</a></li>
+<li class="chapter" data-level="7.1.8" data-path="összefoglalás-és-következő-lépések.html"><a href="összefoglalás-és-következő-lépések.html#excel-access-integr%C3%A1ci%C3%B3-1"><i class="fa fa-check"></i><b>7.1.8</b> 8. Excel-Access integráció</a></li>
+<li class="chapter" data-level="7.1.9" data-path="összefoglalás-és-következő-lépések.html"><a href="összefoglalás-és-következő-lépések.html#makr%C3%B3k"><i class="fa fa-check"></i><b>7.1.9</b> 9. Makrók</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="összefoglalás-és-következő-lépések.html"><a href="összefoglalás-és-következő-lépések.html#mit-tudunk-halado"><i class="fa fa-check"></i><b>7.2</b> A kurzus végeztével mit tudunk?</a></li>
+<li class="chapter" data-level="7.3" data-path="összefoglalás-és-következő-lépések.html"><a href="összefoglalás-és-következő-lépések.html#gyakorlati-alk"><i class="fa fa-check"></i><b>7.3</b> Gyakorlati alkalmazások</a>
+<ul>
+<li class="chapter" data-level="7.3.1" data-path="összefoglalás-és-következő-lépések.html"><a href="összefoglalás-és-következő-lépések.html#teljes-%C3%A1llom%C3%A1ny-nyilv%C3%A1ntart%C3%B3-rendszer"><i class="fa fa-check"></i><b>7.3.1</b> 1. Teljes állomány-nyilvántartó rendszer</a></li>
+<li class="chapter" data-level="7.3.2" data-path="összefoglalás-és-következő-lépések.html"><a href="összefoglalás-és-következő-lépések.html#digitaliz%C3%A1l%C3%A1si-workflow-rendszer"><i class="fa fa-check"></i><b>7.3.2</b> 2. Digitalizálási workflow rendszer</a></li>
+<li class="chapter" data-level="7.3.3" data-path="összefoglalás-és-következő-lépések.html"><a href="összefoglalás-és-következő-lépések.html#kutat%C3%B3i-kiszolg%C3%A1l%C3%A1si-rendszer"><i class="fa fa-check"></i><b>7.3.3</b> 3. Kutatói kiszolgálási rendszer</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="összefoglalás-és-következő-lépések.html"><a href="összefoglalás-és-következő-lépések.html#kovetkezo-lepesek-halado"><i class="fa fa-check"></i><b>7.4</b> Következő lépések</a>
+<ul>
+<li class="chapter" data-level="7.4.1" data-path="összefoglalás-és-következő-lépések.html"><a href="összefoglalás-és-következő-lépések.html#sql-tanul%C3%A1s"><i class="fa fa-check"></i><b>7.4.1</b> SQL tanulás</a></li>
+<li class="chapter" data-level="7.4.2" data-path="összefoglalás-és-következő-lépések.html"><a href="összefoglalás-és-következő-lépések.html#vba-programoz%C3%A1s"><i class="fa fa-check"></i><b>7.4.2</b> VBA programozás</a></li>
+<li class="chapter" data-level="7.4.3" data-path="összefoglalás-és-következő-lépések.html"><a href="összefoglalás-és-következő-lépések.html#adatb%C3%A1zis-adminisztr%C3%A1ci%C3%B3"><i class="fa fa-check"></i><b>7.4.3</b> Adatbázis-adminisztráció</a></li>
+<li class="chapter" data-level="7.4.4" data-path="összefoglalás-és-következő-lépések.html"><a href="összefoglalás-és-következő-lépések.html#t%C3%B6bb-felhaszn%C3%A1l%C3%B3s-adatb%C3%A1zisok"><i class="fa fa-check"></i><b>7.4.4</b> Több felhasználós adatbázisok</a></li>
+</ul></li>
+<li class="chapter" data-level="7.5" data-path="összefoglalás-és-következő-lépések.html"><a href="összefoglalás-és-következő-lépések.html#hasznos-forrasok"><i class="fa fa-check"></i><b>7.5</b> Hasznos források</a></li>
+<li class="chapter" data-level="7.6" data-path="összefoglalás-és-következő-lépések.html"><a href="összefoglalás-és-következő-lépések.html#zaro-gondolatok"><i class="fa fa-check"></i><b>7.6</b> Záró gondolatok</a></li>
+<li class="chapter" data-level="" data-path="összefoglalás-és-következő-lépések.html"><a href="összefoglalás-és-következő-lépések.html#f%C3%BCggel%C3%A9k-%C3%B6sszefoglal%C3%B3-t%C3%A1bl%C3%A1zat"><i class="fa fa-check"></i>Függelék: Összefoglaló táblázat</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Bookdown által készítve</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Access haladó - Levéltári adatbázisok</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="kereszttábla-lekérdezések" class="section level1 hasAnchor" number="4">
+<h1><span class="header-section-number">Fejezet 4</span> Kereszttábla lekérdezések<a href="kereszttábla-lekérdezések.html#keresztt%C3%A1bla-lek%C3%A9rdez%C3%A9sek" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>A <strong>kereszttábla lekérdezés</strong> (crosstab query) adatokat kétdimenziós táblázatos formába rendez, ahol a sorok és oszlopok egyaránt kategóriák, az értékek pedig összesítések.</p>
+<p><strong>Időigény:</strong> 15-20 perc<br />
+<strong>Hasznosság:</strong> Nagyon hasznos statisztikákhoz, jelentésekhez, Excel pivot táblákhoz!</p>
+<div id="mi-kereszttabla" class="section level2 hasAnchor" number="4.1">
+<h2><span class="header-section-number">4.1</span> Mi a kereszttábla?<a href="kereszttábla-lekérdezések.html#mi-kereszttabla" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>A kereszttábla olyan lekérdezés, amely az adatokat <strong>mátrix formában</strong> jeleníti meg.</p>
+<div id="hagyományos-lekérdezés-vs.-kereszttábla" class="section level3 hasAnchor" number="4.1.1">
+<h3><span class="header-section-number">4.1.1</span> Hagyományos lekérdezés vs. Kereszttábla<a href="kereszttábla-lekérdezések.html#hagyom%C3%A1nyos-lek%C3%A9rdez%C3%A9s-vs.-keresztt%C3%A1bla" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>Hagyományos csoportosítás (GROUP BY):</strong></p>
+<pre><code>┌─────────────┬──────────────┬─────────────┐
+│ ÁllagNév    │ Digitalizálva│ IratokSzáma │
+├─────────────┼──────────────┼─────────────┤
+│ Tanács      │ Igen         │     15      │
+│ Tanács      │ Nem          │      8      │
+│ Színház     │ Igen         │     12      │
+│ Színház     │ Nem          │      5      │
+│ Népszámlálás│ Igen         │     20      │
+│ Népszámlálás│ Nem          │      0      │
+└─────────────┴──────────────┴─────────────┘
+
+6 sor, 3 oszlop</code></pre>
+<p><strong>Ugyanez kereszttáblaként:</strong></p>
+<pre><code>┌─────────────┬──────┬──────┬──────────┐
+│ ÁllagNév    │ Igen │  Nem │ Összesen │
+├─────────────┼──────┼──────┼──────────┤
+│ Tanács      │  15  │   8  │    23    │
+│ Színház     │  12  │   5  │    17    │
+│ Népszámlálás│  20  │   0  │    20    │
+└─────────────┴──────┴──────┴──────────┘
+
+3 sor, 4 oszlop</code></pre>
+<p><strong>Előnyök:</strong>
+- <strong>Tömörebb</strong>: 3 sor a 6 helyett
+- <strong>Áttekinthetőbb</strong>: Egy pillantással látható a különbség
+- <strong>Excel-kompatibilis</strong>: Pivot táblákhoz hasonló
+- <strong>Könnyen exportálható</strong>: Jelentésekhez, grafikonokhoz</p>
+</div>
+<div id="kereszttábla-elemei" class="section level3 hasAnchor" number="4.1.2">
+<h3><span class="header-section-number">4.1.2</span> Kereszttábla elemei<a href="kereszttábla-lekérdezések.html#keresztt%C3%A1bla-elemei" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>Anatómia:</strong></p>
+<pre><code>                    OSZLOPFEJLÉCEK
+                    ↓     ↓     ↓
+┌─────────────┬──────┬──────┬──────────┐
+│ SORFEJLÉC   │ Igen │  Nem │ Összesen │ ← Összesítő oszlop (opcionális)
+├─────────────┼──────┼──────┼──────────┤
+│ Tanács      │  15  │   8  │    23    │
+│ Színház     │  12  │   5  │    17    │ ← ÉRTÉKEK (Count, Sum, Avg, stb.)
+│ Népszámlálás│  20  │   0  │    20    │
+└─────────────┴──────┴──────┴──────────┘</code></pre>
+<p><strong>Komponensek:</strong>
+1. <strong>Sorfejlécek</strong> (Row Headings): Baloldali kategóriák (ÁllagNév)
+2. <strong>Oszlopfejlécek</strong> (Column Headings): Felső kategóriák (Igen/Nem)
+3. <strong>Értékek</strong> (Values): Összesítések (Count, Sum, stb.)
+4. <strong>Összesítő oszlop</strong> (opcionális): Soronkénti összeg</p>
+</div>
+</div>
+<div id="kereszt-varazslo" class="section level2 hasAnchor" number="4.2">
+<h2><span class="header-section-number">4.2</span> Kereszttábla varázsló részletesen<a href="kereszttábla-lekérdezések.html#kereszt-varazslo" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>A legegyszerűbb módszer a <strong>Kereszttábla varázsló</strong> használata.</p>
+<p>⏱️ <strong>Időigény:</strong> 5 perc</p>
+<div id="lépés-varázsló-indítása" class="section level3 hasAnchor" number="4.2.1">
+<h3><span class="header-section-number">4.2.1</span> 1. LÉPÉS: Varázsló indítása<a href="kereszttábla-lekérdezések.html#l%C3%A9p%C3%A9s-var%C3%A1zsl%C3%B3-ind%C3%ADt%C3%A1sa" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<pre><code>1. Létrehozás fül (felső menüszalag)
+2. Lekérdezésvarázsló gomb (Lekérdezések csoport)</code></pre>
+<p><strong>Felugró ablak:</strong> “Új lekérdezés”</p>
+<pre><code>┌────────────────────────────────────┐
+│ Új lekérdezés                      │
+├────────────────────────────────────┤
+│ ○ Egyszerű lekérdezésvarázsló      │
+│ ● Kereszttábla lekérdezésvarázsló  │ ← Válaszd!
+│ ○ Ismétlődő rekordok keres...     │
+│ ○ Ismétlődés nélküli rekordok...  │
+│                                    │
+│     [OK]       [Mégse]             │
+└────────────────────────────────────┘
+
+3. Kereszttábla lekérdezésvarázsló → Kijelöld
+4. OK gomb</code></pre>
+</div>
+<div id="lépés-forrás-tábla-kiválasztása" class="section level3 hasAnchor" number="4.2.2">
+<h3><span class="header-section-number">4.2.2</span> 2. LÉPÉS: Forrás tábla kiválasztása<a href="kereszttábla-lekérdezések.html#l%C3%A9p%C3%A9s-forr%C3%A1s-t%C3%A1bla-kiv%C3%A1laszt%C3%A1sa" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>Képernyő:</strong> “Milyen táblához vagy lekérdezéshez tartalmazza a kereszttábla lekérdezés mezőit?”</p>
+<pre><code>┌────────────────────────────────────┐
+│ Nézet:                             │
+│ ● Táblák  ○ Lekérdezések  ○ Mindkettő │
+├────────────────────────────────────┤
+│ Elérhető táblák:                   │
+│ ┌────────────────────────────────┐ │
+│ │ tbl_Fondok                     │ │
+│ │ tbl_Állagok                    │ │
+│ │ tbl_Iratok        ← Válaszd!   │ │
+│ │ tbl_Kikérések                  │ │
+│ └────────────────────────────────┘ │
+│                                    │
+│  [&lt;Vissza]  [Tovább&gt;]  [Mégse]    │
+└────────────────────────────────────┘
+
+5. tbl_Iratok → Kattints rá (kijelölöd)
+6. Tovább &gt; gomb</code></pre>
+<div class="info">
+<p><strong>Tipp:</strong> Ha több táblát szeretnél összekombinálni (pl. tbl_Állagok + tbl_Iratok), először készíts egy szelekciós lekérdezést JOIN-nal, aztán arra építsd a kereszttáblát!</p>
+</div>
+</div>
+<div id="lépés-sorfejlécek-kiválasztása" class="section level3 hasAnchor" number="4.2.3">
+<h3><span class="header-section-number">4.2.3</span> 3. LÉPÉS: Sorfejlécek kiválasztása<a href="kereszttábla-lekérdezések.html#l%C3%A9p%C3%A9s-sorfejl%C3%A9cek-kiv%C3%A1laszt%C3%A1sa" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>Képernyő:</strong> “Milyen mezőértékeket szeretne sorfejlécekként használni?”</p>
+<p><strong>Mit jelent ez?</strong> A <strong>bal oldali</strong> kategóriákat választod ki (mi legyen a sorok címkéje).</p>
+<pre><code>┌────────────────────────────────────┐
+│ Elérhető mezők:       Kiválasztott │
+│ ┌──────────────────┐  ┌──────────┐ │
+│ │ IratID           │  │ ÁllagID  │ │ ← Ez lesz a sorfejléc
+│ │ ÁllagID          │  │          │ │
+│ │ IratCím          │  │          │ │
+│ │ Jelzet           │  │          │ │
+│ │ DoboztárSzám     │  │          │ │
+│ │ Digitalizálva    │  │          │ │
+│ └──────────────────┘  └──────────┘ │
+│       &gt;                             │
+│      &gt;&gt;        Eltávolítás gomb    │
+│       &lt;                             │
+│                                    │
+│  [&lt;Vissza]  [Tovább&gt;]  [Mégse]    │
+└────────────────────────────────────┘
+
+7. ÁllagID → Dupla klikk (átkerül jobbra)
+   VAGY kijelölöd és &gt; gomb
+
+8. Tovább &gt; gomb</code></pre>
+<p><strong>Megjegyzés:</strong> Egyelőre ÁllagID-t választunk (szám), de később az SQL-ben átírjuk ÁllagNévre!</p>
+<p><strong>Előnézet alul:</strong></p>
+<pre><code>Mintaelőnézet:
+┌──────────┐
+│ ÁllagID  │
+├──────────┤
+│    1     │
+│    2     │
+│    3     │
+└──────────┘</code></pre>
+</div>
+<div id="lépés-oszlopfejlécek-kiválasztása" class="section level3 hasAnchor" number="4.2.4">
+<h3><span class="header-section-number">4.2.4</span> 4. LÉPÉS: Oszlopfejlécek kiválasztása<a href="kereszttábla-lekérdezések.html#l%C3%A9p%C3%A9s-oszlopfejl%C3%A9cek-kiv%C3%A1laszt%C3%A1sa" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>Képernyő:</strong> “Melyik mező értékeit szeretné oszlopfejlécekként használni?”</p>
+<p><strong>Mit jelent ez?</strong> A <strong>felső</strong> kategóriákat választod ki (mi legyen az oszlopok címkéje).</p>
+<pre><code>┌────────────────────────────────────┐
+│ Elérhető mezők:                    │
+│ ┌──────────────────┐               │
+│ │ IratID           │               │
+│ │ IratCím          │               │
+│ │ Jelzet           │               │
+│ │ DoboztárSzám     │               │
+│ │ Digitalizálva    │ ← Válaszd!    │
+│ └──────────────────┘               │
+│                                    │
+│ Mintaelőnezet:                     │
+│ ┌──────────┬──────┬──────┐         │
+│ │ ÁllagID  │ Igen │  Nem │         │
+│ ├──────────┼──────┼──────┤         │
+│ │    1     │      │      │         │
+│ └──────────┴──────┴──────┘         │
+│                                    │
+│  [&lt;Vissza]  [Tovább&gt;]  [Mégse]    │
+└────────────────────────────────────┘
+
+9. Digitalizálva → Kattints rá (kijelöld)
+10. Tovább &gt; gomb</code></pre>
+<p><strong>Magyarázat:</strong>
+- A Digitalizálva mező értékei: <strong>Igen</strong> és <strong>Nem</strong>
+- Ezekből lesznek az oszlopok: <code>Igen</code> és <code>Nem</code> oszlopok</p>
+</div>
+<div id="lépés-értékek-beállítása" class="section level3 hasAnchor" number="4.2.5">
+<h3><span class="header-section-number">4.2.5</span> 5. LÉPÉS: Értékek beállítása<a href="kereszttábla-lekérdezések.html#l%C3%A9p%C3%A9s-%C3%A9rt%C3%A9kek-be%C3%A1ll%C3%ADt%C3%A1sa" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>Képernyő:</strong> “Milyen számot szeretne kiszámolni minden egyes oszlop- és sorcímke-metszésponthoz?”</p>
+<p><strong>Mit jelent ez?</strong> Mi legyen a <strong>cellákban</strong>: összeg, darabszám, átlag, stb.?</p>
+<pre><code>┌────────────────────────────────────┐
+│ Mezők:               Függvények:   │
+│ ┌──────────────┐  ┌────────────┐   │
+│ │ IratID       │  │ Összeg     │   │
+│ │ IratCím      │  │ Átlag      │   │
+│ │ Jelzet       │  │ Min        │   │
+│ │ DoboztárSzám │  │ Max        │   │
+│ └──────────────┘  │ Darabszám  │ ← │
+│                   │ StdDev     │   │
+│                   │ Var        │   │
+│                   └────────────┘   │
+│                                    │
+│ ☑ Igen, szerepeljen a sor összege  │ ← Összesítő oszlop
+│                                    │
+│ Mintaelőnézet:                     │
+│ ┌──────────┬──────┬──────┬──────┐  │
+│ │ ÁllagID  │ Igen │  Nem │Összeg│  │
+│ ├──────────┼──────┼──────┼──────┤  │
+│ │    1     │  15  │   8  │  23  │  │
+│ └──────────┴──────┴──────┴──────┘  │
+│                                    │
+│  [&lt;Vissza]  [Tovább&gt;]  [Mégse]    │
+└────────────────────────────────────┘
+
+11. Mezők lista: IratID → Kattints rá
+12. Függvények lista: Darabszám → Kattints rá
+13. ☑ &quot;Igen, szerepeljen a sor összege&quot; → Pipáld be!
+14. Tovább &gt; gomb</code></pre>
+<p><strong>Függvények magyarázata:</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th>Függvény</th>
+<th>Magyar</th>
+<th>Mire jó?</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Sum</td>
+<td>Összeg</td>
+<td>Számok összeadása (pl. iratok száma ÖSSZESEN)</td>
+</tr>
+<tr class="even">
+<td>Avg</td>
+<td>Átlag</td>
+<td>Átlagérték (pl. átlagos oldalszám)</td>
+</tr>
+<tr class="odd">
+<td>Min</td>
+<td>Minimum</td>
+<td>Legkisebb érték</td>
+</tr>
+<tr class="even">
+<td>Max</td>
+<td>Maximum</td>
+<td>Legnagyobb érték</td>
+</tr>
+<tr class="odd">
+<td><strong>Count</strong></td>
+<td><strong>Darabszám</strong></td>
+<td><strong>Rekordok számolása</strong> ← LEGGYAKORIBB!</td>
+</tr>
+<tr class="even">
+<td>StdDev</td>
+<td>Szórás</td>
+<td>Statisztikai szórás</td>
+</tr>
+<tr class="odd">
+<td>Var</td>
+<td>Variancia</td>
+<td>Statisztikai variancia</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Mikor melyiket használd?</strong>
+- <strong>Rekordok számolása</strong> → Count (Darabszám) ✅ Legtöbbször ezt!
+- <strong>Számok összegzése</strong> → Sum (pl. kikért iratok száma összesen)
+- <strong>Átlagolás</strong> → Avg (pl. átlagos látogatási idő)</p>
+</div>
+<div id="lépés-lekérdezés-neve" class="section level3 hasAnchor" number="4.2.6">
+<h3><span class="header-section-number">4.2.6</span> 6. LÉPÉS: Lekérdezés neve<a href="kereszttábla-lekérdezések.html#l%C3%A9p%C3%A9s-lek%C3%A9rdez%C3%A9s-neve" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>Képernyő:</strong> “Milyen nevet szeretne adni a lekérdezésnek?”</p>
+<pre><code>┌────────────────────────────────────┐
+│ Milyen nevet szeretne adni a       │
+│ lekérdezésnek?                     │
+│                                    │
+│ [qry_Digitalizált_Kereszttábla   ] │ ← Írd be!
+│                                    │
+│ ○ Lekérdezés megnyitása            │
+│ ● Lekérdezés módosítása         ← │
+│                                    │
+│  [&lt;Vissza]  [Befejezés]  [Mégse]  │
+└────────────────────────────────────┘
+
+15. Név mező: qry_Digitalizált_Kereszttábla
+16. ● Lekérdezés módosítása → Válaszd (hogy SQL-t szerkeszthessük!)
+17. Befejezés gomb</code></pre>
+<p><strong>Eredmény:</strong> Megnyílik a lekérdezés <strong>Tervezői nézetben</strong>!</p>
+<hr />
+</div>
+</div>
+<div id="sql-szerkesztes" class="section level2 hasAnchor" number="4.3">
+<h2><span class="header-section-number">4.3</span> SQL szerkesztése és magyarázat<a href="kereszttábla-lekérdezések.html#sql-szerkesztes" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>A varázsló alapvető SQL-t generál, de mi <strong>finomítani</strong> akarjuk!</p>
+<div id="generált-sql-varázsló-eredménye" class="section level3 hasAnchor" number="4.3.1">
+<h3><span class="header-section-number">4.3.1</span> Generált SQL (varázsló eredménye):<a href="kereszttábla-lekérdezések.html#gener%C3%A1lt-sql-var%C3%A1zsl%C3%B3-eredm%C3%A9nye" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<pre><code>Tervezés fül → Nézet → SQL nézet</code></pre>
+<p><strong>SQL kód:</strong></p>
+<div class="sourceCode" id="cb143"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb143-1"><a href="kereszttábla-lekérdezések.html#cb143-1" tabindex="-1"></a>TRANSFORM <span class="fu">Count</span>(tbl_Iratok.IratID) <span class="kw">AS</span> [IratID <span class="op">-</span> Darabszám]</span>
+<span id="cb143-2"><a href="kereszttábla-lekérdezések.html#cb143-2" tabindex="-1"></a><span class="kw">SELECT</span> tbl_Iratok.ÁllagID</span>
+<span id="cb143-3"><a href="kereszttábla-lekérdezések.html#cb143-3" tabindex="-1"></a><span class="kw">FROM</span> tbl_Iratok</span>
+<span id="cb143-4"><a href="kereszttábla-lekérdezések.html#cb143-4" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> tbl_Iratok.ÁllagID</span>
+<span id="cb143-5"><a href="kereszttábla-lekérdezések.html#cb143-5" tabindex="-1"></a>PIVOT tbl_Iratok.Digitalizálva;</span></code></pre></div>
+<p><strong>Probléma:</strong>
+- Az ÁllagID <strong>szám</strong> (1, 2, 3…), nem beszédes!
+- Nincs állag név, nem tudjuk, melyik állagról van szó!</p>
+</div>
+<div id="javított-sql-join-nal-állag-névvel" class="section level3 hasAnchor" number="4.3.2">
+<h3><span class="header-section-number">4.3.2</span> Javított SQL (JOIN-nal, állag névvel):<a href="kereszttábla-lekérdezések.html#jav%C3%ADtott-sql-join-nal-%C3%A1llag-n%C3%A9vvel" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>Töröld ki az egész SQL-t, és írd be ezt:</strong></p>
+<div class="sourceCode" id="cb144"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb144-1"><a href="kereszttábla-lekérdezések.html#cb144-1" tabindex="-1"></a>TRANSFORM <span class="fu">Count</span>(tbl_Iratok.IratID) <span class="kw">AS</span> IratDarab</span>
+<span id="cb144-2"><a href="kereszttábla-lekérdezések.html#cb144-2" tabindex="-1"></a><span class="kw">SELECT</span> tbl_Állagok.ÁllagNév, </span>
+<span id="cb144-3"><a href="kereszttábla-lekérdezések.html#cb144-3" tabindex="-1"></a>       <span class="fu">Count</span>(tbl_Iratok.IratID) <span class="kw">AS</span> [Összesen]</span>
+<span id="cb144-4"><a href="kereszttábla-lekérdezések.html#cb144-4" tabindex="-1"></a><span class="kw">FROM</span> tbl_Állagok </span>
+<span id="cb144-5"><a href="kereszttábla-lekérdezések.html#cb144-5" tabindex="-1"></a><span class="kw">INNER</span> <span class="kw">JOIN</span> tbl_Iratok <span class="kw">ON</span> tbl_Állagok.ÁllagID <span class="op">=</span> tbl_Iratok.ÁllagID</span>
+<span id="cb144-6"><a href="kereszttábla-lekérdezések.html#cb144-6" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> tbl_Állagok.ÁllagNév</span>
+<span id="cb144-7"><a href="kereszttábla-lekérdezések.html#cb144-7" tabindex="-1"></a>PIVOT tbl_Iratok.Digitalizálva;</span></code></pre></div>
+<p><strong>Futtatás:</strong></p>
+<pre><code>Tervezés fül → Futtatás (!) gomb
+VAGY F5</code></pre>
+<p><strong>Eredmény:</strong></p>
+<pre><code>┌───────────────────────────┬─────┬─────┬──────────┐
+│ ÁllagNév                  │ Igen│ Nem │ Összesen │
+├───────────────────────────┼─────┼─────┼──────────┤
+│ Tanácsi ülések jegyző...  │  15 │   8 │    23    │
+│ Igazgatósági iratok       │  12 │   5 │    17    │
+│ 1960-as népszámlálás      │  20 │   0 │    20    │
+└───────────────────────────┴─────┴─────┴──────────┘</code></pre>
+<p><strong>Sokkal jobb!</strong> Most látjuk az állag <strong>nevét</strong>, nem csak az ID-t!</p>
+</div>
+<div id="transformpivot-sql-magyarázat" class="section level3 hasAnchor" number="4.3.3">
+<h3><span class="header-section-number">4.3.3</span> TRANSFORM…PIVOT SQL magyarázat<a href="kereszttábla-lekérdezések.html#transformpivot-sql-magyar%C3%A1zat" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>A kereszttábla lekérdezés SQL-je speciális szintaxist használ.</p>
+<p><strong>Általános felépítés:</strong></p>
+<div class="sourceCode" id="cb147"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb147-1"><a href="kereszttábla-lekérdezések.html#cb147-1" tabindex="-1"></a>TRANSFORM <span class="op">&lt;</span>összesítő függvény<span class="op">&gt;</span></span>
+<span id="cb147-2"><a href="kereszttábla-lekérdezések.html#cb147-2" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">&lt;</span>sorfejlécek<span class="op">&gt;</span>, <span class="op">&lt;</span>összesítő oszlop (opcionális)<span class="op">&gt;</span></span>
+<span id="cb147-3"><a href="kereszttábla-lekérdezések.html#cb147-3" tabindex="-1"></a><span class="kw">FROM</span> <span class="op">&lt;</span>tábla(k)<span class="op">&gt;</span></span>
+<span id="cb147-4"><a href="kereszttábla-lekérdezések.html#cb147-4" tabindex="-1"></a><span class="kw">WHERE</span> <span class="op">&lt;</span>feltétel (opcionális)<span class="op">&gt;</span></span>
+<span id="cb147-5"><a href="kereszttábla-lekérdezések.html#cb147-5" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> <span class="op">&lt;</span>sorfejlécek<span class="op">&gt;</span></span>
+<span id="cb147-6"><a href="kereszttábla-lekérdezések.html#cb147-6" tabindex="-1"></a>PIVOT <span class="op">&lt;</span>oszlopfejlécek<span class="op">&gt;</span>;</span></code></pre></div>
+<p><strong>Részletes magyarázat:</strong></p>
+<div id="transform-sor" class="section level4 hasAnchor" number="4.3.3.1">
+<h4><span class="header-section-number">4.3.3.1</span> 1. TRANSFORM sor<a href="kereszttábla-lekérdezések.html#transform-sor" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="sourceCode" id="cb148"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb148-1"><a href="kereszttábla-lekérdezések.html#cb148-1" tabindex="-1"></a>TRANSFORM <span class="fu">Count</span>(tbl_Iratok.IratID) <span class="kw">AS</span> IratDarab</span></code></pre></div>
+<p><strong>Mit csinál:</strong>
+- <code>TRANSFORM</code> = “alakítsd át” (kereszttáblává)
+- <code>Count(tbl_Iratok.IratID)</code> = számold az IratID-kat (rekordokat)
+- <code>AS IratDarab</code> = eredmény neve (opcionális)</p>
+<p><strong>Ez adja az értékeket a cellákban!</strong></p>
+</div>
+<div id="select-sor" class="section level4 hasAnchor" number="4.3.3.2">
+<h4><span class="header-section-number">4.3.3.2</span> 2. SELECT sor<a href="kereszttábla-lekérdezések.html#select-sor" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="sourceCode" id="cb149"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb149-1"><a href="kereszttábla-lekérdezések.html#cb149-1" tabindex="-1"></a><span class="kw">SELECT</span> tbl_Állagok.ÁllagNév, </span>
+<span id="cb149-2"><a href="kereszttábla-lekérdezések.html#cb149-2" tabindex="-1"></a>       <span class="fu">Count</span>(tbl_Iratok.IratID) <span class="kw">AS</span> [Összesen]</span></code></pre></div>
+<p><strong>Mit csinál:</strong>
+- <code>tbl_Állagok.ÁllagNév</code> = <strong>sorfejlécek</strong> (bal oldali kategóriák)
+- <code>Count(tbl_Iratok.IratID) AS [Összesen]</code> = <strong>összesítő oszlop</strong> (opcionális)</p>
+<p><strong>Ez adja a sorokat és az összesítő oszlopot!</strong></p>
+</div>
+<div id="from-join" class="section level4 hasAnchor" number="4.3.3.3">
+<h4><span class="header-section-number">4.3.3.3</span> 3. FROM + JOIN<a href="kereszttábla-lekérdezések.html#from-join" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="sourceCode" id="cb150"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb150-1"><a href="kereszttábla-lekérdezések.html#cb150-1" tabindex="-1"></a><span class="kw">FROM</span> tbl_Állagok </span>
+<span id="cb150-2"><a href="kereszttábla-lekérdezések.html#cb150-2" tabindex="-1"></a><span class="kw">INNER</span> <span class="kw">JOIN</span> tbl_Iratok <span class="kw">ON</span> tbl_Állagok.ÁllagID <span class="op">=</span> tbl_Iratok.ÁllagID</span></code></pre></div>
+<p><strong>Mit csinál:</strong>
+- Összeköti a két táblát az ÁllagID alapján
+- INNER JOIN = csak olyan állagok, amelyekhez VAN irat</p>
+</div>
+<div id="group-by-sor" class="section level4 hasAnchor" number="4.3.3.4">
+<h4><span class="header-section-number">4.3.3.4</span> 4. GROUP BY sor<a href="kereszttábla-lekérdezések.html#group-by-sor" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="sourceCode" id="cb151"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb151-1"><a href="kereszttábla-lekérdezések.html#cb151-1" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> tbl_Állagok.ÁllagNév</span></code></pre></div>
+<p><strong>Mit csinál:</strong>
+- Csoportosít állag név szerint
+- Minden egyedi ÁllagNév = egy sor a kereszttáblában</p>
+</div>
+<div id="pivot-sor" class="section level4 hasAnchor" number="4.3.3.5">
+<h4><span class="header-section-number">4.3.3.5</span> 5. PIVOT sor<a href="kereszttábla-lekérdezések.html#pivot-sor" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="sourceCode" id="cb152"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb152-1"><a href="kereszttábla-lekérdezések.html#cb152-1" tabindex="-1"></a>PIVOT tbl_Iratok.Digitalizálva;</span></code></pre></div>
+<p><strong>Mit csinál:</strong>
+- <code>PIVOT</code> = “fordítsd el” (sorokból oszlopokat csinál)
+- <code>tbl_Iratok.Digitalizálva</code> = a mező, amelynek értékeiből oszlopok lesznek
+- Értékek: <strong>Igen</strong> és <strong>Nem</strong> → két oszlop</p>
+<p><strong>Ez adja az oszlopfejléceket!</strong></p>
+</div>
+</div>
+<div id="vizualizáció---mi-történik" class="section level3 hasAnchor" number="4.3.4">
+<h3><span class="header-section-number">4.3.4</span> Vizualizáció - Mi történik?<a href="kereszttábla-lekérdezések.html#vizualiz%C3%A1ci%C3%B3---mi-t%C3%B6rt%C3%A9nik" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>Normál lekérdezés (GROUP BY):</strong></p>
+<pre><code>SELECT ÁllagNév, Digitalizálva, COUNT(*) AS Darab
+FROM ...
+GROUP BY ÁllagNév, Digitalizálva
+
+┌───────────────┬──────────────┬──────┐
+│ ÁllagNév      │ Digitalizálva│ Darab│
+├───────────────┼──────────────┼──────┤
+│ Tanács        │ Igen         │  15  │ ← 1. sor
+│ Tanács        │ Nem          │   8  │ ← 2. sor
+│ Színház       │ Igen         │  12  │ ← 3. sor
+│ Színház       │ Nem          │   5  │ ← 4. sor
+└───────────────┴──────────────┴──────┘</code></pre>
+<p><strong>Kereszttábla (PIVOT):</strong></p>
+<pre><code>PIVOT Digitalizálva → Igen és Nem oszlopok lesznek!
+
+┌───────────────┬──────┬──────┐
+│ ÁllagNév      │ Igen │  Nem │
+├───────────────┼──────┼──────┤
+│ Tanács        │  15  │   8  │ ← 1+2. sor összevonva!
+│ Színház       │  12  │   5  │ ← 3+4. sor összevonva!
+└───────────────┴──────┴──────┘</code></pre>
+<hr />
+</div>
+</div>
+<div id="kereszt-datum" class="section level2 hasAnchor" number="4.4">
+<h2><span class="header-section-number">4.4</span> Kereszttábla dátumokkal<a href="kereszttábla-lekérdezések.html#kereszt-datum" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>A kereszttábla <strong>nagyon hasznos dátumokkal</strong> - havi/éves statisztikák készítéséhez!</p>
+<div id="példa-1-digitalizálás-havi-bontásban" class="section level3 hasAnchor" number="4.4.1">
+<h3><span class="header-section-number">4.4.1</span> Példa 1: Digitalizálás havi bontásban<a href="kereszttábla-lekérdezések.html#p%C3%A9lda-1-digitaliz%C3%A1l%C3%A1s-havi-bont%C3%A1sban" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>Feladat:</strong> Hány iratot digitalizáltunk havonta 2024-ben?</p>
+<p><strong>SQL:</strong></p>
+<div class="sourceCode" id="cb155"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb155-1"><a href="kereszttábla-lekérdezések.html#cb155-1" tabindex="-1"></a>TRANSFORM <span class="fu">Count</span>(tbl_Iratok.IratID) <span class="kw">AS</span> Darab</span>
+<span id="cb155-2"><a href="kereszttábla-lekérdezések.html#cb155-2" tabindex="-1"></a><span class="kw">SELECT</span> Format([DigitalizálásDátuma],<span class="ot">&quot;yyyy&quot;</span>) <span class="kw">AS</span> Év</span>
+<span id="cb155-3"><a href="kereszttábla-lekérdezések.html#cb155-3" tabindex="-1"></a><span class="kw">FROM</span> tbl_Iratok</span>
+<span id="cb155-4"><a href="kereszttábla-lekérdezések.html#cb155-4" tabindex="-1"></a><span class="kw">WHERE</span> Digitalizálva <span class="op">=</span> <span class="kw">True</span></span>
+<span id="cb155-5"><a href="kereszttábla-lekérdezések.html#cb155-5" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> Format([DigitalizálásDátuma],<span class="ot">&quot;yyyy&quot;</span>)</span>
+<span id="cb155-6"><a href="kereszttábla-lekérdezések.html#cb155-6" tabindex="-1"></a>PIVOT Format([DigitalizálásDátuma],<span class="ot">&quot;mmmm&quot;</span>);</span></code></pre></div>
+<p><strong>Magyarázat:</strong></p>
+<ul>
+<li><strong>TRANSFORM:</strong> Számláld az iratokat</li>
+<li><strong>SELECT:</strong> Év (2024)</li>
+<li><strong>GROUP BY:</strong> Év szerint csoportosít</li>
+<li><strong>PIVOT:</strong> <code>Format(..., "mmmm")</code> = hónap neve (január, február, …)</li>
+<li><strong>WHERE:</strong> Csak digitalizált iratok</li>
+</ul>
+<p><strong>Eredmény:</strong></p>
+<pre><code>┌─────┬─────────┬─────────┬────────┬────────┬─────┬─────────┬──────────┐
+│ Év  │ január  │ február │ március│ április│ ... │ november│ december │
+├─────┼─────────┼─────────┼────────┼────────┼─────┼─────────┼──────────┤
+│ 2024│    15   │    8    │   12   │   18   │ ... │    22   │    10    │
+└─────┴─────────┴─────────┴────────┴────────┴─────┴─────────┴──────────┘</code></pre>
+<p><strong>Format() függvény dátumokhoz:</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th>Formátum</th>
+<th>Eredmény</th>
+<th>Példa</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>"yyyy"</code></td>
+<td>Év</td>
+<td>2024</td>
+</tr>
+<tr class="even">
+<td><code>"mm"</code></td>
+<td>Hónap száma</td>
+<td>03 (március)</td>
+</tr>
+<tr class="odd">
+<td><code>"mmmm"</code></td>
+<td>Hónap neve</td>
+<td>március</td>
+</tr>
+<tr class="even">
+<td><code>"mmm"</code></td>
+<td>Hónap rövid</td>
+<td>már.</td>
+</tr>
+<tr class="odd">
+<td><code>"q"</code></td>
+<td>Negyedév</td>
+<td>1 (Q1)</td>
+</tr>
+<tr class="even">
+<td><code>"ww"</code></td>
+<td>Hét száma</td>
+<td>12</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="példa-2-kikérések-negyedéves-bontásban" class="section level3 hasAnchor" number="4.4.2">
+<h3><span class="header-section-number">4.4.2</span> Példa 2: Kikérések negyedéves bontásban<a href="kereszttábla-lekérdezések.html#p%C3%A9lda-2-kik%C3%A9r%C3%A9sek-negyed%C3%A9ves-bont%C3%A1sban" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>SQL:</strong></p>
+<div class="sourceCode" id="cb157"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb157-1"><a href="kereszttábla-lekérdezések.html#cb157-1" tabindex="-1"></a>TRANSFORM <span class="fu">Count</span>(tbl_Kikérések.KikérésID) <span class="kw">AS</span> KikérésekSzáma</span>
+<span id="cb157-2"><a href="kereszttábla-lekérdezések.html#cb157-2" tabindex="-1"></a><span class="kw">SELECT</span> tbl_Fondok.FondNév</span>
+<span id="cb157-3"><a href="kereszttábla-lekérdezések.html#cb157-3" tabindex="-1"></a><span class="kw">FROM</span> tbl_Fondok </span>
+<span id="cb157-4"><a href="kereszttábla-lekérdezések.html#cb157-4" tabindex="-1"></a><span class="kw">INNER</span> <span class="kw">JOIN</span> tbl_Állagok <span class="kw">ON</span> tbl_Fondok.FondID <span class="op">=</span> tbl_Állagok.FondID</span>
+<span id="cb157-5"><a href="kereszttábla-lekérdezések.html#cb157-5" tabindex="-1"></a><span class="kw">INNER</span> <span class="kw">JOIN</span> tbl_Iratok <span class="kw">ON</span> tbl_Állagok.ÁllagID <span class="op">=</span> tbl_Iratok.ÁllagID</span>
+<span id="cb157-6"><a href="kereszttábla-lekérdezések.html#cb157-6" tabindex="-1"></a><span class="kw">INNER</span> <span class="kw">JOIN</span> tbl_Kikérések <span class="kw">ON</span> tbl_Iratok.IratID <span class="op">=</span> tbl_Kikérések.IratID</span>
+<span id="cb157-7"><a href="kereszttábla-lekérdezések.html#cb157-7" tabindex="-1"></a><span class="kw">WHERE</span> <span class="dt">Year</span>([KikérésDátuma]) <span class="op">=</span> <span class="dv">2024</span></span>
+<span id="cb157-8"><a href="kereszttábla-lekérdezések.html#cb157-8" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> tbl_Fondok.FondNév</span>
+<span id="cb157-9"><a href="kereszttábla-lekérdezések.html#cb157-9" tabindex="-1"></a>PIVOT <span class="ot">&quot;Q&quot;</span> &amp; Format([KikérésDátuma],<span class="ot">&quot;q&quot;</span>);</span></code></pre></div>
+<p><strong>Eredmény:</strong></p>
+<pre><code>┌───────────────┬────┬────┬────┬────┐
+│ FondNév       │ Q1 │ Q2 │ Q3 │ Q4 │
+├───────────────┼────┼────┼────┼────┤
+│ Tanács        │ 45 │ 38 │ 52 │ 41 │
+│ Színház       │ 28 │ 32 │ 29 │ 35 │
+│ Népszámlálás  │ 15 │ 12 │ 18 │ 20 │
+└───────────────┴────┴────┴────┴────┘</code></pre>
+<hr />
+</div>
+</div>
+<div id="excel-export" class="section level2 hasAnchor" number="4.5">
+<h2><span class="header-section-number">4.5</span> Excel exportálás<a href="kereszttábla-lekérdezések.html#excel-export" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>A kereszttábla <strong>tökéletes Excel-be exportáláshoz</strong>!</p>
+<p>⏱️ <strong>Időigény:</strong> 2 perc</p>
+<div id="lépések-1" class="section level3 hasAnchor" number="4.5.1">
+<h3><span class="header-section-number">4.5.1</span> Lépések:<a href="kereszttábla-lekérdezések.html#l%C3%A9p%C3%A9sek-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<pre><code>1. Nyisd meg a kereszttábla lekérdezést (Adatlap nézetben)
+2. JOBB egérgomb a lekérdezés nevén (navigációs panel)
+3. Exportálás → Excel</code></pre>
+<p><strong>Felugró ablak:</strong> “Exportálás - Excel táblázat”</p>
+<pre><code>┌────────────────────────────────────┐
+│ Fájlnév: [____________________]    │
+│ Tallózás...                        │
+│                                    │
+│ Fájlformátum: Excel munkafüzet     │
+│ (*.xlsx)                           │
+│                                    │
+│ ☑ Formázással és elrendezéssel     │ ← Pipáld be!
+│   exportálás                       │
+│ ☑ A fájl megnyitása exportálás    │ ← Pipáld be!
+│   után                             │
+│                                    │
+│     [OK]       [Mégse]             │
+└────────────────────────────────────┘
+
+4. Fájlnév: C:\Export\Digitalizált_statisztika.xlsx
+5. ☑ Formázással... → Pipáld be
+6. ☑ Megnyitás... → Pipáld be
+7. OK gomb</code></pre>
+<p><strong>Eredmény:</strong> Megnyílik az Excel fájl!</p>
+</div>
+<div id="excel-ben-további-feldolgozás" class="section level3 hasAnchor" number="4.5.2">
+<h3><span class="header-section-number">4.5.2</span> Excel-ben további feldolgozás<a href="kereszttábla-lekérdezések.html#excel-ben-tov%C3%A1bbi-feldolgoz%C3%A1s" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>Mit csinálhatsz Excel-ben:</strong></p>
+<ol style="list-style-type: decimal">
+<li><p><strong>Grafikon készítése:</strong></p>
+<pre><code>Beszúrás fül → Grafikonok → Oszlopdiagram</code></pre></li>
+<li><p><strong>Pivot tábla készítése:</strong></p>
+<pre><code>Beszúrás fül → Pivot tábla</code></pre></li>
+<li><p><strong>Formázás:</strong></p>
+<ul>
+<li>Színek, betűtípusok</li>
+<li>Összegző sorok</li>
+<li>Feltételes formázás</li>
+</ul></li>
+<li><p><strong>Nyomtatás:</strong></p>
+<pre><code>Fájl → Nyomtatás → Beállítások</code></pre></li>
+</ol>
+<div class="info">
+<p><strong>Tipp:</strong> A kereszttábla Excel-be exportálva <strong>azonnal használható</strong> jelentésekben, prezentációkban!</p>
+</div>
+<hr />
+</div>
+</div>
+<div id="hibak-07" class="section level2 hasAnchor" number="4.6">
+<h2><span class="header-section-number">4.6</span> Hibaelhárítás<a href="kereszttábla-lekérdezések.html#hibak-07" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="h1-túl-sok-oszlop" class="section level3 hasAnchor" number="4.6.1">
+<h3><span class="header-section-number">4.6.1</span> H1: “Túl sok oszlop”<a href="kereszttábla-lekérdezések.html#h1-t%C3%BAl-sok-oszlop" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>Probléma:</strong> A PIVOT mező túl sok egyedi értéket tartalmaz.</p>
+<p><strong>Példa:</strong></p>
+<div class="sourceCode" id="cb164"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb164-1"><a href="kereszttábla-lekérdezések.html#cb164-1" tabindex="-1"></a>PIVOT tbl_Iratok.IratCím;  <span class="co">-- HIBA! Minden iratcím = 1 oszlop!</span></span>
+<span id="cb164-2"><a href="kereszttábla-lekérdezések.html#cb164-2" tabindex="-1"></a><span class="co">-- 500 különböző iratcím → 500 oszlop! </span></span></code></pre></div>
+<p><strong>Megoldás:</strong> Használj kategorizált mezőt (pl. Igen/Nem, hónap, negyedév)!</p>
+<div class="sourceCode" id="cb165"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb165-1"><a href="kereszttábla-lekérdezések.html#cb165-1" tabindex="-1"></a><span class="co">-- HELYES:</span></span>
+<span id="cb165-2"><a href="kereszttábla-lekérdezések.html#cb165-2" tabindex="-1"></a>PIVOT Format([DigitalizálásDátuma],<span class="ot">&quot;mmmm&quot;</span>);  <span class="co">-- Max. 12 oszlop (hónapok) </span></span></code></pre></div>
+</div>
+<div id="h2-null-értékek-az-oszlopokban" class="section level3 hasAnchor" number="4.6.2">
+<h3><span class="header-section-number">4.6.2</span> H2: “NULL értékek az oszlopokban”<a href="kereszttábla-lekérdezések.html#h2-null-%C3%A9rt%C3%A9kek-az-oszlopokban" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>Probléma:</strong> Üres cellák a kereszttáblában.</p>
+<p><strong>Példa:</strong></p>
+<pre><code>┌───────────────┬──────┬──────┐
+│ ÁllagNév      │ Igen │  Nem │
+├───────────────┼──────┼──────┤
+│ Tanács        │  15  │      │ ← Üres! (NULL)
+└───────────────┴──────┴──────┘</code></pre>
+<p><strong>Ok:</strong> Nincs olyan rekord, ahol Tanács + Digitalizálva = Nem</p>
+<p><strong>Megoldás:</strong> Használj <code>Nz()</code> függvényt (Null-ból zéró):</p>
+<div class="sourceCode" id="cb167"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb167-1"><a href="kereszttábla-lekérdezések.html#cb167-1" tabindex="-1"></a>TRANSFORM Nz(<span class="fu">Count</span>(tbl_Iratok.IratID), <span class="dv">0</span>) <span class="kw">AS</span> Darab</span></code></pre></div>
+<p><strong>Eredmény:</strong></p>
+<pre><code>┌───────────────┬──────┬──────┐
+│ ÁllagNév      │ Igen │  Nem │
+├───────────────┼──────┼──────┤
+│ Tanács        │  15  │   0  │ ← Mostmár 0! 
+└───────────────┴──────┴──────┘</code></pre>
+</div>
+<div id="h3-hónapok-rossz-sorrendben" class="section level3 hasAnchor" number="4.6.3">
+<h3><span class="header-section-number">4.6.3</span> H3: “Hónapok rossz sorrendben”<a href="kereszttábla-lekérdezések.html#h3-h%C3%B3napok-rossz-sorrendben" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>Probléma:</strong> Alfabetikus sorrend (április, augusztus, …)</p>
+<p><strong>Ok:</strong> A hónap <strong>szöveg</strong>, nem szám!</p>
+<p><strong>Megoldás:</strong> Használj hónap számot csoportosításhoz, nevet csak PIVOT-ban:</p>
+<div class="sourceCode" id="cb169"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb169-1"><a href="kereszttábla-lekérdezések.html#cb169-1" tabindex="-1"></a>TRANSFORM <span class="fu">Count</span>(<span class="op">*</span>) <span class="kw">AS</span> Darab</span>
+<span id="cb169-2"><a href="kereszttábla-lekérdezések.html#cb169-2" tabindex="-1"></a><span class="kw">SELECT</span> Format([Dátum],<span class="ot">&quot;yyyy&quot;</span>) <span class="kw">AS</span> Év,</span>
+<span id="cb169-3"><a href="kereszttábla-lekérdezések.html#cb169-3" tabindex="-1"></a>       <span class="dt">Month</span>([Dátum]) <span class="kw">AS</span> HónapSzám  ← Csoportosításhoz</span>
+<span id="cb169-4"><a href="kereszttábla-lekérdezések.html#cb169-4" tabindex="-1"></a><span class="kw">FROM</span> <span class="op">..</span>.</span>
+<span id="cb169-5"><a href="kereszttábla-lekérdezések.html#cb169-5" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> Format([Dátum],<span class="ot">&quot;yyyy&quot;</span>), <span class="dt">Month</span>([Dátum])</span>
+<span id="cb169-6"><a href="kereszttábla-lekérdezések.html#cb169-6" tabindex="-1"></a>PIVOT Format([Dátum],<span class="ot">&quot;mmmm&quot;</span>);  ← Csak megjelenítéshez</span>
+<span id="cb169-7"><a href="kereszttábla-lekérdezések.html#cb169-7" tabindex="-1"></a></span>
+<span id="cb169-8"><a href="kereszttábla-lekérdezések.html#cb169-8" tabindex="-1"></a><span class="co">-- Majd rendezd HónapSzám szerint!</span></span></code></pre></div>
+<hr />
+</div>
+</div>
+<div id="gyakorlatok-07" class="section level2 hasAnchor" number="4.7">
+<h2><span class="header-section-number">4.7</span> Gyakorlatok<a href="kereszttábla-lekérdezések.html#gyakorlatok-07" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="exercise">
+<p><span id="exr:unlabeled-div-7" class="exercise"><strong>Exercise 4.1  </strong></span><strong>1. gyakorlat: Fond × Digitalizálás kereszttábla</strong></p>
+<p><strong>Feladat:</strong> Készíts kereszttáblát, amely megmutatja, fond-onként hány digitalizált és nem digitalizált irat van!</p>
+<p><strong>Elvárások:</strong>
+- Sorok: FondNév (tbl_Fondok)
+- Oszlopok: Digitalizálva (Igen/Nem)
+- Érték: Iratok száma (Count)
+- Összesítő oszlop: Igen</p>
+<p><strong>Segítség SQL:</strong></p>
+<div class="sourceCode" id="cb170"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb170-1"><a href="kereszttábla-lekérdezések.html#cb170-1" tabindex="-1"></a>TRANSFORM <span class="fu">Count</span>(tbl_Iratok.IratID) <span class="kw">AS</span> Darab</span>
+<span id="cb170-2"><a href="kereszttábla-lekérdezések.html#cb170-2" tabindex="-1"></a><span class="kw">SELECT</span> tbl_Fondok.FondNév,</span>
+<span id="cb170-3"><a href="kereszttábla-lekérdezések.html#cb170-3" tabindex="-1"></a>       <span class="fu">Count</span>(tbl_Iratok.IratID) <span class="kw">AS</span> [Összesen]</span>
+<span id="cb170-4"><a href="kereszttábla-lekérdezések.html#cb170-4" tabindex="-1"></a><span class="kw">FROM</span> tbl_Fondok</span>
+<span id="cb170-5"><a href="kereszttábla-lekérdezések.html#cb170-5" tabindex="-1"></a><span class="kw">INNER</span> <span class="kw">JOIN</span> tbl_Állagok <span class="kw">ON</span> tbl_Fondok.FondID <span class="op">=</span> tbl_Állagok.FondID</span>
+<span id="cb170-6"><a href="kereszttábla-lekérdezések.html#cb170-6" tabindex="-1"></a><span class="kw">INNER</span> <span class="kw">JOIN</span> tbl_Iratok <span class="kw">ON</span> tbl_Állagok.ÁllagID <span class="op">=</span> tbl_Iratok.ÁllagID</span>
+<span id="cb170-7"><a href="kereszttábla-lekérdezések.html#cb170-7" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> tbl_Fondok.FondNév</span>
+<span id="cb170-8"><a href="kereszttábla-lekérdezések.html#cb170-8" tabindex="-1"></a>PIVOT tbl_Iratok.Digitalizálva;</span></code></pre></div>
+<p><strong>Elvárt eredmény:</strong></p>
+<pre><code>┌───────────────┬──────┬──────┬──────────┐
+│ FondNév       │ Igen │  Nem │ Összesen │
+├───────────────┼──────┼──────┼──────────┤
+│ Tanács        │  85  │  42  │   127    │
+│ Színház       │  63  │  28  │    91    │
+│ Népszámlálás  │  40  │   0  │    40    │
+└───────────────┴──────┴──────┴──────────┘</code></pre>
+</div>
+<div class="exercise">
+<p><span id="exr:unlabeled-div-8" class="exercise"><strong>Exercise 4.2  </strong></span><strong>2. gyakorlat: Doboztár prefix × Állag kereszttábla</strong></p>
+<p><strong>Feladat:</strong> Készíts kereszttáblát, amely megmutatja, állag-onként hány irat van melyik doboztár típusban (TB, TANK, SZ, K, stb.)!</p>
+<p><strong>Segítség:</strong>
+- Doboztár prefix: <code>Left([DoboztárSzám],InStr([DoboztárSzám],"-")-1)</code>
+- Ez kiveszi a kötőjel előtti részt: “TB-123” → “TB”</p>
+<p><strong>SQL sablon:</strong></p>
+<div class="sourceCode" id="cb172"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb172-1"><a href="kereszttábla-lekérdezések.html#cb172-1" tabindex="-1"></a>TRANSFORM <span class="fu">Count</span>(tbl_Iratok.IratID) <span class="kw">AS</span> Darab</span>
+<span id="cb172-2"><a href="kereszttábla-lekérdezések.html#cb172-2" tabindex="-1"></a><span class="kw">SELECT</span> tbl_Állagok.ÁllagNév</span>
+<span id="cb172-3"><a href="kereszttábla-lekérdezések.html#cb172-3" tabindex="-1"></a><span class="kw">FROM</span> tbl_Állagok</span>
+<span id="cb172-4"><a href="kereszttábla-lekérdezések.html#cb172-4" tabindex="-1"></a><span class="kw">INNER</span> <span class="kw">JOIN</span> tbl_Iratok <span class="kw">ON</span> tbl_Állagok.ÁllagID <span class="op">=</span> tbl_Iratok.ÁllagID</span>
+<span id="cb172-5"><a href="kereszttábla-lekérdezések.html#cb172-5" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> tbl_Állagok.ÁllagNév</span>
+<span id="cb172-6"><a href="kereszttábla-lekérdezések.html#cb172-6" tabindex="-1"></a>PIVOT <span class="kw">Left</span>([DoboztárSzám],<span class="fu">InStr</span>([DoboztárSzám],<span class="ot">&quot;-&quot;</span>)<span class="op">-</span><span class="dv">1</span>);</span></code></pre></div>
+<p><strong>Elvárt eredmény:</strong></p>
+<pre><code>┌───────────────────┬─────┬──────┬────┬────┐
+│ ÁllagNév          │ TB  │ TANK │ SZ │ K  │
+├───────────────────┼─────┼──────┼────┼────┤
+│ Tanácsi ülések    │  15 │   8  │  0 │  0 │
+│ Igazgatói iratok  │   0 │   0  │ 12 │  5 │
+│ Levelezés         │   5 │  10  │  0 │ 47 │
+└───────────────────┴─────┴──────┴────┴────┘</code></pre>
+</div>
+<div class="exercise">
+<p><span id="exr:unlabeled-div-9" class="exercise"><strong>Exercise 4.3  </strong></span><strong>3. gyakorlat: Éves kikérési statisztika hónaponként</strong></p>
+<p><strong>Feladat:</strong> Készíts kereszttáblát, amely megmutatja 2024-ben havonta hány kikérés történt!</p>
+<p><strong>Elvárások:</strong>
+- Sorok: Hónap neve (január, február, …)
+- Oszlopok: Nincs (csak egy oszlop: Kikérések száma)
+- Érték: Kikérések száma
+- Sorrend: Hónapok helyes sorrendben (január → december)</p>
+<p><strong>Segítség:</strong>
+- Használj <code>Month([KikérésDátuma])</code> csoportosításhoz
+- <code>Format([KikérésDátuma],"mmmm")</code> megjelenítéshez</p>
+<p><strong>Bónusz:</strong> Exportáld Excel-be és készíts oszlopdiagramot!</p>
+</div>
+<hr />
+</div>
+<div id="összefoglalás" class="section level2 unnumbered hasAnchor">
+<h2>Összefoglalás<a href="kereszttábla-lekérdezések.html#%C3%B6sszefoglal%C3%A1s" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Ebben a fejezetben megtanultuk:</p>
+<ul>
+<li><strong>Mi a kereszttábla</strong>: Sorok × oszlopok mátrix formátum</li>
+<li><strong>Kereszttábla varázsló</strong>: 6 lépéses folyamat részletesen</li>
+<li><strong>TRANSFORM…PIVOT SQL</strong>: Szintaxis és működés</li>
+<li><strong>Dátumokkal</strong>: Havi/negyedéves statisztikák</li>
+<li><strong>Excel exportálás</strong>: Jelentésekhez, grafikonokhoz</li>
+<li><strong>Hibaelhárítás</strong>: NULL értékek, sorrend, túl sok oszlop</li>
+</ul>
+<p><strong>Következő fejezet:</strong> Excel-Access integráció - import, export, összekapcsolt táblák!</p>
+<div class="info">
+<p><strong>Kulcsgondolat:</strong> A kereszttábla a <strong>legjobb módszer statisztikák készítésére</strong> Access-ben! Excel pivot táblákhoz hasonló, de Access-benSQL-lel vezérelhető!</p>
+</div>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="műveleti-lekérdezések.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="excel-access-integráció.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+  "sharing": {
+    "github": false,
+    "facebook": false,
+    "twitter": false,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": null,
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": ["access_halado.pdf", "access_halado.epub"],
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "subsection"
+  }
+});
+});
+</script>
+
+</body>
+
+</html>
