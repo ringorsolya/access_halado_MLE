@@ -81,11 +81,11 @@ stratégia
 lépés-állagok-űrlap-készítése-alűrlappal
 lépés-fondok-űrlap-módosítása
 eredmény-2
-kombinált-listák-combo-box
+kombinált-listák
 mi-combo
 combo-varazslo
 lépés-alapűrlap-készítése
-lépés-combo-box-beszúrása
+lépés-kombinált-lista-beszúrása
 eredmény-3
 combo-sql
 fejlett-combo
@@ -242,7 +242,7 @@ rossz-struktúra-felismerése
 normalizálás
 többtáblás-struktúra
 hierarchikus-űrlapok
-kombinált-listák-combo-box-1
+kombinált-listák-combo-box
 műveleti-lekérdezések-1
 kereszttábla-lekérdezések-1
 excel-access-integráció-1
