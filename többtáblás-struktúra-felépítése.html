@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Fejezet 9 Alapszintű makrók | Access haladó - Levéltári adatbázisok</title>
+  <title>Fejezet 3 Többtáblás struktúra felépítése | Access haladó - Levéltári adatbázisok</title>
   <meta name="description" content="Microsoft Access haladó szintű tananyag levéltárosok számára - többtáblás adatbázisok, normalizálás, hierarchikus űrlapok, haladó lekérdezések." />
   <meta name="generator" content="bookdown 0.46 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Fejezet 9 Alapszintű makrók | Access haladó - Levéltári adatbázisok" />
+  <meta property="og:title" content="Fejezet 3 Többtáblás struktúra felépítése | Access haladó - Levéltári adatbázisok" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="Microsoft Access haladó szintű tananyag levéltárosok számára - többtáblás adatbázisok, normalizálás, hierarchikus űrlapok, haladó lekérdezések." />
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Fejezet 9 Alapszintű makrók | Access haladó - Levéltári adatbázisok" />
+  <meta name="twitter:title" content="Fejezet 3 Többtáblás struktúra felépítése | Access haladó - Levéltári adatbázisok" />
   
   <meta name="twitter:description" content="Microsoft Access haladó szintű tananyag levéltárosok számára - többtáblás adatbázisok, normalizálás, hierarchikus űrlapok, haladó lekérdezések." />
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="excel-access-integráció.html"/>
-<link rel="next" href="összefoglalás-és-következő-lépések.html"/>
+<link rel="prev" href="normalizálás-alapjai.html"/>
+<link rel="next" href="hierarchikus-űrlapok-főűrlap-alűrlap.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -501,721 +501,435 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="alapszintű-makrók" class="section level1 hasAnchor" number="9">
-<h1><span class="header-section-number">Fejezet 9</span> Alapszintű makrók<a href="alapszintű-makrók.html#alapszint%C5%B1-makr%C3%B3k" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>A <strong>makrók</strong> automatizálják az ismétlődő feladatokat. Egyetlen gomb megnyomásával futtathatunk lekérdezéseket, nyithatunk űrlapokat, exportálhatunk jelentéseket, és még sok mást!</p>
-<div id="mi-a-makro" class="section level2 hasAnchor" number="9.1">
-<h2><span class="header-section-number">9.1</span> Mi a makró?<a href="alapszintű-makrók.html#mi-a-makro" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>A <strong>makró</strong> parancsok sorozata, amelyet az Access végrehajt egy művelet hatására (pl. gombnyomás).</p>
-<p><strong>Analógia:</strong> Mint egy recept - lépésről-lépésre utasítások.</p>
-<p><strong>Példa:</strong> “Gombnyomásra nyisd meg a frm_Iratok űrlapot szerkesztési módban!”</p>
-<div id="makró-vs.-vba" class="section level3 hasAnchor" number="9.1.1">
-<h3><span class="header-section-number">9.1.1</span> Makró vs. VBA<a href="alapszintű-makrók.html#makr%C3%B3-vs.-vba" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<table>
-<colgroup>
-<col width="27%" />
-<col width="19%" />
-<col width="52%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th>Jellemző</th>
-<th>Makró</th>
-<th>VBA (Visual Basic)</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><strong>Nehézség</strong></td>
-<td>Könnyű</td>
-<td>Nehéz (programozás)</td>
-</tr>
-<tr class="even">
-<td><strong>Felület</strong></td>
-<td>Vizuális, legördülők</td>
-<td>Kód írása</td>
-</tr>
-<tr class="odd">
-<td><strong>Használat</strong></td>
-<td>Egyszerű feladatok</td>
-<td>Bonyolult logika</td>
-</tr>
-<tr class="even">
-<td><strong>Példák</strong></td>
-<td>Űrlap megnyitása, exportálás</td>
-<td>Ciklusok, feltételek, API hívások</td>
-</tr>
-</tbody>
-</table>
-<p><strong>Most a makrókat tanuljuk</strong> - nincs kódolás, csak kattintgatás!</p>
+<div id="többtáblás-struktúra-felépítése" class="section level1 hasAnchor" number="3">
+<h1><span class="header-section-number">Fejezet 3</span> Többtáblás struktúra felépítése<a href="többtáblás-struktúra-felépítése.html#t%C3%B6bbt%C3%A1bl%C3%A1s-strukt%C3%BAra-fel%C3%A9p%C3%ADt%C3%A9se" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>Most Access-ben megvalósítjuk a normalizált, háromszintű levéltári struktúrát: <strong>Fondok → Állagok → Iratok</strong>.</p>
+<div id="elokeszites" class="section level2 hasAnchor" number="3.1">
+<h2><span class="header-section-number">3.1</span> Előkészítés<a href="többtáblás-struktúra-felépítése.html#elokeszites" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="új-adatbázis-létrehozása" class="section level3 hasAnchor" number="3.1.1">
+<h3><span class="header-section-number">3.1.1</span> Új adatbázis létrehozása<a href="többtáblás-struktúra-felépítése.html#%C3%BAj-adatb%C3%A1zis-l%C3%A9trehoz%C3%A1sa" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ol style="list-style-type: decimal">
+<li><strong>Access megnyitása</strong></li>
+<li><strong>Üres adatbázis</strong> létrehozása</li>
+<li>Fájlnév: <code>Leveltar_Allomany.accdb</code></li>
+<li>Mentési hely: Válasszunk egy könnyen elérhető mappát</li>
+<li><strong>Létrehozás</strong> gomb</li>
+</ol>
 <div class="info">
-<p><strong>Mikor használj makrót?</strong>
-- Gyakran ismétlődő feladat (pl. napi jelentés exportálás)
-- Gomb az űrlapon (pl. “Nyomtatás” gomb)
-- Egyszerű automatizálás (nyitás, zárás, szűrés)</p>
-<p><strong>Mikor NEM elég a makró?</strong>
-- Bonyolult logika (ha-akkor-egyébként többször egymásba ágyazva)
-- Ciklusok (végigmenni 1000 rekordon és mindegyikkel valami)
-- Külső alkalmazások vezérlése (Word, Excel, Outlook)
-- Adatbázis-műveletek (rekordok törlése, módosítása feltételek alapján)</p>
-</div>
-<hr />
+<p><strong>Tipp:</strong> Célszerű külön mappát létrehozni a projekthez, mert később több fájl is keletkezhet (biztonsági mentések, import fájlok, stb.).</p>
 </div>
 </div>
-<div id="makro-urlap" class="section level2 hasAnchor" number="9.2">
-<h2><span class="header-section-number">9.2</span> Egyszerű makró: Űrlap megnyitása<a href="alapszintű-makrók.html#makro-urlap" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p><strong>Időigény:</strong> 5 perc<br />
-<strong>Cél:</strong> Készítsünk egy gombot, amely megnyit egy űrlapot!</p>
-<div id="lépés-makró-létrehozása" class="section level3 hasAnchor" number="9.2.1">
-<h3><span class="header-section-number">9.2.1</span> 1. LÉPÉS: Makró létrehozása<a href="alapszintű-makrók.html#l%C3%A9p%C3%A9s-makr%C3%B3-l%C3%A9trehoz%C3%A1sa" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<pre><code>1. Létrehozás fül (felső menüszalag)
-2. Makró gomb (Makrók és kódok csoport)</code></pre>
-<p><strong>Képernyő:</strong> Megjelenik a <strong>Makró tervező</strong> ablak</p>
-<pre><code>┌─────────────────────────────────────────────┐
-│ Makró1                                      │
-├─────────────────────────────────────────────┤
-│                                             │
-│ Új művelet hozzáadása [▼]  ← Kattints ide! │
-│                                             │
-│                                             │
-│                                             │
-│                                             │
-│                                             │
-│                                             │
-└─────────────────────────────────────────────┘</code></pre>
 </div>
-<div id="lépés-művelet-hozzáadása" class="section level3 hasAnchor" number="9.2.2">
-<h3><span class="header-section-number">9.2.2</span> 2. LÉPÉS: Művelet hozzáadása<a href="alapszintű-makrók.html#l%C3%A9p%C3%A9s-m%C5%B1velet-hozz%C3%A1ad%C3%A1sa" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<pre><code>3. &quot;Új művelet hozzáadása&quot; legördülő → Kattints rá</code></pre>
-<p><strong>Megjelenik egy HOSSZÚ lista!</strong> Keresés:</p>
-<pre><code>4. Kezd el gépelni: &quot;Űrlap&quot;
-   → Automatikusan szűr!
-   
-5. Lista: ŰrlapMegnyitása → Kattints rá</code></pre>
-<p><strong>VAGY görgess le manuálisan:</strong></p>
-<pre><code>Programablak-műveletek
-  └─ ŰrlapMegnyitása  ← Ez kell!</code></pre>
-<p><strong>A makró tervező megváltozik:</strong></p>
-<pre><code>┌─────────────────────────────────────────────┐
-│ Makró1                                      │
-├─────────────────────────────────────────────┤
-│ ŰrlapMegnyitása                             │
-│   Űrlap neve: [▼]                           │
-│   Nézet: [▼ Űrlap nézet]                    │
-│   Szűrőnév: [                            ]  │
-│   Feltétel: [                            ]  │
-│   Adatmód: [▼ Szerkesztés]                  │
-│   Ablak mód: [▼ Normál]                     │
-│                                             │
-│ Új művelet hozzáadása [▼]                   │
-└─────────────────────────────────────────────┘</code></pre>
+<div id="tbl-fondok" class="section level2 hasAnchor" number="3.2">
+<h2><span class="header-section-number">3.2</span> Az első tábla: tbl_Fondok<a href="többtáblás-struktúra-felépítése.html#tbl-fondok" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="táblatervezés" class="section level3 hasAnchor" number="3.2.1">
+<h3><span class="header-section-number">3.2.1</span> Táblatervezés<a href="többtáblás-struktúra-felépítése.html#t%C3%A1blatervez%C3%A9s" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>Létrehozás</strong> → <strong>Táblatervezés</strong></p>
+<p><strong>Mezők definiálása:</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th>Mezőnév</th>
+<th>Adattípus</th>
+<th>Leírás</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>FondID</td>
+<td>AutoNumber</td>
+<td>Elsődleges kulcs</td>
+</tr>
+<tr class="even">
+<td>FondNév</td>
+<td>Rövid szöveg</td>
+<td>A fond neve</td>
+</tr>
+<tr class="odd">
+<td>JelzetPrefix</td>
+<td>Rövid szöveg</td>
+<td>Jelzet előtagja (pl. “HU MNL OL K”)</td>
+</tr>
+<tr class="even">
+<td>FondLeírás</td>
+<td>Hosszú szöveg</td>
+<td>Részletes leírás</td>
+</tr>
+</tbody>
+</table>
+<p><strong>FondID beállítása:</strong></p>
+<ul>
+<li>Kijelöljük a FondID sort</li>
+<li>🔑 <strong>Elsődleges kulcs</strong> gomb</li>
+</ul>
+<p><strong>FondNév mezőtulajdonságai:</strong></p>
+<ul>
+<li><strong>Mezőméret</strong>: 100</li>
+<li><strong>Kötelező</strong>: Igen</li>
+</ul>
+<p><strong>JelzetPrefix mezőtulajdonságai:</strong></p>
+<ul>
+<li><strong>Mezőméret</strong>: 50</li>
+<li><strong>Kötelező</strong>: Nem (opcionális)</li>
+</ul>
+<p><strong>Mentés:</strong> <code>tbl_Fondok</code></p>
 </div>
-<div id="lépés-paraméterek-beállítása" class="section level3 hasAnchor" number="9.2.3">
-<h3><span class="header-section-number">9.2.3</span> 3. LÉPÉS: Paraméterek beállítása<a href="alapszintű-makrók.html#l%C3%A9p%C3%A9s-param%C3%A9terek-be%C3%A1ll%C3%ADt%C3%A1sa" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p><strong>Csak a fontosakat kell kitölteni!</strong></p>
-<pre><code>6. Űrlap neve: [▼] → Kattints a legördülőre
-   → Lista: frm_Fondok, frm_Állagok, frm_Iratok
-   → Válaszd: frm_Iratok
-
-7. Nézet: [▼ Űrlap nézet] ← Maradhat! 
-   (Űrlap nézet = normál szerkesztési nézet)
-
-8. Adatmód: [▼ Szerkesztés] ← Maradhat! 
-   (Szerkesztés = lehet módosítani a rekordokat)
-
-9. Többi mező: HAGYD ÜRESEN! </code></pre>
-<p><strong>Paraméterek magyarázata:</strong></p>
+<div id="adatok-rögzítése" class="section level3 hasAnchor" number="3.2.2">
+<h3><span class="header-section-number">3.2.2</span> Adatok rögzítése<a href="többtáblás-struktúra-felépítése.html#adatok-r%C3%B6gz%C3%ADt%C3%A9se" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Adatlap nézetre váltás, és vigyünk fel néhány fondot:</p>
+<p><strong>1. fond:</strong></p>
+<pre><code>FondID: (automatikus: 1)
+FondNév: Tanács iratok
+JelzetPrefix: HU MNL OL K
+FondLeírás: Budapest Főváros XIV. kerületi Tanács iratai, 1950-1990</code></pre>
+<p><strong>2. fond:</strong></p>
+<pre><code>FondID: (automatikus: 2)
+FondNév: Nemzeti Színház
+JelzetPrefix: HU MNL OL SZ
+FondLeírás: Nemzeti Színház igazgatósági és művészi iratai, 1900-1950</code></pre>
+<p><strong>3. fond:</strong></p>
+<pre><code>FondID: (automatikus: 3)
+FondNév: Népszámlálási ívek
+JelzetPrefix: HU MNL OL N
+FondLeírás: Népszámlálási ívek és összeírások, 1869-1970</code></pre>
+</div>
+</div>
+<div id="tbl-allagok" class="section level2 hasAnchor" number="3.3">
+<h2><span class="header-section-number">3.3</span> A második tábla: tbl_Állagok<a href="többtáblás-struktúra-felépítése.html#tbl-allagok" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="táblatervezés-1" class="section level3 hasAnchor" number="3.3.1">
+<h3><span class="header-section-number">3.3.1</span> Táblatervezés<a href="többtáblás-struktúra-felépítése.html#t%C3%A1blatervez%C3%A9s-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>Létrehozás</strong> → <strong>Táblatervezés</strong></p>
+<p><strong>Mezők definiálása:</strong></p>
 <table>
 <colgroup>
-<col width="26%" />
-<col width="30%" />
-<col width="42%" />
+<col width="32%" />
+<col width="39%" />
+<col width="28%" />
 </colgroup>
 <thead>
 <tr class="header">
-<th>Paraméter</th>
-<th>Mit csinál?</th>
-<th>Mikor módosítsd?</th>
+<th>Mezőnév</th>
+<th>Adattípus</th>
+<th>Leírás</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td><strong>Űrlap neve</strong></td>
-<td>Melyik űrlapot nyitja meg</td>
-<td>MINDIG kitöltendő!</td>
+<td>ÁllagID</td>
+<td>AutoNumber</td>
+<td>Elsődleges kulcs</td>
 </tr>
 <tr class="even">
-<td><strong>Nézet</strong></td>
-<td>Milyen nézetben (Űrlap, Adatlap, Tervezés)</td>
-<td>Általában “Űrlap nézet”</td>
+<td>FondID</td>
+<td>Szám (Hosszú egész)</td>
+<td><strong>Idegen kulcs</strong> - kapcsolat a Fondokhoz</td>
 </tr>
 <tr class="odd">
-<td><strong>Szűrőnév</strong></td>
-<td>Előre mentett szűrő neve</td>
-<td>Ha van mentett szűrő</td>
+<td>ÁllagNév</td>
+<td>Rövid szöveg</td>
+<td>Az állag neve</td>
 </tr>
 <tr class="even">
-<td><strong>Feltétel</strong></td>
-<td>SQL WHERE feltétel</td>
-<td>Speciális szűréshez</td>
+<td>KeletkezésÉvtől</td>
+<td>Szám (Egész)</td>
+<td>Keletkezés kezdő éve</td>
 </tr>
 <tr class="odd">
-<td><strong>Adatmód</strong></td>
-<td>Szerkesztés / Hozzáadás / Csak olvasás</td>
-<td>Ha írásvédett legyen</td>
+<td>KeletkezésÉvig</td>
+<td>Szám (Egész)</td>
+<td>Keletkezés záró éve</td>
 </tr>
 <tr class="even">
-<td><strong>Ablak mód</strong></td>
-<td>Normál / Rejtett / Ikon / Párbeszéd</td>
-<td>Speciális megjelenítéshez</td>
+<td>ÁllagLeírás</td>
+<td>Hosszú szöveg</td>
+<td>Részletes leírás</td>
 </tr>
 </tbody>
 </table>
-</div>
-<div id="lépés-makró-mentése" class="section level3 hasAnchor" number="9.2.4">
-<h3><span class="header-section-number">9.2.4</span> 4. LÉPÉS: Makró mentése<a href="alapszintű-makrók.html#l%C3%A9p%C3%A9s-makr%C3%B3-ment%C3%A9se" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<pre><code>10. Ctrl+S (vagy Fájl → Mentés)</code></pre>
-<p><strong>Felugró ablak:</strong> “Mentés másként”</p>
-<pre><code>┌─────────────────────────────────────────────┐
-│ Mentés másként                              │
-├─────────────────────────────────────────────┤
-│ Makró neve: [______________________]        │
-│                                             │
-│     [OK]       [Mégse]                      │
-└─────────────────────────────────────────────┘
-
-11. Makró neve: mcr_IratokMegnyitás
-    ↑ Névkonvenció: mcr_ (makró prefix)
-
-12. OK gomb</code></pre>
-<p><strong>Eredmény:</strong> A makró elmentve!</p>
-<p><strong>Bezárás:</strong></p>
-<pre><code>13. Jobb egérgomb a &quot;mcr_IratokMegnyitás&quot; fülre → Bezárás
-    VAGY Ctrl+W</code></pre>
-</div>
-<div id="lépés-gomb-készítése-űrlapon" class="section level3 hasAnchor" number="9.2.5">
-<h3><span class="header-section-number">9.2.5</span> 5. LÉPÉS: Gomb készítése űrlapon<a href="alapszintű-makrók.html#l%C3%A9p%C3%A9s-gomb-k%C3%A9sz%C3%ADt%C3%A9se-%C5%B1rlapon" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p><strong>Most létrehozunk egy gombot, amely futtatja a makrót!</strong></p>
-<p><strong>Nyisd meg a frm_Fondok űrlapot Tervezési nézetben:</strong></p>
-<pre><code>1. Navigációs panel → JOBB egérgomb: frm_Fondok
-2. Tervezési nézet</code></pre>
-<p><strong>Gomb hozzáadása:</strong></p>
-<pre><code>3. Tervezés fül (felső menüszalag)
-4. Vezérlők csoport → Gomb ikon (🔘)
-   ↑ FIGYELEM: NE az ActiveX gombot!
-   ↑ A sima &quot;Gomb&quot; kell (Command Button)
-
-5. Kattints az űrlapon oda, ahova a gombot szeretnéd
-   (pl. jobb alsó sarok)</code></pre>
-<p><strong>Megjelenik a “Parancsgomb varázsló”:</strong></p>
-<pre><code>┌─────────────────────────────────────────────┐
-│ Parancsgomb varázsló                        │
-├─────────────────────────────────────────────┤
-│ Milyen műveletet szeretne, hogy             │
-│ a gomb végrehajtson?                        │
-│                                             │
-│ Kategóriák:        │ Műveletek:             │
-│ ┌────────────────┐ │ ┌──────────────────┐  │
-│ │ Rekord műveletek│ │ │ Rekord hozzáadása│  │
-│ │ Rekord mozgatás │ │ │ Rekord törlése   │  │
-│ │ Rekord műveletek│ │ │ ...              │  │
-│ │ Űrlap műveletek │←│ │ Űrlap megnyitása │← │
-│ │ Jelentés műveletek│ │ ...              │  │
-│ │ Alkalmazás      │ │ └──────────────────┘  │
-│ │ Egyéni          │ │                        │
-│ └────────────────┘ │                        │
-│                                             │
-│  [&lt;Vissza]  [Tovább&gt;]  [Mégse]             │
-└─────────────────────────────────────────────┘
-
-6. Kategóriák: Egyéni → Kattints rá
-7. Műveletek: Egy makró futtatása → Kattints rá
-8. Tovább &gt; gomb</code></pre>
-<p><strong>Következő képernyő:</strong> “Melyik makrót szeretné futtatni?”</p>
-<pre><code>┌─────────────────────────────────────────────┐
-│ Melyik makrót szeretné futtatni?            │
-├─────────────────────────────────────────────┤
-│ Makrók:                                     │
-│ ┌─────────────────────────────────────────┐ │
-│ │ mcr_IratokMegnyitás   ← Válaszd ezt!   │ │
-│ └─────────────────────────────────────────┘ │
-│                                             │
-│  [&lt;Vissza]  [Tovább&gt;]  [Mégse]             │
-└─────────────────────────────────────────────┘
-
-9. mcr_IratokMegnyitás → Kattints rá (kijelölöd)
-10. Tovább &gt; gomb</code></pre>
-<p><strong>Következő képernyő:</strong> “Szöveg vagy kép?”</p>
-<pre><code>┌─────────────────────────────────────────────┐
-│ Szöveg vagy kép jelenjen meg a gombon?      │
-├─────────────────────────────────────────────┤
-│ ● Szöveg: [___________________________]     │
-│ ○ Kép:    [▼]                               │
-│                                             │
-│  [&lt;Vissza]  [Tovább&gt;]  [Mégse]             │
-└─────────────────────────────────────────────┘
-
-11. ● Szöveg → Válaszd
-12. Szöveg mező: Iratok megnyitása
-    (vagy bármi más beszédes)
-13. Tovább &gt; gomb</code></pre>
-<p><strong>Utolsó képernyő:</strong> “Adjon nevet a gombnak!”</p>
-<pre><code>┌─────────────────────────────────────────────┐
-│ Adjon nevet a gombnak!                      │
-├─────────────────────────────────────────────┤
-│ Gomb neve: [cmd_IratokMegnyitás         ]  │
-│            ↑ Belső név (nem látható)        │
-│                                             │
-│  [&lt;Vissza]  [Befejezés]  [Mégse]           │
-└─────────────────────────────────────────────┘
-
-14. Gomb neve: cmd_IratokMegnyitás
-    ↑ Névkonvenció: cmd_ (command button prefix)
-
-15. Befejezés gomb</code></pre>
-<p><strong>Eredmény:</strong> A gomb megjelent az űrlapon!</p>
-<pre><code>┌─────────────────────────────────────────────┐
-│ frm_Fondok                          [X]     │
-├─────────────────────────────────────────────┤
-│ FondID: [1                              ]   │
-│ FondNév: [Tanács                         ]  │
-│ ...                                         │
-│                                             │
-│                ┌────────────────────┐       │
-│                │ Iratok megnyitása  │ ← ÚJ!│
-│                └────────────────────┘       │
-└─────────────────────────────────────────────┘</code></pre>
-</div>
-<div id="lépés-tesztelés" class="section level3 hasAnchor" number="9.2.6">
-<h3><span class="header-section-number">9.2.6</span> 6. LÉPÉS: Tesztelés<a href="alapszintű-makrók.html#l%C3%A9p%C3%A9s-tesztel%C3%A9s" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p><strong>Váltás Űrlap nézetre:</strong></p>
-<pre><code>16. Kezdőlap fül → Nézet → Űrlap nézet
-    VAGY F5</code></pre>
-<p><strong>Teszt:</strong></p>
-<pre><code>17. Kattints a &quot;Iratok megnyitása&quot; gombra</code></pre>
-<p><strong>Eredmény:</strong> A <strong>frm_Iratok</strong> űrlap megnyílik!</p>
-<p><strong>Ha működik:</strong></p>
-<pre><code>18. Ctrl+S (mentsd el a frm_Fondok űrlapot a gombbal!)
-19. Bezárás</code></pre>
-<hr />
-</div>
-</div>
-<div id="makro-lekerdezes" class="section level2 hasAnchor" number="9.3">
-<h2><span class="header-section-number">9.3</span> Makró lekérdezés futtatásához<a href="alapszintű-makrók.html#makro-lekerdezes" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>⏱️ <strong>Időigény:</strong> 5 perc</p>
-<p><strong>Cél:</strong> Készítsünk gombot, amely futtat egy lekérdezést!</p>
-<div id="makró-létrehozása" class="section level3 hasAnchor" number="9.3.1">
-<h3><span class="header-section-number">9.3.1</span> Makró létrehozása<a href="alapszintű-makrók.html#makr%C3%B3-l%C3%A9trehoz%C3%A1sa" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<pre><code>1. Létrehozás → Makró
-
-2. Új művelet: Kezd el gépelni &quot;Lekér&quot;
-   → LekérdezésMegnyitása
-
-3. Paraméterek:
-   - Lekérdezés neve: qry_DigitalizáltIratok
-   - Nézet: Adatlap nézet
-   - Adatmód: Szerkesztés
-
-4. Ctrl+S → Név: mcr_DigitalizáltLekérdezés
-5. Bezárás</code></pre>
-</div>
-<div id="gomb-hozzáadása-gyorsított" class="section level3 hasAnchor" number="9.3.2">
-<h3><span class="header-section-number">9.3.2</span> Gomb hozzáadása (gyorsított)<a href="alapszintű-makrók.html#gomb-hozz%C3%A1ad%C3%A1sa-gyors%C3%ADtott" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<pre><code>1. frm_Fondok Tervezési nézet
-2. Gomb vezérlő → Kattints az űrlapra
-3. Varázsló:
-   - Kategória: Egyéni
-   - Művelet: Egy makró futtatása
-   - Makró: mcr_DigitalizáltLekérdezés
-   - Szöveg: &quot;Digitalizált iratok&quot;
-   - Gomb neve: cmd_DigitalizáltLekérdezés
-4. Befejezés
-5. Teszt (F5) → Kattints a gombra → Lekérdezés megnyílik! </code></pre>
-<hr />
-</div>
-</div>
-<div id="makro-export" class="section level2 hasAnchor" number="9.4">
-<h2><span class="header-section-number">9.4</span> Makró exportáláshoz<a href="alapszintű-makrók.html#makro-export" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p><strong>Időigény:</strong> 10 perc<br />
-<strong>Hasznosság:</strong> NAGYON hasznos napi jelentésekhez!</p>
-<p><strong>Cél:</strong> Automatizáljuk egy jelentés PDF-be exportálását egy gombnyomással!</p>
-<div id="makró-létrehozása-1" class="section level3 hasAnchor" number="9.4.1">
-<h3><span class="header-section-number">9.4.1</span> Makró létrehozása<a href="alapszintű-makrók.html#makr%C3%B3-l%C3%A9trehoz%C3%A1sa-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<pre><code>1. Létrehozás → Makró
-
-2. Új művelet: Kezd el gépelni &quot;Kiír&quot;
-   → KiírásObjectMásolat</code></pre>
-<p><strong>Paraméterek kitöltése:</strong></p>
-<pre><code>3. Objektumtípus: [▼] → Jelentés
-
-4. Objektum neve: [▼] → rpt_FondStatisztika
-   (válaszd ki a jelentésed nevét)
-
-5. Kimeneti formátum: [▼] → PDF formátum (*.pdf)
-
-6. Kimeneti fájl: C:\Export\FondStatisztika.pdf
-   ↑ FONTOS: Teljes elérési út!
-   ↑ A C:\Export\ mappa LÉTEZNIE KELL előre!
-
-7. Automatikus kezdés: Igen
-   (automatikusan nyitja a PDF-et)</code></pre>
-<p><strong>Teljes paraméterezés:</strong></p>
-<pre><code>┌─────────────────────────────────────────────┐
-│ KiírásObjectMásolat                         │
-│   Objektumtípus: Jelentés                   │
-│   Objektum neve: rpt_FondStatisztika        │
-│   Kimeneti formátum: PDF formátum (*.pdf)   │
-│   Kimeneti fájl: C:\Export\FondStat.pdf     │
-│   Automatikus kezdés: Igen                  │
-│   ...                                       │
-└─────────────────────────────────────────────┘
-
-8. Ctrl+S → Név: mcr_PDFExport
-9. Bezárás</code></pre>
+<p><strong>Elsődleges kulcs:</strong></p>
+<ul>
+<li>ÁllagID → 🔑 <strong>Elsődleges kulcs</strong></li>
+</ul>
+<p><strong>FondID mezőtulajdonságai (FONTOS!):</strong></p>
+<ul>
+<li><strong>Mezőméret</strong>: Hosszú egész (Long Integer)</li>
+<li><strong>Kötelező</strong>: Igen</li>
+</ul>
 <div class="warning">
-<p><strong>KRITIKUS:</strong> A kimeneti mappa LÉTEZNIE KELL!</p>
-<p>Ha <code>C:\Export\</code> nem létezik → hiba!</p>
-<p><strong>Megoldás:</strong>
-1. Windows Intéző → C: megnyitás
-2. Jobb egérgomb → Új → Mappa
-3. Név: Export
-4. MOST már futtatható a makró!</p>
+<p><strong>Figyelem!</strong> A FondID <strong>Szám</strong> típusú, NEM AutoNumber! Ez az idegen kulcs, ami a tbl_Fondok FondID-jára mutat.</p>
+</div>
+<p><strong>KeletkezésÉvtől/Évig mezőtulajdonságai:</strong></p>
+<ul>
+<li><strong>Mezőméret</strong>: Egész (Integer)</li>
+<li><strong>Kötelező</strong>: Nem (lehet üres)</li>
+</ul>
+<p><strong>Mentés:</strong> <code>tbl_Állagok</code></p>
+</div>
+<div id="adatok-rögzítése-1" class="section level3 hasAnchor" number="3.3.2">
+<h3><span class="header-section-number">3.3.2</span> Adatok rögzítése<a href="többtáblás-struktúra-felépítése.html#adatok-r%C3%B6gz%C3%ADt%C3%A9se-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Vigyünk fel néhány állagot!</p>
+<p><strong>Állag 1 (I. ker. Tanács fond alatt):</strong></p>
+<pre><code>ÁllagID: (automatikus: 1)
+FondID: 1 (I. ker. Tanács)
+ÁllagNév: Tanácsi ülések jegyzőkönyvei
+KeletkezésÉvtől: 1950
+KeletkezésÉvig: 1990
+ÁllagLeírás: Tanácsülési jegyzőkönyvek és határozatok</code></pre>
+<p><strong>Állag 2 (I. ker. Tanács fond alatt):</strong></p>
+<pre><code>ÁllagID: (automatikus: 2)
+FondID: 1 (I. ker. Tanács)
+ÁllagNév: Tanácsi iratok
+KeletkezésÉvtől: 1945
+KeletkezésÉvig: 1989
+ÁllagLeírás: Levelezés, rendeletek, körlevél</code></pre>
+<p><strong>Állag 3 (Nemzeti Színház fond alatt):</strong></p>
+<pre><code>ÁllagID: (automatikus: 3)
+FondID: 2 (Nemzeti Színház)
+ÁllagNév: Igazgatósági iratok
+KeletkezésÉvtől: 1900
+KeletkezésÉvig: 1950
+ÁllagLeírás: Igazgatói kinevezések, szerződések, jelentések</code></pre>
+<p><strong>Állag 4 (Színház fond alatt):</strong></p>
+<pre><code>ÁllagID: (automatikus: 4)
+FondID: 2 (Nemzeti Színház)
+ÁllagNév: Előadási iratok
+KeletkezésÉvtől: 1920
+KeletkezésÉvig: 1944
+ÁllagLeírás: Műsorok, szereposztások, kritikák</code></pre>
+<p><strong>Állag 5 (Népszámlálás fond alatt):</strong></p>
+<pre><code>ÁllagID: (automatikus: 5)
+FondID: 3 (Népszámlálás)
+ÁllagNév: 1960-as népszámlálás
+KeletkezésÉvtől: 1960
+KeletkezésÉvig: 1960
+ÁllagLeírás: 1960. évi népszámlálási ívek</code></pre>
 </div>
 </div>
-<div id="gomb-hozzáadása" class="section level3 hasAnchor" number="9.4.2">
-<h3><span class="header-section-number">9.4.2</span> Gomb hozzáadása<a href="alapszintű-makrók.html#gomb-hozz%C3%A1ad%C3%A1sa" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<pre><code>1. frm_Fondok Tervezési nézet
-2. Gomb → Kattints az űrlapra
-3. Varázsló:
-   - Kategória: Egyéni
-   - Makró: mcr_PDFExport
-   - Szöveg: &quot;Jelentés PDF&quot;
-   - Név: cmd_PDFExport
-4. Teszt → PDF létrejön és megnyílik! </code></pre>
-<hr />
-</div>
-</div>
-<div id="makro-sorozat" class="section level2 hasAnchor" number="9.5">
-<h2><span class="header-section-number">9.5</span> Makró sorozat<a href="alapszintű-makrók.html#makro-sorozat" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>⏱️ <strong>Időigény:</strong> 10 perc</p>
-<p><strong>Cél:</strong> Több műveletet végrehajtani egymás után!</p>
-<p><strong>Példa:</strong> Exportálj egy lekérdezést Excel-be, majd jelenítsd meg üzenetet!</p>
-<div id="makró-létrehozása-több-művelettel" class="section level3 hasAnchor" number="9.5.1">
-<h3><span class="header-section-number">9.5.1</span> Makró létrehozása több művelettel<a href="alapszintű-makrók.html#makr%C3%B3-l%C3%A9trehoz%C3%A1sa-t%C3%B6bb-m%C5%B1velettel" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<pre><code>1. Létrehozás → Makró</code></pre>
-<p><strong>ELSŐ művelet: Exportálás</strong></p>
-<pre><code>2. Új művelet: KiírásExcel
-
-3. Paraméterek:
-   - Objektumtípus: Lekérdezés
-   - Objektum neve: qry_IratStatisztika
-   - Kimeneti formátum: Excel munkafüzet (*.xlsx)
-   - Kimeneti fájl: C:\Export\Statisztika.xlsx
-   - Automatikus kezdés: Nem (ne nyissa meg automatikusan)</code></pre>
-<p><strong>MÁSODIK művelet: Üzenet</strong></p>
-<pre><code>4. Új művelet hozzáadása [▼] → ÜzenetMegjelenítés
-
-5. Paraméterek:
-   - Üzenet: Exportálás sikeres! A fájl itt található: C:\Export\Statisztika.xlsx
-   - Hangjelzés: Igen
-   - Típus: Információ
-   - Cím: Exportálás</code></pre>
-<p><strong>Makró kinézete (két művelet):</strong></p>
-<pre><code>┌─────────────────────────────────────────────┐
-│ Makró1                                      │
-├─────────────────────────────────────────────┤
-│ KiírásExcel                             ⬆ 1 │
-│   Objektumtípus: Lekérdezés                 │
-│   Objektum neve: qry_IratStatisztika        │
-│   ...                                       │
-│                                             │
-│ ÜzenetMegjelenítés                      ⬆ 2 │
-│   Üzenet: Exportálás sikeres!...            │
-│   ...                                       │
-│                                             │
-│ Új művelet hozzáadása [▼]                   │
-└─────────────────────────────────────────────┘</code></pre>
-<p><strong>Sorrend fontos!</strong> Fentről lefelé fut végig.</p>
-<pre><code>6. Ctrl+S → Név: mcr_ExportÉsÜzenet
-7. Bezárás
-8. Teszt (gomb vagy közvetlenül futtatás)</code></pre>
-<p><strong>Futtatás eredménye:</strong>
-1. Excel fájl létrejön
-2. Felugró üzenet megjelenik</p>
-<hr />
-</div>
-</div>
-<div id="felteteles-makro" class="section level2 hasAnchor" number="9.6">
-<h2><span class="header-section-number">9.6</span> Feltételes makró<a href="alapszintű-makrók.html#felteteles-makro" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p><strong>Időigény:</strong> 15 perc<br />
-<strong>Nehézség:</strong> Közepes (logika kell!)</p>
-<p><strong>Cél:</strong> Feltétellel futtatunk műveleteket - “HA… AKKOR… KÜLÖNBEN…”</p>
-<p><strong>Példa:</strong> Ha nincs rekord kiválasztva az űrlapon, jelenítsen meg üzenetet! Ha van, nyomtassa ki a jelentést!</p>
-<div id="makró-létrehozása-feltétellel" class="section level3 hasAnchor" number="9.6.1">
-<h3><span class="header-section-number">9.6.1</span> Makró létrehozása feltétellel<a href="alapszintű-makrók.html#makr%C3%B3-l%C3%A9trehoz%C3%A1sa-felt%C3%A9tellel" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<pre><code>1. Létrehozás → Makró
-
-2. Új művelet: Ha</code></pre>
-<p><strong>Felugró ablak:</strong> “Kifejezésszerkesztő” (Expression Builder)</p>
-<p><strong>EGYSZERŰBB:</strong> Zárd be, és gépeld be kézzel!</p>
-<pre><code>3. Kifejezésszerkesztő → Bezárás (X gomb)
-
-4. Feltétel mező (a Ha blokk tetején):
-   [Űrlap]![frm_Iratok].[ÚjRekord]=True
-   
-   ↑ Mit jelent?
-   - [Űrlap]![frm_Iratok] = az frm_Iratok űrlap
-   - .[ÚjRekord] = az &quot;Új rekord&quot; sor (üres, új rekord hozzáadása)
-   - =True = ha IGAZ (vagyis üres sor, nincs kiválasztott rekord)</code></pre>
-<p><strong>A Ha blokk BELSEJÉBE művelet:</strong></p>
-<pre><code>5. Ha blokk alatt (behúzva): kattints az &quot;Új művelet hozzáadása&quot;-ra
-
-6. Művelet: ÜzenetMegjelenítés
-
-7. Paraméterek:
-   - Üzenet: Nincs kiválasztott rekord! Válassz ki egy iratot!
-   - Típus: Figyelmeztetés
-   - Cím: Figyelem</code></pre>
-<p><strong>Különben ág hozzáadása:</strong></p>
-<pre><code>8. Ha blokk végén (zöld vonal): &quot;Különben Ha hozzáadása&quot; gomb → Kattints
-
-9. Változik: &quot;Különben&quot; ág jelenik meg
-
-10. Különben ág alatt: Új művelet → JelentésMegnyitása
-
-11. Paraméterek:
-    - Jelentés neve: rpt_IratRészletek
-    - Nézet: Nyomtatási kép</code></pre>
-<p><strong>Makró struktúra:</strong></p>
-<pre><code>┌─────────────────────────────────────────────┐
-│ Ha [Űrlap]![frm_Iratok].[ÚjRekord]=True     │ ← Feltétel
-│ │                                           │
-│ │ ÜzenetMegjelenítés                        │ ← AKKOR
-│ │   Üzenet: Nincs kiválasztott...           │
-│ │                                           │
-│ Különben                                    │
-│ │                                           │
-│ │ JelentésMegnyitása                        │ ← KÜLÖNBEN
-│ │   Jelentés: rpt_IratRészletek             │
-│ │                                           │
-│ Vége Ha                                     │
-└─────────────────────────────────────────────┘
-
-12. Ctrl+S → Név: mcr_JelentésFeltétellel
-13. Bezárás</code></pre>
-</div>
-<div id="tesztelés" class="section level3 hasAnchor" number="9.6.2">
-<h3><span class="header-section-number">9.6.2</span> Tesztelés<a href="alapszintű-makrók.html#tesztel%C3%A9s" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<pre><code>1. frm_Iratok megnyitása
-2. Navigálj egy létező rekordra
-3. Futtasd a makrót (gomb vagy közvetlenül)
-   → Jelentés megnyílik! 
-
-4. Navigálj az új rekord sorra (utolsó, üres sor)
-5. Futtasd a makrót
-   → Üzenet: &quot;Nincs kiválasztott rekord!&quot; </code></pre>
-<hr />
-</div>
-</div>
-<div id="makro-debug" class="section level2 hasAnchor" number="9.7">
-<h2><span class="header-section-number">9.7</span> Makró debugolás<a href="alapszintű-makrók.html#makro-debug" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p><strong>Időigény:</strong> 5 perc<br />
-<strong>Hasznosság:</strong> Hibaelhárításhoz elengedhetetlen!</p>
-<p><strong>Probléma:</strong> A makró nem azt csinálja, amit vártál, vagy hibát dob.</p>
-<div id="lépésenkénti-futtatás" class="section level3 hasAnchor" number="9.7.1">
-<h3><span class="header-section-number">9.7.1</span> Lépésenkénti futtatás<a href="alapszintű-makrók.html#l%C3%A9p%C3%A9senk%C3%A9nti-futtat%C3%A1s" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<pre><code>1. Navigációs panel → JOBB egérgomb a makrón
-2. Tervezési nézet
-
-3. Tervezés fül → Eszközök csoport → Lépésenkénti futtatás gomb
-   (ikon: láb nyomok)
-   
-4. Futtatás (!) gomb</code></pre>
-<p><strong>Mi történik:</strong>
-- A makró <strong>megáll</strong> az első műveletnél
-- Látod, hol tart (sárga kiemelés)
-- <strong>F8</strong> billentyű → következő lépés
-- <strong>F5</strong> billentyű → többi futtatása megállás nélkül</p>
-<p><strong>Ezzel azonosíthatod, melyik lépésnél akad el!</strong></p>
-</div>
-<div id="hibaüzenetek-értelmezése" class="section level3 hasAnchor" number="9.7.2">
-<h3><span class="header-section-number">9.7.2</span> Hibaüzenetek értelmezése<a href="alapszintű-makrók.html#hiba%C3%BCzenetek-%C3%A9rtelmez%C3%A9se" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p><strong>Gyakori hibaüzenetek:</strong></p>
-<table style="width:100%;">
+<div id="tbl-iratok" class="section level2 hasAnchor" number="3.4">
+<h2><span class="header-section-number">3.4</span> A harmadik tábla: tbl_Iratok<a href="többtáblás-struktúra-felépítése.html#tbl-iratok" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="táblatervezés-2" class="section level3 hasAnchor" number="3.4.1">
+<h3><span class="header-section-number">3.4.1</span> Táblatervezés<a href="többtáblás-struktúra-felépítése.html#t%C3%A1blatervez%C3%A9s-2" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>Létrehozás</strong> → <strong>Táblatervezés</strong></p>
+<p><strong>Mezők definiálása:</strong></p>
+<table>
 <colgroup>
-<col width="44%" />
-<col width="18%" />
-<col width="37%" />
+<col width="32%" />
+<col width="39%" />
+<col width="28%" />
 </colgroup>
 <thead>
 <tr class="header">
-<th>Hibaüzenet</th>
-<th>Ok</th>
-<th>Megoldás</th>
+<th>Mezőnév</th>
+<th>Adattípus</th>
+<th>Leírás</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>“Az objektum nem található”</td>
-<td>Rossz név (pl. frm_Iratpk helyett frm_Iratok)</td>
-<td>Javítsd a nevet!</td>
+<td>IratID</td>
+<td>AutoNumber</td>
+<td>Elsődleges kulcs</td>
 </tr>
 <tr class="even">
-<td>“A fájl már létezik”</td>
-<td>PDF/Excel fájl már nyitva van</td>
-<td>Zárd be a fájlt!</td>
+<td>ÁllagID</td>
+<td>Szám (Hosszú egész)</td>
+<td><strong>Idegen kulcs</strong> - kapcsolat az Állagokhoz</td>
 </tr>
 <tr class="odd">
-<td>“A mappa nem található”</td>
-<td>C: nem létezik</td>
-<td>Hozd létre a mappát!</td>
+<td>IratCím</td>
+<td>Rövid szöveg</td>
+<td>Az irat címe</td>
 </tr>
 <tr class="even">
-<td>“Érvénytelen paraméter”</td>
-<td>Hibás kifejezés a feltételben</td>
-<td>Ellenőrizd a szintaxist!</td>
+<td>Jelzet</td>
+<td>Rövid szöveg</td>
+<td>Teljes jelzet</td>
+</tr>
+<tr class="odd">
+<td>DoboztárSzám</td>
+<td>Rövid szöveg</td>
+<td>Raktári hely</td>
+</tr>
+<tr class="even">
+<td>Digitalizálva</td>
+<td>Igen/Nem</td>
+<td>Van-e digitális másolat?</td>
+</tr>
+<tr class="odd">
+<td>DigitalizálásDátuma</td>
+<td>Dátum/idő</td>
+<td>Mikor digitalizáltuk?</td>
+</tr>
+<tr class="even">
+<td>Megjegyzés</td>
+<td>Hosszú szöveg</td>
+<td>Egyéb megjegyzések</td>
 </tr>
 </tbody>
 </table>
-<hr />
+<p><strong>Elsődleges kulcs:</strong></p>
+<ul>
+<li>IratID → 🔑 <strong>Elsődleges kulcs</strong></li>
+</ul>
+<p><strong>ÁllagID mezőtulajdonságai:</strong></p>
+<ul>
+<li><strong>Mezőméret</strong>: Hosszú egész</li>
+<li><strong>Kötelező</strong>: Igen</li>
+</ul>
+<p><strong>Digitalizálva mezőtulajdonságai:</strong></p>
+<ul>
+<li><strong>Alapértelmezett érték</strong>: Nem</li>
+</ul>
+<p><strong>DigitalizálásDátuma mezőtulajdonságai:</strong></p>
+<ul>
+<li><strong>Formátum</strong>: Rövid dátum</li>
+<li><strong>Kötelező</strong>: Nem</li>
+</ul>
+<p><strong>Mentés:</strong> <code>tbl_Iratok</code></p>
 </div>
-</div>
-<div id="gyakori-mintak" class="section level2 hasAnchor" number="9.8">
-<h2><span class="header-section-number">9.8</span> Gyakori makró minták<a href="alapszintű-makrók.html#gyakori-mintak" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div id="bezárás-és-újramegnyitás-frissítés" class="section level3 hasAnchor" number="9.8.1">
-<h3><span class="header-section-number">9.8.1</span> 1. “Bezárás és újramegnyitás” (frissítés)<a href="alapszintű-makrók.html#bez%C3%A1r%C3%A1s-%C3%A9s-%C3%BAjramegnyit%C3%A1s-friss%C3%ADt%C3%A9s" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p><strong>Mikor:</strong> Az űrlap adatait szeretnéd frissíteni (pl. új rekordok láthatók legyenek)</p>
-<pre><code>Makró műveletek:
-1. BezárásŰrlap
-   - Űrlap neve: frm_Iratok
-   - Mentés: Igen
-
-2. ŰrlapMegnyitása
-   - Űrlap neve: frm_Iratok
-   - Nézet: Űrlap nézet</code></pre>
-</div>
-<div id="szűrés-alkalmazása" class="section level3 hasAnchor" number="9.8.2">
-<h3><span class="header-section-number">9.8.2</span> 2. “Szűrés alkalmazása”<a href="alapszintű-makrók.html#sz%C5%B1r%C3%A9s-alkalmaz%C3%A1sa" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p><strong>Mikor:</strong> Gombnyomásra szűrd az űrlapot (pl. “Csak digitalizált iratok”)</p>
-<pre><code>Makró műveletek:
-1. SzűrőAlkalmazása
-   - Feltétel: Digitalizálva = True
-   - Vezérlő neve: (üresen hagyva)</code></pre>
-</div>
-<div id="rekord-törlése-megerősítéssel" class="section level3 hasAnchor" number="9.8.3">
-<h3><span class="header-section-number">9.8.3</span> 3. “Rekord törlése megerősítéssel”<a href="alapszintű-makrók.html#rekord-t%C3%B6rl%C3%A9se-meger%C5%91s%C3%ADt%C3%A9ssel" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p><strong>Mikor:</strong> Biztonságosan törölni rekordot (kérdez előtte)</p>
-<pre><code>Makró műveletek:
-1. ÜzenetMegjelenítés
-   - Üzenet: Biztosan törli ezt a rekordot?
-   - Típus: Igen/Nem
-   - Cím: Törlés megerősítése
-
-2. Ha [MacroError].[Number] = 0 Akkor
-   │ RekordTörlése
-   Vége Ha</code></pre>
-</div>
-<div id="email-küldés-outlook-kal" class="section level3 hasAnchor" number="9.8.4">
-<h3><span class="header-section-number">9.8.4</span> 4. “Email küldés Outlook-kal”<a href="alapszintű-makrók.html#email-k%C3%BCld%C3%A9s-outlook-kal" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p><strong>Mikor:</strong> Jelentés küldése emailben</p>
-<pre><code>Makró műveletek:
-1. EmailKüldése
-   - Címzett: vki@example.com
-   - Tárgy: Havi jelentés
-   - Üzenet: Csatolt PDF
-   - Melléklet: C:\Export\Jelentés.pdf</code></pre>
-<div class="advanced">
-<p><strong>VBA alternatíva:</strong> Ha bonyolultabb logika kell (ciklusok, változók, feltételek egymásba ágyazva), akkor VBA-ra van szükség. Ez egy külön haladó téma!</p>
-</div>
-<hr />
-</div>
-</div>
-<div id="hibak-09" class="section level2 hasAnchor" number="9.9">
-<h2><span class="header-section-number">9.9</span> Hibaelhárítás<a href="alapszintű-makrók.html#hibak-09" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div id="h1-az-objektum-nem-található" class="section level3 hasAnchor" number="9.9.1">
-<h3><span class="header-section-number">9.9.1</span> H1: “Az objektum nem található”<a href="alapszintű-makrók.html#h1-az-objektum-nem-tal%C3%A1lhat%C3%B3" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p><strong>Probléma:</strong> A makró nem találja az űrlapot/lekérdezést/jelentést</p>
-<p><strong>Példa:</strong></p>
-<pre><code>ŰrlapMegnyitása: frm_Iratpk  ← HIBA! Elgépelés!
-Helyes: frm_Iratok</code></pre>
-<p><strong>Megoldás:</strong></p>
-<pre><code>1. Nyisd meg a makrót Tervezési nézetben
-2. Ellenőrizd az objektum nevét:
-   - Navigációs panel → nézd meg a pontos nevet!
-   - frm_Iratok ← Másolás-beillesztés!
-3. Javítsd a makróban
-4. Ctrl+S</code></pre>
-</div>
-<div id="h2-a-fájl-már-használatban-van" class="section level3 hasAnchor" number="9.9.2">
-<h3><span class="header-section-number">9.9.2</span> H2: “A fájl már használatban van”<a href="alapszintű-makrók.html#h2-a-f%C3%A1jl-m%C3%A1r-haszn%C3%A1latban-van" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p><strong>Probléma:</strong> Nem tud exportálni, mert a fájl nyitva van</p>
-<p><strong>Példa:</strong></p>
-<pre><code>KiírásObjectMásolat: C:\Export\Jelentés.pdf
-HIBA! A Jelentés.pdf már meg van nyitva Adobe-ban!</code></pre>
-<p><strong>Megoldás:</strong></p>
-<pre><code>1. Zárd be a PDF/Excel fájlt!
-2. Futtasd újra a makrót</code></pre>
-<p><strong>Megelőzés:</strong></p>
-<pre><code>Adj egyedi nevet dátummal:
-C:\Export\Jelentés_2024_03_16.pdf
-↑ Minden nap új fájl, nem ütközik!</code></pre>
-</div>
-<div id="h3-érvénytelen-kifejezés" class="section level3 hasAnchor" number="9.9.3">
-<h3><span class="header-section-number">9.9.3</span> H3: “Érvénytelen kifejezés”<a href="alapszintű-makrók.html#h3-%C3%A9rv%C3%A9nytelen-kifejez%C3%A9s" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p><strong>Probléma:</strong> Hibás szintaxis a feltételben</p>
-<p><strong>Példa:</strong></p>
-<pre><code>Ha [Űrlap]![frm_Iratok].ÚjRekord=True  ← HIBA! Hiányzik a pont!
-Helyes: [Űrlap]![frm_Iratok].[ÚjRekord]=True
-                             ↑ Pont kell!</code></pre>
-<p><strong>Megoldás:</strong></p>
-<pre><code>Ellenőrizd a szintaxist:
-- [Objektum]![Név].[Tulajdonság]
-- Egyenlőség: = (nem == mint más nyelvekben!)
-- Szöveg idézőjelben: &quot;Szöveg&quot;
-- Dátum #-jelek között: #2024.03.16#</code></pre>
-<hr />
-</div>
-</div>
-<div id="gyakorlatok-09" class="section level2 hasAnchor" number="9.10">
-<h2><span class="header-section-number">9.10</span> Gyakorlatok<a href="alapszintű-makrók.html#gyakorlatok-09" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="adatok-rögzítése-2" class="section level3 hasAnchor" number="3.4.2">
+<h3><span class="header-section-number">3.4.2</span> Adatok rögzítése<a href="többtáblás-struktúra-felépítése.html#adatok-r%C3%B6gz%C3%ADt%C3%A9se-2" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Vigyünk fel néhány iratot!</p>
+<p><strong>Irat 1 (Tanácsi ülések állag alatt):</strong></p>
+<pre><code>IratID: (automatikus: 1)
+ÁllagID: 1
+IratCím: Tanácsülési jegyzőkönyv 1956. október 23.
+Jelzet: HU MNL OL K 150/1956/10/23
+DoboztárSzám: TB-123
+Digitalizálva: Igen
+DigitalizálásDátuma: 2024-01-15</code></pre>
+<p><strong>Irat 2 (Tanácsi ülések állag alatt):</strong></p>
+<pre><code>IratID: (automatikus: 2)
+ÁllagID: 1
+IratCím: Tanácsülési jegyzőkönyv 1956. november 4.
+Jelzet: HU MNL OL K 150/1956/11/04
+DoboztárSzám: TB-124
+Digitalizálva: Igen
+DigitalizálásDátuma: 2024-01-15</code></pre>
+<p><strong>Irat 3 (Tanácsi iratok állag alatt):</strong></p>
+<pre><code>IratID: (automatikus: 3)
+ÁllagID: 2
+IratCím: Levelezés a belügyminisztériummal
+Jelzet: HU MNL OL K 151/1970/05/12
+DoboztárSzám: TB-200
+Digitalizálva: Nem</code></pre>
+<p><strong>Irat 4-10:</strong> Vigyünk fel még néhány iratot különböző állagokhoz!</p>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-11" class="exercise"><strong>Exercise 9.1  </strong></span><strong>1. gyakorlat: Gombok az űrlapon</strong></p>
-<p><strong>Feladat:</strong> Készíts 3 gombot a frm_Fondok űrlapon:
-1. “Állagok megnyitása” → frm_Állagok megnyitása
-2. “Iratok megnyitása” → frm_Iratok megnyitása
-3. “Bezárás” → Aktuális űrlap bezárása (BezárásŰrlap művelet)</p>
-<p><strong>Segítség:</strong>
-- Minden gombhoz új makró
-- Névkonvenció: mcr_ÁllagokMegnyitás, mcr_IratokMegnyitás, mcr_Bezárás
-- Gomb nevek: cmd_ÁllagokMegnyitás, cmd_IratokMegnyitás, cmd_Bezárás</p>
-<p><strong>Ellenőrzés:</strong> Mind a 3 gomb működik?</p>
+<p><span id="exr:unlabeled-div-2" class="exercise"><strong>Exercise 3.1  </strong></span><strong>Gyakorlat:</strong> Vigyen fel legalább 15-20 iratot különböző állagokhoz! Változatos legyen:</p>
+<ul>
+<li>Különböző fondok</li>
+<li>Különböző állagok</li>
+<li>Néhány digitalizált, néhány nem</li>
+<li>Különböző jelzetek</li>
+</ul>
 </div>
-<div class="exercise">
-<p><span id="exr:unlabeled-div-12" class="exercise"><strong>Exercise 9.2  </strong></span><strong>2. gyakorlat: Havi exportálás makró</strong></p>
-<p><strong>Feladat:</strong> Készíts egy makrót, amely:
-1. Exportálja a qry_HáviStatisztika lekérdezést Excel-be
-2. Fájlnév: C:_ÉÉÉÉ_HH.xlsx (dátummal!)
-3. Megjelenít egy üzenetet: “Havi statisztika exportálva!”</p>
-<p><strong>Bónusz:</strong> Add hozzá egy gombhoz a főűrlapon!</p>
-<p><strong>Segítség:</strong>
-- Művelet 1: KiírásExcel
-- Művelet 2: ÜzenetMegjelenítés
-- Makró név: mcr_HáviExport</p>
 </div>
-<div class="exercise">
-<p><span id="exr:unlabeled-div-13" class="exercise"><strong>Exercise 9.3  </strong></span><strong>3. gyakorlat: Feltételes jelentés</strong></p>
-<p><strong>Feladat:</strong> Készíts egy makrót feltétellel:
-- HA van kiválasztott fond a frm_Fondok űrlapon
-- AKKOR nyisd meg a rpt_FondRészletek jelentést
-- KÜLÖNBEN
-- Jelenítsd meg: “Nincs kiválasztott fond!”</p>
-<p><strong>Segítség:</strong>
-- Feltétel: <code>[Űrlap]![frm_Fondok].[ÚjRekord]=False</code>
-(False = VAN kiválasztott rekord)
-- Ha blokk: JelentésMegnyitása
-- Különben blokk: ÜzenetMegjelenítés</p>
 </div>
-<hr />
+<div id="kapcsolatok" class="section level2 hasAnchor" number="3.5">
+<h2><span class="header-section-number">3.5</span> Kapcsolatok létrehozása<a href="többtáblás-struktúra-felépítése.html#kapcsolatok" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Most hozzuk létre a kapcsolatokat a három tábla között!</p>
+<div id="kapcsolatok-nézet-megnyitása" class="section level3 hasAnchor" number="3.5.1">
+<h3><span class="header-section-number">3.5.1</span> Kapcsolatok nézet megnyitása<a href="többtáblás-struktúra-felépítése.html#kapcsolatok-n%C3%A9zet-megnyit%C3%A1sa" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>Adatbázis-eszközök</strong> → <strong>Kapcsolatok</strong> (vagy <strong>Ctrl+R</strong>)</p>
+</div>
+<div id="táblák-hozzáadása" class="section level3 hasAnchor" number="3.5.2">
+<h3><span class="header-section-number">3.5.2</span> Táblák hozzáadása<a href="többtáblás-struktúra-felépítése.html#t%C3%A1bl%C3%A1k-hozz%C3%A1ad%C3%A1sa" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>Tervezés</strong> → <strong>Tábla megjelenítése</strong></p>
+<ul>
+<li>Dupla klikk: <code>tbl_Fondok</code></li>
+<li>Dupla klikk: <code>tbl_Állagok</code></li>
+<li>Dupla klikk: <code>tbl_Iratok</code></li>
+<li><strong>Bezárás</strong></li>
+</ul>
+<p>Most látjuk mind a három táblát a Kapcsolatok nézetben!</p>
+</div>
+<div id="első-kapcsolat-fondok-állagok" class="section level3 hasAnchor" number="3.5.3">
+<h3><span class="header-section-number">3.5.3</span> Első kapcsolat: Fondok ←→ Állagok<a href="többtáblás-struktúra-felépítése.html#els%C5%91-kapcsolat-fondok-%C3%A1llagok" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>Húzzuk a kapcsolatot:</strong></p>
+<ol style="list-style-type: decimal">
+<li>Kattintsunk a <code>tbl_Fondok</code> tábla <strong>FondID</strong> mezőjére</li>
+<li>Tartsuk lenyomva, és húzzuk a <code>tbl_Állagok</code> tábla <strong>FondID</strong> mezőjére</li>
+<li>Eresszük el</li>
+</ol>
+<p>Megjelenik a <strong>Kapcsolatok módosítása</strong> ablak.</p>
+<p><strong>Beállítások:</strong></p>
+<ul>
+<li>☑ <strong>Referenciális integritás érvényesítése</strong></li>
+<li>☑ <strong>Lépcsőzetes frissítés a kapcsolódó mezőkben</strong></li>
+<li><label><input type="checkbox" /><strong>Lépcsőzetes törlés</strong> (NEM pipáljuk be!)</label></li>
+</ul>
+<div class="warning">
+<p><strong>Figyelem!</strong> A lépcsőzetes törlést NE kapcsoljuk be levéltári adatbázisnál! Ha véletlenül törlünk egy fondot, nem akarjuk, hogy az összes állag és irat is törlődjön!</p>
+</div>
+<p><strong>Kapcsolattípus:</strong> Egy a többhöz (1:∞)</p>
+<p><strong>Létrehozás</strong> gomb</p>
+</div>
+<div id="második-kapcsolat-állagok-iratok" class="section level3 hasAnchor" number="3.5.4">
+<h3><span class="header-section-number">3.5.4</span> Második kapcsolat: Állagok ←→ Iratok<a href="többtáblás-struktúra-felépítése.html#m%C3%A1sodik-kapcsolat-%C3%A1llagok-iratok" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>Húzzuk a kapcsolatot:</strong></p>
+<ol style="list-style-type: decimal">
+<li>Kattintsunk a <code>tbl_Állagok</code> tábla <strong>ÁllagID</strong> mezőjére</li>
+<li>Húzzuk a <code>tbl_Iratok</code> tábla <strong>ÁllagID</strong> mezőjére</li>
+</ol>
+<p><strong>Beállítások:</strong></p>
+<ul>
+<li>☑ <strong>Referenciális integritás érvényesítése</strong></li>
+<li>☑ <strong>Lépcsőzetes frissítés</strong></li>
+<li><label><input type="checkbox" /><strong>Lépcsőzetes törlés</strong> (NEM!)</label></li>
+</ul>
+<p><strong>Létrehozás</strong> gomb</p>
+</div>
+<div id="eredmény" class="section level3 hasAnchor" number="3.5.5">
+<h3><span class="header-section-number">3.5.5</span> Eredmény<a href="többtáblás-struktúra-felépítése.html#eredm%C3%A9ny" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Most a Kapcsolatok nézetben látjuk a teljes hierarchiát:</p>
+<pre><code>┌──────────────┐       ┌───────────────┐       ┌──────────────┐
+│tbl_Fondok    │       │tbl_Állagok    │       │tbl_Iratok    │
+├──────────────┤       ├───────────────┤       ├──────────────┤
+│🔑FondID      │───1──∞│FondID         │       │ ÁllagID      │
+│ FondNév      │       │🔑ÁllagID      │───1──∞│🔑IratID      │
+│ JelzetPrefix │       │ ÁllagNév      │       │ IratCím      │
+│ FondLeírás   │       │ Keletkezés... │       │ Jelzet       │
+└──────────────┘       └───────────────┘       └──────────────┘</code></pre>
+<p><strong>Mentés:</strong> Ctrl+S vagy Bezárás → Igen</p>
+</div>
+</div>
+<div id="teszteles" class="section level2 hasAnchor" number="3.6">
+<h2><span class="header-section-number">3.6</span> A struktúra tesztelése<a href="többtáblás-struktúra-felépítése.html#teszteles" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Most teszteljük, hogy a referenciális integritás működik-e!</p>
+<div id="teszt-1-érvénytelen-állagid" class="section level3 hasAnchor" number="3.6.1">
+<h3><span class="header-section-number">3.6.1</span> Teszt 1: Érvénytelen ÁllagID<a href="többtáblás-struktúra-felépítése.html#teszt-1-%C3%A9rv%C3%A9nytelen-%C3%A1llagid" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Nyissuk meg a <code>tbl_Iratok</code> táblát, és próbáljunk meg egy iratot felvinni <strong>nem létező ÁllagID-val</strong>:</p>
+<pre><code>ÁllagID: 999 (nem létezik!)
+IratCím: Teszt irat</code></pre>
+<p><strong>Eredmény:</strong> Hibaüzenet! “A tbl_Állagok táblában nem található kapcsolódó rekord.”</p>
+</div>
+<div id="teszt-2-állag-törlése" class="section level3 hasAnchor" number="3.6.2">
+<h3><span class="header-section-number">3.6.2</span> Teszt 2: Állag törlése<a href="többtáblás-struktúra-felépítése.html#teszt-2-%C3%A1llag-t%C3%B6rl%C3%A9se" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Próbáljuk meg törölni az “1” számú állagot (Tanácsi ülések), aminek <strong>vannak iratai</strong>!</p>
+<ol style="list-style-type: decimal">
+<li>Nyissuk meg a <code>tbl_Állagok</code> táblát</li>
+<li>Jelöljük ki az 1-es állagot</li>
+<li>Delete billentyű</li>
+</ol>
+<p><strong>Eredmény:</strong> Hibaüzenet! “Nem törölhet rekordokat, mert a tbl_Iratok tábla kapcsolódó rekordokat tartalmaz.”</p>
+</div>
+<div id="teszt-3-fond-törlése" class="section level3 hasAnchor" number="3.6.3">
+<h3><span class="header-section-number">3.6.3</span> Teszt 3: Fond törlése<a href="többtáblás-struktúra-felépítése.html#teszt-3-fond-t%C3%B6rl%C3%A9se" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Hasonlóan, próbáljuk meg törölni a “Tanács” fondot!</p>
+<p><strong>Eredmény:</strong> Hibaüzenet! Az Access megvédi az adatainkat!</p>
+</div>
+</div>
+<div id="összefoglalás" class="section level2 unnumbered hasAnchor">
+<h2>Összefoglalás<a href="többtáblás-struktúra-felépítése.html#%C3%B6sszefoglal%C3%A1s" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Ebben a fejezetben:</p>
+<ul>
+<li>Létrehoztuk a <strong>három táblát</strong>: Fondok, Állagok, Iratok</li>
+<li>Definiáltuk a <strong>mezőket</strong> és <strong>adattípusokat</strong></li>
+<li>Beállítottuk az <strong>elsődleges kulcsokat</strong></li>
+<li>Beállítottuk az <strong>idegen kulcsokat</strong> (FondID, ÁllagID)</li>
+<li>Létrehoztuk a <strong>kapcsolatokat</strong> referenciális integritással</li>
+<li><strong>Teszteltük</strong> a struktúrát</li>
+</ul>
 
 </div>
 </div>
@@ -1224,8 +938,8 @@ Helyes: [Űrlap]![frm_Iratok].[ÚjRekord]=True
           </div>
         </div>
       </div>
-<a href="excel-access-integráció.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="összefoglalás-és-következő-lépések.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="normalizálás-alapjai.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="hierarchikus-űrlapok-főűrlap-alűrlap.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
